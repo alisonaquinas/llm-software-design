@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Patterns"
+  short_description: "Choose and critique common software design patterns."
+  default_prompt: "Use $design-patterns to choose or critique a software design pattern for a given problem."

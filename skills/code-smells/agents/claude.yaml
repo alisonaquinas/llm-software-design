@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Smells"
+  short_description: "Spot maintainability risks and propose refactoring paths."
+  default_prompt: "Use $code-smells to identify code smells and recommend pragmatic refactoring options."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "OOP"
+  short_description: "Reason about objects, responsibilities, and collaborations."
+  default_prompt: "Use $oop to model objects, responsibilities, and collaborations in an object-oriented design."

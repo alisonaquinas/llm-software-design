@@ -1,0 +1,4 @@
+interface:
+  display_name: "SOLID"
+  short_description: "Apply SOLID principles to code and design tradeoffs."
+  default_prompt: "Use $solid to evaluate a design against SOLID principles and suggest targeted improvements."
