@@ -1,6 +1,6 @@
 # llm-software-design
 
-A cross-compatible repository of 107 LLM skills for software design guidance, language-specific code review, and source-level API documentation. The merged catalog now includes the original design-review skills, 50 `[language]-best-practice` skills, and 50 `[language]-docstrings` skills that align on consistent structure and depth.
+A cross-compatible repository of 114 LLM skills for software design guidance, language-specific code review, and source-level API documentation. The merged catalog now includes the original design-review skills, 7 design methodology skills, 50 `[language]-best-practice` skills, and 50 `[language]-docstrings` skills that align on consistent structure and depth.
 
 ## Skill Families
 
@@ -15,6 +15,18 @@ A cross-compatible repository of 107 LLM skills for software design guidance, la
 | `code-smells` | Identify maintainability risks, triage them, and propose pragmatic refactoring paths |
 | `semantic-versioning` | Apply SemVer 2.0.0, choose the correct bump level, and manage git tags with `bump-version` / `set-version` |
 | `well-documented` | Audit, initialize, and normalize repository documentation: README, AGENTS.md, CONCEPTS.md, file headers, and docstrings |
+
+### Design methodology skills
+
+| Skill | Description |
+| --- | --- |
+| `bdd` | Specify behavior through collaborative examples, executable scenarios, and shared language |
+| `tdd` | Drive design with test-first development, fast feedback loops, and small refactoring steps |
+| `ddd` | Model complex business domains using bounded contexts, ubiquitous language, and aggregates |
+| `dependency-injection` | Design, review, and refactor explicit dependency graphs, composition roots, and service lifetimes |
+| `event-sourcing` | Design systems that persist state as ordered domain events and derive views through replay |
+| `idd` | Design systems around stable contracts, ports, and interface boundaries |
+| `pdd` | Design asynchronous software around promises, tasks, futures, and structured concurrency |
 
 ### Language best-practice skills
 
@@ -38,28 +50,28 @@ See [INSTALL.md](INSTALL.md) for full setup guidance.
 
 ## Development
 
-```bash
+\`\`\`bash
 make lint
 make test
 make build
 make verify
-```
+\`\`\`
 
 The Python helpers are also available directly:
 
-```bash
+\`\`\`bash
 python scripts/lint_skills.py
 python scripts/validate_skills.py
 python -m unittest discover -s tests -v
-```
+\`\`\`
 
-Build artifacts land in `built/` as one ZIP per skill. Each archive is rooted at `llm-software-design/skills/<skill>/...` so release uploads match the repo layout.
+Build artifacts land in \`built/\` as one ZIP per skill. Each archive is rooted at \`llm-software-design/skills/<skill>/...\` so release uploads match the repo layout.
 
-Legacy `linting/` and `validation/` shell entrypoints remain available as compatibility wrappers for one release cycle, but they now delegate to the Python baseline.
+Legacy \`linting/\` and \`validation/\` shell entrypoints remain available as compatibility wrappers for one release cycle, but they now delegate to the Python baseline.
 
 ## Structure
 
-```text
+\`\`\`text
 llm-software-design/
 ├── .claude-plugin/
 ├── .github/workflows/
@@ -74,7 +86,7 @@ llm-software-design/
 ├── INSTALL.md
 ├── Makefile
 └── README.md
-```
+\`\`\`
 
 ## Design intent
 
