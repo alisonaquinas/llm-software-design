@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-03-14
+
+### Fixed
+
+- corrected README skill count from 107 to 114 and added Design Methodology skills section
+  documenting the seven skills added in v1.1.0 (bdd, tdd, ddd, dependency-injection,
+  event-sourcing, idd, pdd) that were missing from the skill families table
+- escaped C# heading in `design-patterns/references/language-examples.md` to pass markdown linting
+
 ## [1.1.0] - 2026-03-14
 
 ### Added
