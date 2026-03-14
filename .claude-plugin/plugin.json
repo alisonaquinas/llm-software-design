@@ -1,6 +1,6 @@
 {
   "name": "llm-software-design",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Cross-compatible LLM skills for software design, object-oriented design, architecture, and code quality guidance.",
   "author": {
     "name": "Alison Aquinas"
