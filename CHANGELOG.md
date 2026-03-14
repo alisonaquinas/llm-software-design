@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-03-14
+
+### Added
+
+- added `semantic-versioning` skill with `set-version` and `bump-version` commands
+  that validate SemVer 2.0.0 strings, update all version files, promote the
+  CHANGELOG Unreleased block, commit, and create an annotated git tag
+- added `references/spec.md` with the complete SemVer 2.0.0 specification
+  (all 12 clauses, BNF grammar, precedence rules, and FAQ)
+- added `references/git-tagging.md` covering annotated vs lightweight tags,
+  push strategy, retag policy, release CI hooks, and a consistency checklist
+- added `references/version-files.md` with version file discovery and update
+  patterns for Node.js, Python, Rust, Java, .NET, Go, Ruby, PHP, and
+  plain-text VERSION files
+
 ## [0.3.1] - 2026-03-14
 
 ### Fixed
