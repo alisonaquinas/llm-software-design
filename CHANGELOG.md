@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-03-14
+
+### Added
+
+- added `well-documented` skill with six commands (`init-docs`, `audit-docs`, `normalize-docs`,
+  `add-file-headers`, `add-docstrings`, `check-concepts`) that audit, initialize, and normalize
+  repository documentation to a consistent standard
+- added `references/structure-standard.md` defining required files at every level (README.md,
+  AGENTS.md, CLAUDE.md, CONCEPTS.md, docs/), PlantUML as the preferred diagramming tool for
+  human-centered documents, and the full AGENTS.md and CONCEPTS.md structural standards
+- added `references/file-headers.md` with file-level header templates for 12 languages
+  (Python, TypeScript/JavaScript, Java, C/C++, C#, Go, Ruby, Rust, Kotlin, Swift, Bash, SQL)
+  and docstring depth guidance by symbol type
+- added `references/agents-md-guide.md` with authoring rules for AI-navigable AGENTS.md files
+  including required sections, anti-patterns, formatting rules, and sync obligations
+- added `references/audit-checklist.md` with a scored rubric (PASS/WARN/FAIL/SKIP) across
+  root-level, per-directory, code-file, and docs-folder criteria
+
+### Changed
+
+- updated `README.md` to list `semantic-versioning` and `well-documented` in the design and
+  review skills table; updated total skill count from 105 to 107
+
 ## [0.4.0] - 2026-03-14
 
 ### Added

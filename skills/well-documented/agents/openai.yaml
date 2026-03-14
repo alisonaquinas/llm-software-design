@@ -1,0 +1,4 @@
+interface:
+  display_name: "Well-Documented"
+  short_description: "Enforce thorough docs: README, AGENTS.md, CONCEPTS.md, headers."
+  default_prompt: "Use $well-documented to audit, initialize, or normalize documentation across a repository, including folder-level README and AGENTS.md files, CONCEPTS.md, file headers, and docstrings."
