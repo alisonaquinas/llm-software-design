@@ -19,9 +19,26 @@ See [INSTALL.md](INSTALL.md) for full setup guidance.
 ## Development
 
 ```bash
-bash linting/lint-all.sh
-bash validation/validate-skill.sh skills/solid
+make lint
+make test
+make build
+make verify
 ```
+
+The Python helpers are also available directly:
+
+```bash
+python scripts/lint_skills.py
+python scripts/validate_skills.py
+python -m unittest discover -s tests -v
+```
+
+Build artifacts land in `built/` as one ZIP per skill. Each archive is rooted at
+`llm-software-design/skills/<skill>/...` so release uploads match the repo layout.
+
+Legacy `linting/` and `validation/` shell entrypoints remain available as
+compatibility wrappers for one release cycle, but they now delegate to the
+Python baseline.
 
 ## Structure
 
@@ -29,13 +46,17 @@ bash validation/validate-skill.sh skills/solid
 llm-software-design/
 ├── .claude-plugin/
 ├── .github/workflows/
+├── built/
 ├── docs/
 ├── linting/
+├── scripts/
 ├── skills/
+├── tests/
 ├── validation/
 ├── AGENTS.md
 ├── CHANGELOG.md
 ├── INSTALL.md
+├── Makefile
 └── README.md
 ```
 

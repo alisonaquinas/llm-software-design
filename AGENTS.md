@@ -78,13 +78,28 @@ llm-software-design/
 Before committing a new or updated skill, run:
 
 ```bash
+make lint
+```
+
+When you need a tighter loop for one skill, use:
+
+```bash
+python scripts/lint_skills.py <skill-name>
+python scripts/validate_skills.py <skill-name>
+```
+
+Compatibility wrappers remain available for one release cycle:
+
+```bash
 bash linting/lint-skill.sh skills/<name>
+bash linting/lint-all.sh
+bash validation/validate-skill.sh skills/<name>
 ```
 
 To validate a skill qualitatively:
 
 ```bash
-bash validation/validate-skill.sh skills/<name>
+python scripts/validate_skills.py <skill-name>
 ```
 
 ## Commit Conventions
@@ -92,6 +107,11 @@ bash validation/validate-skill.sh skills/<name>
 - Prefer conventional commit prefixes such as `feat:`, `fix:`, `docs:`, and `refactor:`.
 - Scope to the skill name when practical.
 - Do not amend published commits.
+- Do not commit without running the baseline quality gate:
+  - `make test`
+  - `make build`
+  - `make verify`
+  - or the narrow Python equivalents when changing one skill in isolation
 
 ## Release Process
 
@@ -103,3 +123,4 @@ Before tagging a release:
 4. Create and push the annotated tag.
 
 The release workflow publishes the GitHub release and dispatches `plugin-updated` to `alisonaquinas/llm-skills`.
+- It now runs `make test`, then `make all`, attaches `built/*.zip`, and skips marketplace dispatch cleanly when the token is absent.

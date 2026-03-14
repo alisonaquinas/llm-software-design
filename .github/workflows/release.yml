@@ -20,6 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
       - name: Read plugin version
         id: plugin
         run: |
@@ -34,6 +38,12 @@ jobs:
             echo "ERROR: tag $TAG does not match plugin.json version $EXPECTED"
             exit 1
           fi
+
+      - name: Run repo test gate
+        run: make test
+
+      - name: Build skill ZIPs
+        run: make all
 
       - name: Extract changelog notes
         id: notes
@@ -50,6 +60,7 @@ jobs:
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
           body: ${{ steps.notes.outputs.notes }}
+          files: built/*.zip
 
       - name: Trigger marketplace rebuild
         if: ${{ env.MARKETPLACE_DISPATCH_TOKEN != '' }}

@@ -41,6 +41,23 @@ done
 ## Quality Checks
 
 ```bash
+make lint
+make test
+make build
+make verify
+```
+
+The Python helpers are also available directly:
+
+```bash
+python scripts/lint_skills.py solid
+python scripts/validate_skills.py solid
+```
+
+Legacy shell entrypoints remain available as compatibility shims:
+
+```bash
+bash linting/lint-skill.sh skills/solid
 bash linting/lint-all.sh
 bash validation/validate-skill.sh skills/solid
 ```
