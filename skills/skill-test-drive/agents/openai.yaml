@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Test Drive"
+  short_description: "Live scenario testing for skill usability"
+  default_prompt: "Use $skill-test-drive to exercise the skills/git skill across 5 live scenarios and report improvements."
