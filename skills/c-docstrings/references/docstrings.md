@@ -10,41 +10,61 @@ Doxygen comment blocks
 - otherwise standardize on the preferred convention above for the requested surface
 - document public and externally consumed symbols before private helpers
 - keep summaries, parameters, returns, errors, and examples aligned with the real code
+- prefer documenting declarations in public headers because that is what most external tools index
 
 ## Why this is the default
 
-Prefer Doxygen-style comments for headers and public APIs because they are the most widely interoperable source-adjacent convention in C toolchains.
+C does not have a language-native docstring facility, so the most interoperable source-adjacent convention is a structured Doxygen block. Doxygen-style comments work well for headers, macros, enums, structs, and functions, and many IDEs or AST-based tools can consume or at least preserve them.
 
 ## Best targets
 
-public headers, exported structs, enums, macros, functions
+- public headers
+- exported functions
+- public structs, enums, typedefs, and callback signatures
+- macros whose semantics are part of the supported API
+- configuration objects and error-code families used across modules
+
+## What to document
+
+At minimum, document the parts that callers cannot safely infer from the signature alone:
+
+- ownership and lifetime expectations
+- input and output buffers, including required sizes
+- nullability and mutability expectations
+- return value meaning, including error conventions
+- thread-safety, reentrancy, or interrupt-context constraints when relevant
+- preconditions, postconditions, and units for numeric parameters
 
 ## Canonical syntax
 
 ```text
 /**
- * @brief Add two integers.
- * @param a Left operand.
- * @param b Right operand.
- * @return Sum of a and b.
+ * @brief Initialize the device context.
+ * @param[out] ctx Target context to initialize.
+ * @param[in] config Immutable configuration values.
+ * @return 0 on success, negative error code on failure.
  */
-int add(int a, int b);
+int device_init(device_context *ctx, const device_config *config);
 ```
 
-## Example
+## Macro example
 
 ```text
 /**
- * @brief Initialize the device context.
- * @param ctx Target context.
- * @return 0 on success, negative on failure.
+ * @brief Convert kibibytes to bytes.
+ * @param n Value in KiB.
+ * @return Number of bytes.
  */
-int device_init(device_context *ctx);
+#define KIB_TO_BYTES(n) ((n) * 1024u)
 ```
 
-## External tool access
+## Tooling notes
 
-Doxygen, clang-doc, IDE indexers
+- Place comments on the declaration that appears in the public header rather than only on the `.c` definition.
+- Use one consistent tag vocabulary across the repository, commonly `@brief`, `@param`, `@return`, `@retval`, `@note`, and `@warning`.
+- Avoid repeating the exact same prose on both declaration and definition unless the generator requires it.
+
+## External tool access
 
 ```text
 doxygen Doxyfile
@@ -53,18 +73,28 @@ clang-doc --public headers/*.h
 
 ## Migration guidance
 
-- convert declaration-adjacent comments incrementally so mixed-style files can be cleaned up safely over time
-- avoid mixing competing documentation styles in one file unless a staged migration explicitly requires it
-- verify generated docs, IDE help, or extracted metadata after making documentation changes
+- convert detached block comments into declaration-adjacent documentation blocks
+- document the exported header surface first, then add internal documentation only where maintenance risk justifies it
+- standardize ownership and buffer wording before polishing style
+- verify generated docs or indexed hover help after changes
 
 ## Review checklist
 
-- [ ] the chosen convention matches the surrounding toolchain or house style
-- [ ] comments are attached to the declarations that external tools inspect
-- [ ] summaries describe real behavior without invented guarantees
-- [ ] parameters, returns, errors, and examples match the code
-- [ ] extraction or verification commands are noted when they materially help review or CI
+- [ ] The comment is attached to the declaration external callers inspect.
+- [ ] Parameter names exactly match the declaration.
+- [ ] Ownership, mutability, and size expectations are explicit.
+- [ ] Error returns or output-parameter semantics are truthful and specific.
+- [ ] `@warning` and `@note` are used for real hazards, not for filler text.
 
-## Notes
+## Anti-patterns
 
-Document declarations in headers instead of repeating comments in implementation files. Keep macro documentation adjacent to the macro definition.
+- documenting only the implementation file while leaving the public header opaque
+- describing a pointer parameter without saying whether it may be null or how much storage it requires
+- copying stale prose across declaration and definition
+- inventing thread-safety or performance guarantees the code does not actually provide
+- hiding critical API behavior in ad hoc prose comments that generators ignore
+
+## Reference starting points
+
+- [Doxygen documentation blocks](https://www.doxygen.nl/manual/docblocks.html)
+- [C reference](https://en.cppreference.com/w/c)

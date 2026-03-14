@@ -10,26 +10,35 @@ XML documentation comments
 - otherwise standardize on the preferred convention above for the requested surface
 - document public and externally consumed symbols before private helpers
 - keep summaries, parameters, returns, errors, and examples aligned with the real code
+- enable XML documentation file generation when the project is expected to surface API docs downstream
 
 ## Why this is the default
 
-Prefer triple-slash XML comments because they are native to the compiler, feed IntelliSense, and can be emitted into XML for downstream tools.
+C# has native triple-slash XML documentation comments. The compiler can emit them into an XML documentation file, IDEs surface them as IntelliSense, and downstream tools such as DocFX can turn them into API reference sites. That makes XML comments the canonical machine-readable API documentation convention for C#.
 
 ## Best targets
 
-public types, members, interfaces, records, generics
+- public types and public members
+- interfaces, records, delegates, and generic types that form part of an external contract
+- extension methods and public options objects that callers use directly
+- protected members only when they are part of an intended subclassing surface
+
+## Core tag set
+
+Use the smallest truthful set of tags that helps callers.
+
+- `<summary>`
+- `<param>`
+- `<typeparam>`
+- `<returns>`
+- `<value>` for properties where the meaning is not obvious
+- `<remarks>` for longer narrative context
+- `<exception>` when callers truly need to plan for a thrown exception
+- `<example>` for usage snippets
+- `<see>` or `<seealso>` for discoverability
+- `<inheritdoc/>` when inheritance is the right source of truth
 
 ## Canonical syntax
-
-```text
-/// <summary>Add two integers.</summary>
-/// <param name="a">Left operand.</param>
-/// <param name="b">Right operand.</param>
-/// <returns>Sum of the operands.</returns>
-int Add(int a, int b);
-```
-
-## Example
 
 ```text
 /// <summary>Build the current report snapshot.</summary>
@@ -38,9 +47,25 @@ int Add(int a, int b);
 public ReportSnapshot Build(ReportRequest request) => ...;
 ```
 
-## External tool access
+## Generic example
 
-compiler XML output, IntelliSense, DocFX, Sandcastle-like tooling
+```text
+/// <summary>Transform a source value into a result value.</summary>
+/// <typeparam name="TSource">Input value type.</typeparam>
+/// <typeparam name="TResult">Output value type.</typeparam>
+/// <param name="value">Input value.</param>
+/// <returns>The transformed result.</returns>
+public TResult Convert<TSource, TResult>(TSource value) => ...;
+```
+
+## Tooling notes
+
+- Comments must immediately precede the declaration they document.
+- Parameter names in `<param>` tags must exactly match the signature or tools may drop them.
+- XML must be well formed.
+- `<inheritdoc/>` is often better than duplicating text on overrides or interface implementations when the inherited text is still accurate.
+
+## External tool access
 
 ```text
 dotnet build -p:GenerateDocumentationFile=true
@@ -49,18 +74,30 @@ docfx build
 
 ## Migration guidance
 
-- convert declaration-adjacent comments incrementally so mixed-style files can be cleaned up safely over time
-- avoid mixing competing documentation styles in one file unless a staged migration explicitly requires it
-- verify generated docs, IDE help, or extracted metadata after making documentation changes
+- convert detached prose comments into declaration-adjacent XML comments
+- document the supported public API first rather than trying to annotate every private helper
+- standardize summary wording and tag ordering across similar APIs
+- verify the emitted XML file and IntelliSense output after changes
 
 ## Review checklist
 
-- [ ] the chosen convention matches the surrounding toolchain or house style
-- [ ] comments are attached to the declarations that external tools inspect
-- [ ] summaries describe real behavior without invented guarantees
-- [ ] parameters, returns, errors, and examples match the code
-- [ ] extraction or verification commands are noted when they materially help review or CI
+- [ ] The comment is attached to the declaration external tools inspect.
+- [ ] `<param>` and `<typeparam>` names match the signature exactly.
+- [ ] `<summary>` is concise, truthful, and not just a restatement of the member name.
+- [ ] `<remarks>`, `<example>`, and `<exception>` add real value rather than filler.
+- [ ] Inherited members use `<inheritdoc/>` where duplication would drift.
 
-## Notes
+## Anti-patterns
 
-Keep XML tags structurally valid and ensure parameter names match the signature exactly so external tools do not drop the documentation.
+- malformed XML that silently drops documentation from downstream tools
+- describing exceptions, nullability, or side effects that the code does not actually expose
+- copying summaries onto overrides without noticing behavioral differences
+- documenting internal implementation detail instead of the public contract
+- generating XML files but never validating that the intended comments actually appear there
+
+## Reference starting points
+
+- [Generate XML API documentation comments](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/)
+- [Documentation comments in the C# language specification](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/documentation-comments)
+- [Recommended XML documentation tags](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags)
+- [Compiler output options](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/output)

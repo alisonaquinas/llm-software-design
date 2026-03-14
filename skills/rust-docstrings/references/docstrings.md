@@ -10,64 +10,105 @@ rustdoc comments
 - otherwise standardize on the preferred convention above for the requested surface
 - document public and externally consumed symbols before private helpers
 - keep summaries, parameters, returns, errors, and examples aligned with the real code
+- prefer doctestable examples when the public API is intended for reuse by other developers
 
 ## Why this is the default
 
-Prefer native rustdoc comments because they are compiled into standard library-style documentation and support doctests, module docs, and intra-doc links.
+Rust has a native documentation system. `///` and `//!` comments are consumed by `rustdoc`, rendered into API docs, indexed for IDE help, and can be compiled and run as documentation tests. That makes rustdoc comments the canonical machine-readable API documentation convention for Rust.
 
 ## Best targets
 
-public modules, traits, structs, enums, functions, macros
+- public crates and modules
+- public structs, enums, traits, type aliases, and macros
+- public functions and methods
+- `unsafe` APIs that require explicit safety contracts
+- errors, builders, and extension traits that callers rely on directly
 
-## Canonical syntax
+## Outer and inner docs
+
+- Use `//!` for crate-level or module-level documentation.
+- Use `///` for items such as functions, structs, enums, traits, and methods.
+- Keep crate and module docs focused on purpose, layout, feature flags, and major usage patterns.
+
+## Recommended sections
+
+Add sections only when they help callers. Common high-value sections include:
+
+- `# Examples`
+- `# Errors`
+- `# Panics`
+- `# Safety` for any `unsafe fn` or APIs with caller obligations
+- `# Implementation notes` only when downstream maintainers truly need it
+
+## Canonical pattern
 
 ```text
-/// Add two integers.
+/// Build the current report snapshot.
+///
+/// # Errors
+///
+/// Returns an error if the request is internally inconsistent.
 ///
 /// # Examples
 ///
 /// ```
-/// assert_eq!(add(2, 3), 5);
+/// let snapshot = build(request)?;
+/// # Ok::<(), BuildError>(())
 /// ```
-pub fn add(a: i32, b: i32) -> i32 {
-a + b
+pub fn build(request: ReportRequest) -> Result<ReportSnapshot, BuildError> {
+    ...
 }
 ```
 
-## Example
+## Module example
 
 ```text
 //! Report generation APIs.
-
-/// Build the current report snapshot.
-pub fn build(request: ReportRequest) -> ReportSnapshot {
-...
-}
+//!
+//! This module contains the public entry points for building report snapshots.
 ```
+
+## Tooling notes
+
+- Prefer examples that compile and run under doctest when practical.
+- Use intra-doc links when they improve navigation and remain stable.
+- Hidden setup lines beginning with `#` can keep doctests readable while still compiling.
+- Keep `# Safety` sections specific: explain exactly what the caller must uphold.
 
 ## External tool access
 
-cargo doc, rustdoc, IDE hover help
-
 ```text
 cargo doc --no-deps
+cargo test --doc
 rustdoc src/lib.rs
 ```
 
 ## Migration guidance
 
-- convert declaration-adjacent comments incrementally so mixed-style files can be cleaned up safely over time
-- avoid mixing competing documentation styles in one file unless a staged migration explicitly requires it
-- verify generated docs, IDE help, or extracted metadata after making documentation changes
+- convert detached prose comments into `///` or `//!` docs on the items rustdoc actually renders
+- document the public crate surface first, especially items re-exported at the crate root
+- turn examples into doctests where possible so they stay current
+- enable rustdoc lints or `missing_docs` where the repository wants stronger guarantees
 
 ## Review checklist
 
-- [ ] the chosen convention matches the surrounding toolchain or house style
-- [ ] comments are attached to the declarations that external tools inspect
-- [ ] summaries describe real behavior without invented guarantees
-- [ ] parameters, returns, errors, and examples match the code
-- [ ] extraction or verification commands are noted when they materially help review or CI
+- [ ] Crate and module docs use `//!`, and item docs use `///`.
+- [ ] Examples compile, or are intentionally marked for alternative rustdoc behavior.
+- [ ] `# Errors`, `# Panics`, and `# Safety` sections are present when the API needs them.
+- [ ] Intra-doc links resolve correctly.
+- [ ] The docs describe observable behavior and caller obligations, not stale implementation trivia.
 
-## Notes
+## Anti-patterns
 
-Use `//!` for module or crate docs and `///` for items. Keep doctests correct because external tools can compile and run them.
+- examples that cannot compile or only work because important setup is omitted
+- `unsafe` APIs without a concrete `# Safety` section
+- claiming panic-free behavior when the implementation can still panic on ordinary inputs
+- documenting every private helper while leaving re-exported public APIs thin or undocumented
+- prose that duplicates the type signature but fails to explain usage intent
+
+## Reference starting points
+
+- [What is rustdoc?](https://doc.rust-lang.org/rustdoc/what-is-rustdoc.html)
+- [Documentation tests](https://doc.rust-lang.org/rustdoc/write-documentation/documentation-tests.html)
+- [Rustdoc lints](https://doc.rust-lang.org/rustdoc/lints.html)
+- [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/)
