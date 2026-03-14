@@ -1,0 +1,4 @@
+interface:
+  display_name: "Julia Docstrings"
+  short_description: "Normalize Julia source documentation."
+  default_prompt: "Use $julia-docstrings to add or normalize Julia source documentation for external tools."

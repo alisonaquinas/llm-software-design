@@ -1,0 +1,4 @@
+interface:
+  display_name: "Elixir Docstrings"
+  short_description: "Normalize Elixir source documentation."
+  default_prompt: "Use $elixir-docstrings to add or normalize Elixir source documentation for external tools."

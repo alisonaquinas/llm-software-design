@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lua Docstrings"
+  short_description: "Normalize Lua source documentation."
+  default_prompt: "Use $lua-docstrings to add or normalize Lua source documentation for external tools."

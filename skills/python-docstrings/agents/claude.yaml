@@ -1,0 +1,4 @@
+interface:
+  display_name: "Python Docstrings"
+  short_description: "Normalize Python source documentation."
+  default_prompt: "Use $python-docstrings to add or normalize Python source documentation for external tools."

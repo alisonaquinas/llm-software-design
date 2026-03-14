@@ -1,0 +1,4 @@
+interface:
+  display_name: "TypeScript Best Practice"
+  short_description: "Review idiomatic TypeScript code conventions."
+  default_prompt: "Use $typescript-best-practice to review TypeScript code against common ecosystem best practices."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "SQL Docstrings"
+  short_description: "Normalize SQL source documentation."
+  default_prompt: "Use $sql-docstrings to add or normalize SQL source documentation for external tools."

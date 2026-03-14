@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dart Best Practice"
+  short_description: "Review idiomatic Dart code conventions."
+  default_prompt: "Use $dart-best-practice to review Dart code against common ecosystem best practices."

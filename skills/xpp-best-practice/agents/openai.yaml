@@ -1,0 +1,4 @@
+interface:
+  display_name: "X++ Best Practice"
+  short_description: "Review idiomatic X++ code conventions."
+  default_prompt: "Use $xpp-best-practice to review X++ code against common ecosystem best practices."

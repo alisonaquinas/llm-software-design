@@ -1,0 +1,4 @@
+interface:
+  display_name: "Erlang Docstrings"
+  short_description: "Normalize Erlang source documentation."
+  default_prompt: "Use $erlang-docstrings to add or normalize Erlang source documentation for external tools."

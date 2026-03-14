@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Best Practice"
+  short_description: "Review idiomatic Java code conventions."
+  default_prompt: "Use $java-best-practice to review Java code against common ecosystem best practices."

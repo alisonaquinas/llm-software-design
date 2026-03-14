@@ -1,0 +1,4 @@
+interface:
+  display_name: "ML Docstrings"
+  short_description: "Normalize ML source documentation."
+  default_prompt: "Use $ml-docstrings to add or normalize ML source documentation for external tools."

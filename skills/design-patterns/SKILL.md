@@ -1,35 +1,53 @@
 ---
 name: design-patterns
 description: >
-  Choose, compare, and critique common software design patterns such as strategy, factory, observer, adapter, decorator, and command. Use when the user asks which pattern fits a problem, whether a pattern is overkill, or how to implement one without unnecessary complexity.
+  choose and critique common design patterns and their tradeoffs. use when the user asks whether a pattern fits a problem, how to apply strategy, observer, adapter, factory, decorator, or similar patterns, or how to avoid pattern overuse.
 ---
 
 # Design Patterns
 
-Use this skill to match recurring design problems to proven patterns without turning patterns into ceremony.
+Use this skill to choose, critique, or adapt common design patterns for a concrete design problem.
 
 ## Intent Router
 
 | Need | Load |
 | --- | --- |
-| Pattern selection and tradeoffs | `references/pattern-guide.md` |
+| selection heuristics, tradeoffs, and review checklist | `references/pattern-guide.md` |
 
-## Quick Reference
+## Quick Start
 
-1. Define the change or variability problem first.
-2. Pick a pattern only if it reduces coupling or clarifies behavior.
-3. Explain the concrete participants in the current domain, not just the textbook roles.
-4. State the cost of the pattern so the user can judge whether it is worth it.
+1. Start with the change pressure or collaboration problem before naming a pattern.
+2. Prefer the simplest structure that solves the real variability, lifecycle, or dependency issue.
+3. Use pattern names as shorthand for tradeoffs, not as goals by themselves.
+4. Recommend only the parts of a pattern that materially help the problem at hand.
 
-## Pattern Selection
+## Workflow
 
-- Use Strategy for swappable algorithms.
-- Use Factory when creation logic needs to vary or stay centralized.
-- Use Adapter when integrating a mismatched interface.
-- Use Decorator when layering optional behavior.
-- Use Observer when one change should notify multiple dependents.
+- describe the current pain in terms of variation, coordination, instantiation, or boundary mismatch
+- compare one or two plausible patterns and explain why one fits better
+- note the operational or maintenance cost introduced by the chosen pattern
+- adapt the pattern to the codebase instead of recreating textbook structure mechanically
+- identify the tests or seams that should become easier after the change
+
+## Outputs to Prefer
+
+- tie the pattern choice to a concrete problem and expected benefit
+- explain the extra moving parts the pattern introduces
+- recommend smaller alternatives when a full pattern would be overkill
+- keep the explanation grounded in the user's actual code or scenario
+
+## Common Requests
+
+```text
+Which design pattern best fits this variability or collaboration problem, and why?
+```
+
+```text
+Review this use of a design pattern and call out over-engineering or a better alternative.
+```
 
 ## Safety Notes
 
-- Do not introduce a pattern solely because it is familiar.
-- Prefer plain functions or modules when the problem is small.
+- do not prescribe a pattern when a simpler function, module, or conditional is clearer
+- avoid pattern stacking when one focused abstraction would solve the problem
+- do not confuse naming a pattern with proving the design is good

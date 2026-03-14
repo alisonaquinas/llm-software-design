@@ -1,0 +1,4 @@
+interface:
+  display_name: "PowerShell Best Practice"
+  short_description: "Review idiomatic PowerShell code conventions."
+  default_prompt: "Use $powershell-best-practice to review PowerShell code against common ecosystem best practices."

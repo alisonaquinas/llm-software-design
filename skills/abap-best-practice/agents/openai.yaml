@@ -1,0 +1,4 @@
+interface:
+  display_name: "ABAP Best Practice"
+  short_description: "Review idiomatic ABAP code conventions."
+  default_prompt: "Use $abap-best-practice to review ABAP code against common ecosystem best practices."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Elixir Best Practice"
+  short_description: "Review idiomatic Elixir code conventions."
+  default_prompt: "Use $elixir-best-practice to review Elixir code against common ecosystem best practices."

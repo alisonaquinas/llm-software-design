@@ -1,0 +1,4 @@
+interface:
+  display_name: "MATLAB Best Practice"
+  short_description: "Review idiomatic MATLAB code conventions."
+  default_prompt: "Use $matlab-best-practice to review MATLAB code against common ecosystem best practices."

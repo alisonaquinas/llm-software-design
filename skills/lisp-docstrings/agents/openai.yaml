@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lisp Docstrings"
+  short_description: "Normalize Lisp source documentation."
+  default_prompt: "Use $lisp-docstrings to add or normalize Lisp source documentation for external tools."

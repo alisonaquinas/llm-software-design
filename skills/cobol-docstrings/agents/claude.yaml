@@ -1,0 +1,4 @@
+interface:
+  display_name: "COBOL Docstrings"
+  short_description: "Normalize COBOL source documentation."
+  default_prompt: "Use $cobol-docstrings to add or normalize COBOL source documentation for external tools."

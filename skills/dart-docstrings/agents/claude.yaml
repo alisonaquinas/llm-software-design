@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dart Docstrings"
+  short_description: "Normalize Dart source documentation."
+  default_prompt: "Use $dart-docstrings to add or normalize Dart source documentation for external tools."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Perl Docstrings"
+  short_description: "Normalize Perl source documentation."
+  default_prompt: "Use $perl-docstrings to add or normalize Perl source documentation for external tools."

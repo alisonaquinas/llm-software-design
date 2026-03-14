@@ -1,0 +1,4 @@
+interface:
+  display_name: "VBScript Best Practice"
+  short_description: "Review idiomatic VBScript code conventions."
+  default_prompt: "Use $vbscript-best-practice to review VBScript code against common ecosystem best practices."

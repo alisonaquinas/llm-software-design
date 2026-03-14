@@ -1,0 +1,4 @@
+interface:
+  display_name: "Delphi/Object Pascal Docstrings"
+  short_description: "Normalize Delphi/Object Pascal source documentation."
+  default_prompt: "Use $delphi-object-pascal-docstrings to add or normalize Delphi/Object Pascal source documentation for external tools."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scala Best Practice"
+  short_description: "Review idiomatic Scala code conventions."
+  default_prompt: "Use $scala-best-practice to review Scala code against common ecosystem best practices."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "OCaml Best Practice"
+  short_description: "Review idiomatic OCaml code conventions."
+  default_prompt: "Use $ocaml-best-practice to review OCaml code against common ecosystem best practices."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Swift Best Practice"
+  short_description: "Review idiomatic Swift code conventions."
+  default_prompt: "Use $swift-best-practice to review Swift code against common ecosystem best practices."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Classic Visual Basic Docstrings"
+  short_description: "Normalize Classic Visual Basic source documentation."
+  default_prompt: "Use $classic-visual-basic-docstrings to add or normalize Classic Visual Basic source documentation for external tools."

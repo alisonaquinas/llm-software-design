@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust Best Practice"
+  short_description: "Review idiomatic Rust code conventions."
+  default_prompt: "Use $rust-best-practice to review Rust code against common ecosystem best practices."

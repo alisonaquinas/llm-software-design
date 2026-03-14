@@ -1,0 +1,4 @@
+interface:
+  display_name: "Swift Docstrings"
+  short_description: "Normalize Swift source documentation."
+  default_prompt: "Use $swift-docstrings to add or normalize Swift source documentation for external tools."

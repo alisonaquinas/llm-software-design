@@ -1,0 +1,4 @@
+interface:
+  display_name: "PHP Best Practice"
+  short_description: "Review idiomatic PHP code conventions."
+  default_prompt: "Use $php-best-practice to review PHP code against common ecosystem best practices."

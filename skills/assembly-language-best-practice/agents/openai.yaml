@@ -1,0 +1,4 @@
+interface:
+  display_name: "Assembly language Best Practice"
+  short_description: "Review idiomatic Assembly language code conventions."
+  default_prompt: "Use $assembly-language-best-practice to review Assembly language code against common ecosystem best practices."

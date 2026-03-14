@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solidity Best Practice"
+  short_description: "Review idiomatic Solidity code conventions."
+  default_prompt: "Use $solidity-best-practice to review Solidity code against common ecosystem best practices."

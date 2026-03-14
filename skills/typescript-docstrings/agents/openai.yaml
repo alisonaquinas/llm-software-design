@@ -1,0 +1,4 @@
+interface:
+  display_name: "TypeScript Docstrings"
+  short_description: "Normalize TypeScript source documentation."
+  default_prompt: "Use $typescript-docstrings to add or normalize TypeScript source documentation for external tools."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scratch Docstrings"
+  short_description: "Normalize Scratch source documentation."
+  default_prompt: "Use $scratch-docstrings to add or normalize Scratch source documentation for external tools."

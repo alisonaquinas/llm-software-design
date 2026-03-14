@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ada Best Practice"
+  short_description: "Review idiomatic Ada code conventions."
+  default_prompt: "Use $ada-best-practice to review Ada code against common ecosystem best practices."

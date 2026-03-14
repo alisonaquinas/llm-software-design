@@ -1,0 +1,4 @@
+interface:
+  display_name: "(Visual) FoxPro Best Practice"
+  short_description: "Review idiomatic (Visual) FoxPro code conventions."
+  default_prompt: "Use $visual-foxpro-best-practice to review (Visual) FoxPro code against common ecosystem best practices."

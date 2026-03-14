@@ -1,0 +1,4 @@
+interface:
+  display_name: "PowerShell Docstrings"
+  short_description: "Normalize PowerShell source documentation."
+  default_prompt: "Use $powershell-docstrings to add or normalize PowerShell source documentation for external tools."

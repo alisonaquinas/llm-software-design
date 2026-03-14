@@ -1,0 +1,4 @@
+interface:
+  display_name: "Python Best Practice"
+  short_description: "Review idiomatic Python code conventions."
+  default_prompt: "Use $python-best-practice to review Python code against common ecosystem best practices."

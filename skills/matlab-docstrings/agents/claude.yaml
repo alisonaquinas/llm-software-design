@@ -1,0 +1,4 @@
+interface:
+  display_name: "MATLAB Docstrings"
+  short_description: "Normalize MATLAB source documentation."
+  default_prompt: "Use $matlab-docstrings to add or normalize MATLAB source documentation for external tools."

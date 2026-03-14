@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust Docstrings"
+  short_description: "Normalize Rust source documentation."
+  default_prompt: "Use $rust-docstrings to add or normalize Rust source documentation for external tools."

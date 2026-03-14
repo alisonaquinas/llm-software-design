@@ -1,0 +1,4 @@
+interface:
+  display_name: "R Docstrings"
+  short_description: "Normalize R source documentation."
+  default_prompt: "Use $r-docstrings to add or normalize R source documentation for external tools."

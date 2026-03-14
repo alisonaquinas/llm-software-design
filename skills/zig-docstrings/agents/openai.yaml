@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zig Docstrings"
+  short_description: "Normalize Zig source documentation."
+  default_prompt: "Use $zig-docstrings to add or normalize Zig source documentation for external tools."

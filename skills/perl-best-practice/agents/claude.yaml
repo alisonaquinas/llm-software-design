@@ -1,0 +1,4 @@
+interface:
+  display_name: "Perl Best Practice"
+  short_description: "Review idiomatic Perl code conventions."
+  default_prompt: "Use $perl-best-practice to review Perl code against common ecosystem best practices."

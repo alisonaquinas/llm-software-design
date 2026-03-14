@@ -1,0 +1,4 @@
+interface:
+  display_name: "Go Best Practice"
+  short_description: "Review idiomatic Go code conventions."
+  default_prompt: "Use $go-best-practice to review Go code against common ecosystem best practices."

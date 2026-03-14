@@ -1,0 +1,4 @@
+interface:
+  display_name: "PL/SQL Best Practice"
+  short_description: "Review idiomatic PL/SQL code conventions."
+  default_prompt: "Use $plsql-best-practice to review PL/SQL code against common ecosystem best practices."

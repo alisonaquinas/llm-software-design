@@ -1,0 +1,4 @@
+interface:
+  display_name: "Haskell Best Practice"
+  short_description: "Review idiomatic Haskell code conventions."
+  default_prompt: "Use $haskell-best-practice to review Haskell code against common ecosystem best practices."

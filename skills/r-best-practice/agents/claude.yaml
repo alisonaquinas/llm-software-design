@@ -1,0 +1,4 @@
+interface:
+  display_name: "R Best Practice"
+  short_description: "Review idiomatic R code conventions."
+  default_prompt: "Use $r-best-practice to review R code against common ecosystem best practices."

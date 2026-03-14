@@ -1,0 +1,4 @@
+interface:
+  display_name: "Erlang Best Practice"
+  short_description: "Review idiomatic Erlang code conventions."
+  default_prompt: "Use $erlang-best-practice to review Erlang code against common ecosystem best practices."

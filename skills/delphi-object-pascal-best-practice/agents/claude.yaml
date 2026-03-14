@@ -1,0 +1,4 @@
+interface:
+  display_name: "Delphi/Object Pascal Best Practice"
+  short_description: "Review idiomatic Delphi/Object Pascal code conventions."
+  default_prompt: "Use $delphi-object-pascal-best-practice to review Delphi/Object Pascal code against common ecosystem best practices."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lua Best Practice"
+  short_description: "Review idiomatic Lua code conventions."
+  default_prompt: "Use $lua-best-practice to review Lua code against common ecosystem best practices."

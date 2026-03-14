@@ -1,0 +1,4 @@
+interface:
+  display_name: "VBScript Docstrings"
+  short_description: "Normalize VBScript source documentation."
+  default_prompt: "Use $vbscript-docstrings to add or normalize VBScript source documentation for external tools."

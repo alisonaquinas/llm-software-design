@@ -1,0 +1,4 @@
+interface:
+  display_name: "ABAP Docstrings"
+  short_description: "Normalize ABAP source documentation."
+  default_prompt: "Use $abap-docstrings to add or normalize ABAP source documentation for external tools."

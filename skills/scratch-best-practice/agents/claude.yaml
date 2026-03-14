@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scratch Best Practice"
+  short_description: "Review idiomatic Scratch code conventions."
+  default_prompt: "Use $scratch-best-practice to review Scratch code against common ecosystem best practices."

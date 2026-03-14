@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ruby Docstrings"
+  short_description: "Normalize Ruby source documentation."
+  default_prompt: "Use $ruby-docstrings to add or normalize Ruby source documentation for external tools."

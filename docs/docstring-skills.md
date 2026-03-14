@@ -1,0 +1,56 @@
+# Docstring Skill Catalog
+
+This catalog lists the generated `[language]-docstrings` skills added to this repository.
+
+| Rank | Skill                             | Language             | Preferred convention                                    | External tool access                                                                  |
+| ---: | --------------------------------- | -------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+|    1 | `python-docstrings`               | Python               | PEP 257 docstrings                                      | pydoc, inspect, Sphinx autodoc, IDE help                                              |
+|    2 | `c-docstrings`                    | C                    | Doxygen comment blocks                                  | Doxygen, clang-doc, IDE indexers                                                      |
+|    3 | `c-plus-plus-docstrings`          | C++                  | Doxygen comment blocks                                  | Doxygen, clang-doc, IDE hover help                                                    |
+|    4 | `java-docstrings`                 | Java                 | Javadoc comments                                        | javadoc, Maven and Gradle plugins, IDE help                                           |
+|    5 | `csharp-docstrings`               | C#                   | XML documentation comments                              | compiler XML output, IntelliSense, DocFX, Sandcastle-like tooling                     |
+|    6 | `javascript-docstrings`           | JavaScript           | JSDoc comments                                          | JSDoc, TypeScript language service, IDE hover help                                    |
+|    7 | `visual-basic-docstrings`         | Visual Basic         | XML documentation comments                              | compiler XML output, IntelliSense, .NET doc generators                                |
+|    8 | `sql-docstrings`                  | SQL                  | schema object comments in DDL                           | schema browsers, catalog queries, migration tooling, ERD generators                   |
+|    9 | `r-docstrings`                    | R                    | roxygen2 comments                                       | roxygen2, pkgdown, IDE help, generated Rd pages                                       |
+|   10 | `delphi-object-pascal-docstrings` | Delphi/Object Pascal | XML documentation comments                              | IDE help, XML doc output, PasDoc-style generators                                     |
+|   11 | `perl-docstrings`                 | Perl                 | POD embedded in source                                  | perldoc, pod2html, pod2man, CPAN tooling                                              |
+|   12 | `scratch-docstrings`              | Scratch              | block, sprite, and project comments                     | Scratch editor comments, sb3 project JSON inspection, educational tooling             |
+|   13 | `fortran-docstrings`              | Fortran              | FORD markup comments                                    | FORD, compatible source documentation generators, IDE readers                         |
+|   14 | `rust-docstrings`                 | Rust                 | rustdoc comments                                        | cargo doc, rustdoc, IDE hover help                                                    |
+|   15 | `matlab-docstrings`               | MATLAB               | leading help text comments                              | help, doc, publish, toolbox reference generation                                      |
+|   16 | `go-docstrings`                   | Go                   | Go doc comments                                         | go doc, pkgsite, godoc-compatible tooling, IDE help                                   |
+|   17 | `assembly-language-docstrings`    | Assembly Language    | structured leading comments on labels and macros        | Doxygen filters, symbol browsers, code review tooling                                 |
+|   18 | `php-docstrings`                  | PHP                  | PHPDoc comments                                         | phpDocumentor, Psalm, PHPStan, IDE hover help                                         |
+|   19 | `ada-docstrings`                  | Ada                  | GNATdoc comment annotations                             | GNATdoc, IDE help, generated reference sites                                          |
+|   20 | `swift-docstrings`                | Swift                | Swift Markup comments                                   | DocC, Xcode Quick Help, SourceKit-based tooling                                       |
+|   21 | `prolog-docstrings`               | Prolog               | PlDoc structured comments                               | PlDoc, generated HTML and LaTeX, in-process doc server                                |
+|   22 | `kotlin-docstrings`               | Kotlin               | KDoc comments                                           | Dokka, IDE hover help, generated API sites                                            |
+|   23 | `classic-visual-basic-docstrings` | Classic Visual Basic | structured header comments for VBDOX-style tools        | VBDOX-style generators, legacy code analysis tooling                                  |
+|   24 | `cobol-docstrings`                | COBOL                | structured program and paragraph comment headers        | enterprise analyzers, repository scanners, generated listings                         |
+|   25 | `dart-docstrings`                 | Dart                 | dartdoc comments                                        | dartdoc, IDE hover help, package reference sites                                      |
+|   26 | `lisp-docstrings`                 | Lisp                 | Common Lisp docstring literals                          | documentation function, SLIME or SLY help, DECLT-style generators                     |
+|   27 | `sas-docstrings`                  | SAS                  | structured header comments above macros and steps       | repository search, internal code scanners, generated listings                         |
+|   28 | `pl-sql-docstrings`               | PL/SQL               | COMMENT ON metadata plus package-spec headers           | data dictionary views, schema browsers, migration tools                               |
+|   29 | `julia-docstrings`                | Julia                | native Julia docstrings                                 | REPL help mode, Documenter.jl, IDE help                                               |
+|   30 | `ruby-docstrings`                 | Ruby                 | YARD comments                                           | YARD, IDEs, generated API sites                                                       |
+|   31 | `objective-c-docstrings`          | Objective-C          | AppleDoc or Jazzy-style comments                        | Jazzy, Xcode Quick Help, generated Apple-style docs                                   |
+|   32 | `lua-docstrings`                  | Lua                  | LDoc comments                                           | LDoc, IDE helpers, repository documentation sites                                     |
+|   33 | `powershell-docstrings`           | PowerShell           | comment-based help blocks                               | Get-Help, platyPS, MAML-based help generation                                         |
+|   34 | `erlang-docstrings`               | Erlang               | EDoc comments                                           | EDoc, generated HTML docs, IDE help                                                   |
+|   35 | `typescript-docstrings`           | TypeScript           | TSDoc-style JSDoc comments                              | TypeDoc, API Extractor, TS server, IDE hover help                                     |
+|   36 | `abap-docstrings`                 | ABAP                 | ABAP Doc comments                                       | ABAP Development Tools, generated interface docs, repository browsers                 |
+|   37 | `transact-sql-docstrings`         | Transact-SQL         | extended properties with MS_Description                 | sys.extended_properties, SSMS, ERD tooling, schema diff tools                         |
+|   38 | `scala-docstrings`                | Scala                | Scaladoc comments                                       | scaladoc, IDE hover help, generated API sites                                         |
+|   39 | `visual-foxpro-docstrings`        | Visual FoxPro        | structured header comments for documenting wizard tools | Documenting Wizard, code analysis tooling, generated text docs                        |
+|   40 | `x-plus-plus-docstrings`          | X++                  | structured line comments above classes and methods      | model export, repository indexing, IDE navigation                                     |
+|   41 | `ml-docstrings`                   | ML                   | structured comments adjacent to signatures              | signature browsers, repository indexing, literate documentation tools                 |
+|   42 | `haskell-docstrings`              | Haskell              | Haddock comments                                        | Haddock, Hackage-style docs, IDE support                                              |
+|   43 | `vbscript-docstrings`             | VBScript             | structured header comments for script analyzers         | VBDOX-like tooling, repository scanners, code review indexing                         |
+|   44 | `awk-docstrings`                  | Awk                  | structured script and function header comments          | repository search, lightweight parsers, generated script docs                         |
+|   45 | `wolfram-docstrings`              | Wolfram              | usage messages on public symbols                        | question-mark help queries, notebook help integration, paclet documentation workflows |
+|   46 | `elixir-docstrings`               | Elixir               | @doc and @moduledoc attributes                          | ExDoc, IEx help, generated HTML docs                                                  |
+|   47 | `ocaml-docstrings`                | OCaml                | odoc-compatible comments                                | odoc, generated HTML docs, IDE navigation                                             |
+|   48 | `zig-docstrings`                  | Zig                  | Zig doc comments                                        | zig build docs, emitted HTML docs, editor help                                        |
+|   49 | `solidity-docstrings`             | Solidity             | NatSpec comments                                        | solc userdoc and devdoc output, block explorer tooling, forge doc                     |
+|   50 | `ladder-logic-docstrings`         | Ladder Logic         | rung, routine, and tag comments                         | controller project exports, engineering reports, tag databases                        |

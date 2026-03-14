@@ -1,0 +1,4 @@
+interface:
+  display_name: "JavaScript Docstrings"
+  short_description: "Normalize JavaScript source documentation."
+  default_prompt: "Use $javascript-docstrings to add or normalize JavaScript source documentation for external tools."

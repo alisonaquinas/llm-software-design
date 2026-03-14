@@ -1,0 +1,4 @@
+interface:
+  display_name: "COBOL Best Practice"
+  short_description: "Review idiomatic COBOL code conventions."
+  default_prompt: "Use $cobol-best-practice to review COBOL code against common ecosystem best practices."

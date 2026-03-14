@@ -1,0 +1,4 @@
+interface:
+  display_name: "Java Docstrings"
+  short_description: "Normalize Java source documentation."
+  default_prompt: "Use $java-docstrings to add or normalize Java source documentation for external tools."

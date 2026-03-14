@@ -1,0 +1,4 @@
+interface:
+  display_name: "ML Best Practice"
+  short_description: "Review idiomatic ML code conventions."
+  default_prompt: "Use $ml-best-practice to review ML code against common ecosystem best practices."

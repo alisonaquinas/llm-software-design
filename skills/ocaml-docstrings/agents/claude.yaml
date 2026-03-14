@@ -1,0 +1,4 @@
+interface:
+  display_name: "OCaml Docstrings"
+  short_description: "Normalize OCaml source documentation."
+  default_prompt: "Use $ocaml-docstrings to add or normalize OCaml source documentation for external tools."

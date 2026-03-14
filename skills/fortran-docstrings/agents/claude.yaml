@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fortran Docstrings"
+  short_description: "Normalize Fortran source documentation."
+  default_prompt: "Use $fortran-docstrings to add or normalize Fortran source documentation for external tools."

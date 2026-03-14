@@ -1,0 +1,4 @@
+interface:
+  display_name: "Awk Best Practice"
+  short_description: "Review idiomatic Awk code conventions."
+  default_prompt: "Use $awk-best-practice to review Awk code against common ecosystem best practices."

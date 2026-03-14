@@ -1,0 +1,4 @@
+interface:
+  display_name: "Haskell Docstrings"
+  short_description: "Normalize Haskell source documentation."
+  default_prompt: "Use $haskell-docstrings to add or normalize Haskell source documentation for external tools."

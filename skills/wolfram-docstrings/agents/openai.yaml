@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wolfram Docstrings"
+  short_description: "Normalize Wolfram source documentation."
+  default_prompt: "Use $wolfram-docstrings to add or normalize Wolfram source documentation for external tools."

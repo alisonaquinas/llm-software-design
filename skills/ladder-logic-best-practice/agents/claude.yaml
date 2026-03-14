@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ladder Logic Best Practice"
+  short_description: "Review idiomatic Ladder Logic code conventions."
+  default_prompt: "Use $ladder-logic-best-practice to review Ladder Logic code against common ecosystem best practices."

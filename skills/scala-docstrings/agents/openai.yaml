@@ -1,0 +1,4 @@
+interface:
+  display_name: "Scala Docstrings"
+  short_description: "Normalize Scala source documentation."
+  default_prompt: "Use $scala-docstrings to add or normalize Scala source documentation for external tools."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "SAS Docstrings"
+  short_description: "Normalize SAS source documentation."
+  default_prompt: "Use $sas-docstrings to add or normalize SAS source documentation for external tools."

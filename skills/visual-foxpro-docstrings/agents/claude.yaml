@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visual FoxPro Docstrings"
+  short_description: "Normalize Visual FoxPro source documentation."
+  default_prompt: "Use $visual-foxpro-docstrings to add or normalize Visual FoxPro source documentation for external tools."

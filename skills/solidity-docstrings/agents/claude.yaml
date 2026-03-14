@@ -1,0 +1,4 @@
+interface:
+  display_name: "Solidity Docstrings"
+  short_description: "Normalize Solidity source documentation."
+  default_prompt: "Use $solidity-docstrings to add or normalize Solidity source documentation for external tools."

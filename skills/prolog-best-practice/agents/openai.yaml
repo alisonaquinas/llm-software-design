@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prolog Best Practice"
+  short_description: "Review idiomatic Prolog code conventions."
+  default_prompt: "Use $prolog-best-practice to review Prolog code against common ecosystem best practices."

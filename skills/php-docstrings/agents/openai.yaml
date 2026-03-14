@@ -1,0 +1,4 @@
+interface:
+  display_name: "PHP Docstrings"
+  short_description: "Normalize PHP source documentation."
+  default_prompt: "Use $php-docstrings to add or normalize PHP source documentation for external tools."

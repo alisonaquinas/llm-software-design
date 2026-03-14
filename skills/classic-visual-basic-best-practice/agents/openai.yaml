@@ -1,0 +1,4 @@
+interface:
+  display_name: "Classic Visual Basic Best Practice"
+  short_description: "Review idiomatic Classic Visual Basic code conventions."
+  default_prompt: "Use $classic-visual-basic-best-practice to review Classic Visual Basic code against common ecosystem best practices."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ruby Best Practice"
+  short_description: "Review idiomatic Ruby code conventions."
+  default_prompt: "Use $ruby-best-practice to review Ruby code against common ecosystem best practices."

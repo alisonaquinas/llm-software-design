@@ -1,0 +1,4 @@
+interface:
+  display_name: "Wolfram Best Practice"
+  short_description: "Review idiomatic Wolfram code conventions."
+  default_prompt: "Use $wolfram-best-practice to review Wolfram code against common ecosystem best practices."

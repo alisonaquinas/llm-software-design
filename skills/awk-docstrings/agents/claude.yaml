@@ -1,0 +1,4 @@
+interface:
+  display_name: "Awk Docstrings"
+  short_description: "Normalize Awk source documentation."
+  default_prompt: "Use $awk-docstrings to add or normalize Awk source documentation for external tools."

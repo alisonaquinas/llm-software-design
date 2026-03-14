@@ -1,0 +1,4 @@
+interface:
+  display_name: "Objective-C Docstrings"
+  short_description: "Normalize Objective-C source documentation."
+  default_prompt: "Use $objective-c-docstrings to add or normalize Objective-C source documentation for external tools."

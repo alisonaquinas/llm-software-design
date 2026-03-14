@@ -1,0 +1,4 @@
+interface:
+  display_name: "Objective-C Best Practice"
+  short_description: "Review idiomatic Objective-C code conventions."
+  default_prompt: "Use $objective-c-best-practice to review Objective-C code against common ecosystem best practices."

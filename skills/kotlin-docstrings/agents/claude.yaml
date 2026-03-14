@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kotlin Docstrings"
+  short_description: "Normalize Kotlin source documentation."
+  default_prompt: "Use $kotlin-docstrings to add or normalize Kotlin source documentation for external tools."

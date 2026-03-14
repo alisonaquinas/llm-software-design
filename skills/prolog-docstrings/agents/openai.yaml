@@ -1,0 +1,4 @@
+interface:
+  display_name: "Prolog Docstrings"
+  short_description: "Normalize Prolog source documentation."
+  default_prompt: "Use $prolog-docstrings to add or normalize Prolog source documentation for external tools."

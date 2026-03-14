@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ada Docstrings"
+  short_description: "Normalize Ada source documentation."
+  default_prompt: "Use $ada-docstrings to add or normalize Ada source documentation for external tools."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Visual Basic Best Practice"
+  short_description: "Review idiomatic Visual Basic code conventions."
+  default_prompt: "Use $visual-basic-best-practice to review Visual Basic code against common ecosystem best practices."

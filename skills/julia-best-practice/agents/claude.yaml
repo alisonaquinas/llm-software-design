@@ -1,0 +1,4 @@
+interface:
+  display_name: "Julia Best Practice"
+  short_description: "Review idiomatic Julia code conventions."
+  default_prompt: "Use $julia-best-practice to review Julia code against common ecosystem best practices."

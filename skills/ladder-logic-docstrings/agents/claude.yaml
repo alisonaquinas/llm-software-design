@@ -1,0 +1,4 @@
+interface:
+  display_name: "Ladder Logic Docstrings"
+  short_description: "Normalize Ladder Logic source documentation."
+  default_prompt: "Use $ladder-logic-docstrings to add or normalize Ladder Logic source documentation for external tools."

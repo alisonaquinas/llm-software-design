@@ -1,0 +1,4 @@
+interface:
+  display_name: "Assembly Language Docstrings"
+  short_description: "Normalize Assembly Language source documentation."
+  default_prompt: "Use $assembly-language-docstrings to add or normalize Assembly Language source documentation for external tools."

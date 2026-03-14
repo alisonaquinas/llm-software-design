@@ -1,0 +1,4 @@
+interface:
+  display_name: "Kotlin Best Practice"
+  short_description: "Review idiomatic Kotlin code conventions."
+  default_prompt: "Use $kotlin-best-practice to review Kotlin code against common ecosystem best practices."

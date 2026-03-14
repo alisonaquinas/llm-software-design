@@ -1,0 +1,4 @@
+interface:
+  display_name: "Zig Best Practice"
+  short_description: "Review idiomatic Zig code conventions."
+  default_prompt: "Use $zig-best-practice to review Zig code against common ecosystem best practices."

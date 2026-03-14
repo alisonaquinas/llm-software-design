@@ -1,0 +1,4 @@
+interface:
+  display_name: "JavaScript Best Practice"
+  short_description: "Review idiomatic JavaScript code conventions."
+  default_prompt: "Use $javascript-best-practice to review JavaScript code against common ecosystem best practices."

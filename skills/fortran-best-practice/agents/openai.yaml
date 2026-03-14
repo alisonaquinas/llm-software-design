@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fortran Best Practice"
+  short_description: "Review idiomatic Fortran code conventions."
+  default_prompt: "Use $fortran-best-practice to review Fortran code against common ecosystem best practices."

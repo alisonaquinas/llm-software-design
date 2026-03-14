@@ -1,0 +1,4 @@
+interface:
+  display_name: "Transact-SQL Best Practice"
+  short_description: "Review idiomatic Transact-SQL code conventions."
+  default_prompt: "Use $transact-sql-best-practice to review Transact-SQL code against common ecosystem best practices."

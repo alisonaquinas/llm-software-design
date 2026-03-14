@@ -1,0 +1,4 @@
+interface:
+  display_name: "Lisp Best Practice"
+  short_description: "Review idiomatic Lisp code conventions."
+  default_prompt: "Use $lisp-best-practice to review Lisp code against common ecosystem best practices."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Go Docstrings"
+  short_description: "Normalize Go source documentation."
+  default_prompt: "Use $go-docstrings to add or normalize Go source documentation for external tools."

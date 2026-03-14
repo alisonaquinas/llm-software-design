@@ -1,0 +1,4 @@
+interface:
+  display_name: "SAS Best Practice"
+  short_description: "Review idiomatic SAS code conventions."
+  default_prompt: "Use $sas-best-practice to review SAS code against common ecosystem best practices."

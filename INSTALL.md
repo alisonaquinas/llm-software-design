@@ -12,12 +12,13 @@ Create junctions or symlinks from `~/.codex/skills/` into this repo's `skills/` 
 
 ```powershell
 $repo = "C:\Users\aaqui\llm-software-design\skills"
-foreach ($skill in "solid","oop","design-patterns","software-architecture","code-smells") {
-    $target = "$env:USERPROFILE\.codex\skills\$skill"
+Get-ChildItem -Directory $repo | ForEach-Object {
+    $skill = $_.Name
+    $target = Join-Path $env:USERPROFILE ".codex\skills\$skill"
     if (Test-Path $target) {
         Write-Host "Skipping $skill (already exists)"
     } else {
-        New-Item -ItemType Junction -Path $target -Target "$repo\$skill"
+        New-Item -ItemType Junction -Path $target -Target $_.FullName | Out-Null
         Write-Host "Linked $skill"
     }
 }
@@ -27,24 +28,27 @@ foreach ($skill in "solid","oop","design-patterns","software-architecture","code
 
 ```bash
 REPO="$HOME/llm-software-design/skills"
-for skill in solid oop design-patterns software-architecture code-smells; do
+for skill_path in "$REPO"/*; do
+    [ -d "$skill_path" ] || continue
+    skill="$(basename "$skill_path")"
     target="$HOME/.codex/skills/$skill"
     if [ -e "$target" ]; then
         echo "Skipping $skill (already exists)"
     else
-        ln -s "$REPO/$skill" "$target"
+        ln -s "$skill_path" "$target"
         echo "Linked $skill"
     fi
 done
 ```
 
-## Quality Checks
+## Quality checks
 
 ```bash
 make lint
 make test
 make build
 make verify
+make list
 ```
 
 The Python helpers are also available directly:
@@ -52,6 +56,7 @@ The Python helpers are also available directly:
 ```bash
 python scripts/lint_skills.py solid
 python scripts/validate_skills.py solid
+python -m unittest discover -s tests -v
 ```
 
 Legacy shell entrypoints remain available as compatibility shims:

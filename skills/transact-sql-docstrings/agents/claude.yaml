@@ -1,0 +1,4 @@
+interface:
+  display_name: "Transact-SQL Docstrings"
+  short_description: "Normalize Transact-SQL source documentation."
+  default_prompt: "Use $transact-sql-docstrings to add or normalize Transact-SQL source documentation for external tools."
