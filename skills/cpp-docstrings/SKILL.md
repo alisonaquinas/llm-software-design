@@ -1,12 +1,12 @@
 ---
-name: x-plus-plus-docstrings
+name: cpp-docstrings
 description: >
-  document x++ code with structured line comments above classes and methods so external tools can read the embedded api documentation. use when the request is to add, normalize, migrate, review, or explain x++ source documentation, inline api help, or machine-readable comments.
+  document c++ code with doxygen comment blocks so external tools can read the embedded api documentation. use when the request is to add, normalize, migrate, review, or explain c++ source documentation, inline api help, or machine-readable comments.
 ---
 
-# X++ Docstrings
+# C++ Docstrings
 
-Use this skill to add or normalize structured line comments above classes and methods in X++ code so external tools can discover API intent without reverse-engineering the implementation.
+Use this skill to add or normalize Doxygen comment blocks in C++ code so external tools can discover API intent without reverse-engineering the implementation.
 
 ## Intent Router
 
@@ -18,7 +18,7 @@ Use this skill to add or normalize structured line comments above classes and me
 
 1. Inspect the repository for an existing documentation convention.
 2. Preserve an established machine-readable style when it already works with external tooling.
-3. Otherwise standardize on structured line comments above classes and methods for the requested X++ surface.
+3. Otherwise standardize on Doxygen comment blocks for the requested C++ surface.
 4. Document public and externally consumed symbols before private helpers.
 5. Keep names, parameters, return semantics, and examples aligned with the real code.
 
@@ -40,28 +40,30 @@ Use this skill to add or normalize structured line comments above classes and me
 ## Canonical Pattern
 
 ```text
-// Add two integers.
-// Parameters: a, b
-public int add(int a, int b)
-{
-return a + b;
-}
+/**
+ * @brief Add two integers.
+ * @param a Left operand.
+ * @param b Right operand.
+ * @return Sum of a and b.
+ */
+int add(int a, int b);
 ```
 
 ## Extraction Path
 
 ```text
-repository search, model export, internal documentation extraction
+doxygen Doxyfile
+clang-doc --public include/**/*.hpp
 ```
 
 ## Common Requests
 
 ```text
-Add or normalize X++ source documentation for this public API without changing behavior.
+Add or normalize C++ source documentation for this public API without changing behavior.
 ```
 
 ```text
-Review this X++ file for missing or misleading machine-readable documentation that external tools depend on.
+Review this C++ file for missing or misleading machine-readable documentation that external tools depend on.
 ```
 
 ## Safety Notes

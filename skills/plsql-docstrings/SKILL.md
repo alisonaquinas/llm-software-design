@@ -1,5 +1,5 @@
 ---
-name: pl-sql-docstrings
+name: plsql-docstrings
 description: >
   document pl/sql code with comment on metadata plus package-spec headers so external tools can read the embedded api documentation. use when the request is to add, normalize, migrate, review, or explain pl/sql source documentation, inline api help, or machine-readable comments.
 ---

@@ -1,0 +1,4 @@
+interface:
+  display_name: "X++ Docstrings"
+  short_description: "Normalize X++ source documentation."
+  default_prompt: "Use $xpp-docstrings to add or normalize X++ source documentation for external tools."

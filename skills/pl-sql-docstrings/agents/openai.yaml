@@ -1,4 +1,0 @@
-interface:
-  display_name: "PL/SQL Docstrings"
-  short_description: "Normalize PL/SQL source documentation."
-  default_prompt: "Use $pl-sql-docstrings to add or normalize PL/SQL source documentation for external tools."
