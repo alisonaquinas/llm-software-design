@@ -1,0 +1,4 @@
+interface:
+  display_name: "Semantic Versioning"
+  short_description: "Apply SemVer 2.0.0, bump versions, and manage git tags."
+  default_prompt: "Use $semantic-versioning to choose the correct bump level, run set-version or bump-version, and keep version files, CHANGELOG, and git tags in sync."
