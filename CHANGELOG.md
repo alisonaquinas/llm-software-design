@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-03-14
+
+### Fixed
+
+- renamed three docstring skill directories to match their best-practice counterparts:
+  `c-plus-plus-docstrings` → `cpp-docstrings`,
+  `pl-sql-docstrings` → `plsql-docstrings`,
+  `x-plus-plus-docstrings` → `xpp-docstrings`
+- updated `SKILL.md` name fields, agent YAML `default_prompt` references, and catalog
+  docs (`docs/docstring-skills.md`, `docs/language-skill-matrix.md`) to reflect the new names
+
 ## [0.3.0] - 2026-03-14
 
 ### Added
