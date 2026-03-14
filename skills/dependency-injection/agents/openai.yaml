@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dependency Injection"
+  short_description: "Compose systems with explicit dependencies."
+  default_prompt: "Use $dependency-injection to design explicit dependency graphs, service lifetimes, composition roots, and test seams without falling into service locator patterns."

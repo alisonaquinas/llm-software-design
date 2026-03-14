@@ -1,0 +1,4 @@
+interface:
+  display_name: "IDD"
+  short_description: "Design around contracts and stable interfaces."
+  default_prompt: "Use $idd to design interface-first contracts, ports, adapters, API schemas, and plugin boundaries with stable contracts and explicit evolution rules."

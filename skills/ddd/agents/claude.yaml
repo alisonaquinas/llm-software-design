@@ -1,0 +1,4 @@
+interface:
+  display_name: "DDD"
+  short_description: "Model complex domains with clear boundaries."
+  default_prompt: "Use $ddd to design bounded contexts, aggregates, domain services, repositories, domain events, and ubiquitous language for a complex business domain."

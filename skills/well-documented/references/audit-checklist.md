@@ -4,9 +4,13 @@
 
 Run `audit-docs` to evaluate a repository against this rubric. Each item is scored as:
 
+
 - **PASS** — requirement is fully met
+
 - **WARN** — requirement is partially met (exists but incomplete or low quality)
+
 - **FAIL** — requirement is absent or critically broken
+
 - **SKIP** — item does not apply (excluded directory, language without header convention, etc.)
 
 A repository earns a percentage score: `PASS items / (total items − SKIP items) × 100`.
@@ -15,10 +19,12 @@ Target: **90% or higher** for a well-documented repository.
 
 ---
 
+
 ## Root-level checklist
 
 | # | Item | FAIL condition | WARN condition |
 | --- | --- | --- | --- |
+
 | R01 | `README.md` exists | Absent | Present but fewer than 4 standard sections |
 | R02 | `README.md` has title and description | Absent | First heading does not match project name |
 | R03 | `README.md` has installation steps | Absent | Steps are too vague to follow |
@@ -34,10 +40,12 @@ Target: **90% or higher** for a well-documented repository.
 
 ---
 
+
 ## Per-directory checklist (applied to every source directory)
 
 | # | Item | FAIL condition | WARN condition |
 | --- | --- | --- | --- |
+
 | D01 | `README.md` exists | Absent | Present but no description of what lives in the directory |
 | D02 | `AGENTS.md` exists | Absent | Present but missing layout or invariants |
 | D03 | `AGENTS.md` cross-references parent | No parent link | Parent link is broken |
@@ -45,11 +53,14 @@ Target: **90% or higher** for a well-documented repository.
 
 ---
 
+
 ## Code file checklist (applied per source file)
 
 | # | Item | FAIL condition | WARN condition |
 | --- | --- | --- | --- |
+
 | C01 | File has a file-level header | Absent | Present but fewer than 3 content lines (name + blank = not enough) |
+
 | C02 | File header states the file's purpose | Not mentioned | Only restates the filename |
 | C03 | File header lists key exports | Not mentioned | Lists only some exports |
 | C04 | File header explains role in system | Not mentioned | One-word description |
@@ -61,10 +72,12 @@ Target: **90% or higher** for a well-documented repository.
 
 ---
 
+
 ## docs/ folder checklist
 
 | # | Item | FAIL condition | WARN condition |
 | --- | --- | --- | --- |
+
 | X01 | `docs/` folder exists | Absent for non-trivial projects | — |
 | X02 | `docs/README.md` is an index of all docs | Absent | Links to some but not all documents |
 | X03 | Architecture overview exists | Absent | Present but has no diagram |
@@ -73,10 +86,12 @@ Target: **90% or higher** for a well-documented repository.
 
 ---
 
+
 ## Markdownlint checklist
 
 | # | Item | FAIL condition | WARN condition |
 | --- | --- | --- | --- |
+
 | M01 | markdownlint config file exists | None of `.markdownlint.yaml`, `.markdownlint.json`, `.markdownlint-cli2.jsonc` present | Config present but empty or default-only |
 | M02 | All `.md` files pass markdownlint | Any violations | — |
 | M03 | CI runs markdownlint | No CI step for markdown lint | CI step exists but is non-blocking |
@@ -84,12 +99,14 @@ Target: **90% or higher** for a well-documented repository.
 
 ---
 
+
 ## Quality scoring guidance
 
 ### Score interpretation
 
 | Score | Interpretation |
 | --- | --- |
+
 | 95–100% | Exemplary — minor gaps only |
 | 80–94% | Good — a few important gaps to address |
 | 60–79% | Partial — significant documentation debt |
@@ -110,11 +127,12 @@ When fixing gaps, address items in this order:
 
 ---
 
+
 ## Reporting format
 
 The `audit-docs` command outputs one line per evaluated item:
 
-```
+```text
 PASS  R01  README.md (root)
 PASS  R05  AGENTS.md (root)
 FAIL  R09  CONCEPTS.md (root) — missing
@@ -127,4 +145,4 @@ SKIP  C01  src/auth/__init__.py — empty file
 ...
 SCORE: 18 / 24 evaluated items pass (75%)
 PRIORITY FAILS: R09 (CONCEPTS.md), D02 (src/ AGENTS.md), C05 (src/auth/login.py)
-```
+```text

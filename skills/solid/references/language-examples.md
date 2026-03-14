@@ -32,7 +32,7 @@ class InvoiceService:
         validate(invoice)
         self.store.save(invoice)
         self.notifier.send(invoice)
-```
+```text
 
 `InvoiceService` owns workflow, while storage and notification details stay behind protocols. That supports SRP and DIP without forcing inheritance.
 
@@ -53,10 +53,12 @@ interface PaymentHandler {
 
 class CardHandler implements PaymentHandler {
   async authorize(amount: number) { /* ... */ }
+
 }
 
 class WireHandler implements PaymentHandler {
   async authorize(amount: number) { /* ... */ }
+
 }
 
 const handlers: Record<string, PaymentHandler> = {
@@ -69,7 +71,7 @@ export async function authorize(kind: string, amount: number) {
   if (!handler) throw new Error(`unsupported payment type: ${kind}`);
   await handler.authorize(amount);
 }
-```
+```text
 
 Adding a new payment type extends the registry rather than spreading `switch` edits across the codebase.
 
@@ -93,7 +95,7 @@ export function makeOrderService({ inventory, payments, clock }) {
     },
   };
 }
-```
+```text
 
 The service depends on capabilities supplied from the outside instead of importing concrete vendor modules directly.
 
@@ -120,7 +122,7 @@ typedef struct logger {
 typedef struct order_service {
     logger log;
 } order_service;
-```
+```text
 
 High-level code talks to a function table instead of a concrete logging backend.
 
@@ -129,6 +131,7 @@ High-level code talks to a function table instead of a concrete logging backend.
 Keep parsing, validation, and resource cleanup in separate helpers. When one function opens files, parses records, and applies business rules, it usually has multiple reasons to change.
 
 ## C++
+
 
 C++ supports classic interface-based SOLID, but modern practice usually prefers **RAII, value types, and composition** first.
 
@@ -147,7 +150,7 @@ public:
 private:
     const IClock& clock_;
 };
-```
+```text
 
 The service depends on a minimal abstraction. The seam is small, explicit, and testable.
 
@@ -155,8 +158,7 @@ The service depends on a minimal abstraction. The seam is small, explicit, and t
 
 Prefer composition over inheriting from a base class that carries state or behavior a subtype cannot honor. If some derived classes need to reject base operations, the base abstraction is probably wrong.
 
-## C#
-
+## C #
 C# naturally supports SOLID with **interfaces, records, decorators, and explicit dependency injection**.
 
 ### SRP signal
@@ -177,7 +179,7 @@ public sealed class ReportService
 
     public ReportService(IEnumerable<IReportRenderer> renderers) => _renderers = renderers;
 }
-```
+```text
 
 New renderers can be added without rewriting the service. C# makes this pattern especially natural with DI containers, but the architectural value is the abstraction boundary, not the container itself.
 
@@ -195,7 +197,7 @@ trait Reader {
 trait Writer {
     fn write(&mut self, buf: &[u8]) -> std::io::Result<usize>;
 }
-```
+```text
 
 Small traits are easier to implement honestly and easier to combine than one large “stream” trait with unrelated responsibilities.
 
@@ -205,7 +207,11 @@ Prefer domain code that depends on a trait such as `Clock`, `Repository`, or `No
 
 ## Cross-language review prompts
 
+
 - what is the smallest stable seam that would isolate the volatile dependency here?
+
 - does the abstraction describe behavior every implementation can fully honor?
+
 - is a simple module or function parameter enough, or is a reusable interface or trait justified?
+
 - would one new requirement force edits in many places, or just the addition of one new implementation?

@@ -1,8 +1,10 @@
 ---
 name: well-documented
+
 description: >
   enforce thorough, structured documentation across a repository or code project. use when the user asks to audit, initialize, normalize, or improve project documentation including README files, AGENTS.md files, CONCEPTS.md, design docs, folder-level documentation, or file-level header comments and docstrings.
 ---
+
 
 # Well-Documented
 
@@ -12,6 +14,7 @@ Use this skill to bring a repository to a thorough, consistent documentation sta
 
 | Need | Load |
 | --- | --- |
+
 | Full repository documentation structure standard | `references/structure-standard.md` |
 | File header and docstring conventions by language | `references/file-headers.md` |
 | AGENTS.md authoring guide for AI-navigable docs | `references/agents-md-guide.md` |
@@ -21,6 +24,7 @@ Use this skill to bring a repository to a thorough, consistent documentation sta
 
 | Script | Purpose |
 | --- | --- |
+
 | `scripts/audit-docs.sh` | Scan repo; emit PASS/WARN/FAIL/SKIP per item with a final score |
 | `scripts/init-docs.sh` | Bootstrap all required docs from templates |
 | `scripts/normalize-docs.sh` | Non-destructively fill gaps found by audit |
@@ -33,12 +37,14 @@ Run all tests: `bash tests/bash/well-documented/run-all-tests.sh`
 
 | Asset | Purpose |
 | --- | --- |
+
 | `assets/templates/README.md.tmpl` | Template for human-centered `README.md` |
 | `assets/templates/AGENTS.md.tmpl` | Template for AI-centered `AGENTS.md` |
 | `assets/templates/CONCEPTS.md.tmpl` | Template for `CONCEPTS.md` domain glossary |
 | `assets/config/.markdownlint.yaml` | Base markdownlint configuration (copy to project root) |
 
 ---
+
 
 ## The Documentation Standard
 
@@ -48,18 +54,23 @@ A well-documented repository satisfies all of the following:
 
 | File | Audience | Purpose |
 | --- | --- | --- |
+
 | `README.md` | Humans | What the project is, how to install, how to use, how to contribute |
 | `AGENTS.md` | AI agents | Repo layout, workflows, invariants, how to modify safely |
 | `CLAUDE.md` | AI agents (Claude) | Symlink or stub pointing to `AGENTS.md` |
 | `CONCEPTS.md` | Humans + AI | One paragraph per important concept, each with cross-references |
+
 | `CHANGELOG.md` | Humans | Release history following Keep a Changelog |
 
 ### Per-folder required files (recursive)
 
 Every folder that contains source files or sub-folders must have:
 
+
 - `README.md` — human-centered: what lives here, why, how to use it
+
 - `AGENTS.md` — AI-centered: layout, modification rules, invariants for this subtree
+
 - `CLAUDE.md` — symbolic link to `AGENTS.md` (or `../AGENTS.md` for platform-specific reasons)
 
 Each `AGENTS.md` must cross-reference parent and sibling `AGENTS.md` files.
@@ -84,18 +95,24 @@ Do **not** use PlantUML in `AGENTS.md` files — AI agents read those as plain t
 <One paragraph describing the concept — what it is, why it matters, how it relates to the project.>
 
 **See also:** [Related File](path/to/file.md), [`$related-skill`], [Other Concept](#other-concept)
-```
+
+```text
 
 Each concept entry has exactly one paragraph of prose, followed by a "See also" line with cross-references to documentation files, skills, or other concepts.
 
 ### Code file requirements
 
+
 - Every code file that supports header comments must have a **file-level header** explaining the file's purpose, what it exports, and how it fits into the larger system (see `references/file-headers.md`).
+
 - Every public function, class, method, and module must have a **docstring or documentation comment** following the language's dominant convention.
+
 - Use `$[language]-docstrings` skills for language-specific docstring conventions.
+
 - Use `$[language]-best-practice` skills for broader code quality standards.
 
 ---
+
 
 ## Commands
 
@@ -103,14 +120,17 @@ Each concept entry has exactly one paragraph of prose, followed by a "See also" 
 
 Bootstrap the full documentation structure for a repository that has none or minimal documentation.
 
-**Steps:**
-
+## Steps:
 1. Read the repository layout with `tree -L 3` or equivalent.
 2. For each directory (root and recursive), check for `README.md`, `AGENTS.md`, and `CLAUDE.md`.
 3. Generate missing files:
+
    - `README.md`: title, one-line description, install steps, usage, contributing section.
+
    - `AGENTS.md`: repo layout diagram, key workflows, invariants, cross-references to parent/sibling `AGENTS.md` files.
+
    - `CLAUDE.md`: single-line stub: `# Claude Guidance\n\nSee [AGENTS.md](./AGENTS.md) for the authoritative repository instructions.`
+
 4. Generate `CONCEPTS.md` at the root: infer important concepts from the codebase structure and existing documentation.
 5. Ensure `CHANGELOG.md` exists; create a blank one if absent (use `$changelog` skill).
 6. Report every file created.
@@ -119,9 +139,8 @@ Bootstrap the full documentation structure for a repository that has none or min
 
 Scan the repository and report every gap against the documentation standard.
 
-**Output format:**
-
-```
+## Output format:
+```text
 PASS  README.md (root)
 PASS  AGENTS.md (root)
 FAIL  CLAUDE.md (root) — missing
@@ -133,32 +152,44 @@ WARN  src/auth/login.py — no file-level header comment
 FAIL  src/auth/user.py — public function `authenticate` has no docstring
 ...
 SCORE: 14 / 21 items pass (67%)
-```
+```text
 
 Severity levels:
+
 - `FAIL` — required element is absent
+
 - `WARN` — element exists but does not meet quality bar (too short, missing cross-references, no docstrings)
+
 - `PASS` — element is present and meets the standard
+
 - `SKIP` — directory or file is excluded (see below)
 
 **Exclusion rules** (do not audit):
+
 - `node_modules/`, `vendor/`, `.venv/`, `__pycache__/`, `dist/`, `out/`, `build/`, `.git/`
+
 - Binary files, images, generated files (`.min.js`, `.pb`, `.lock`)
+
 - Test fixtures (`tests/fixtures/`, `testdata/`)
 
 ### `normalize-docs`
 
 Bring all existing documentation files up to standard without replacing content that is already correct.
 
-**Steps:**
-
+## Steps:
 1. Run `audit-docs` internally to find gaps.
 2. For each `FAIL`:
+
    - Create the missing file using the same logic as `init-docs`.
+
 3. For each `WARN`:
+
    - Append missing cross-references to `AGENTS.md` files.
+
    - Extend thin `README.md` files with missing sections.
+
    - Add file-level headers to code files that lack them.
+
 4. Do not overwrite content that already meets the standard.
 5. Report every file created or modified.
 
@@ -166,8 +197,7 @@ Bring all existing documentation files up to standard without replacing content 
 
 Add or update file-level header comments across all code files in a directory or the entire repo.
 
-**Steps:**
-
+## Steps:
 1. Walk all code files (respecting exclusion rules above).
 2. For each file, detect the language from the extension.
 3. Check whether a file-level header comment already exists (first non-blank lines are a comment block / docstring).
@@ -179,8 +209,7 @@ Add or update file-level header comments across all code files in a directory or
 
 Add missing docstrings to all undocumented public symbols in a file or directory.
 
-**Steps:**
-
+## Steps:
 1. Parse the file for public functions, classes, methods, and modules.
 2. For each undocumented symbol, generate a docstring in the language's dominant format (see `references/file-headers.md`).
 3. Delegate language-specific style decisions to the appropriate `$[language]-docstrings` skill.
@@ -191,8 +220,7 @@ Add missing docstrings to all undocumented public symbols in a file or directory
 
 Verify that `CONCEPTS.md` at the root is complete and up to date.
 
-**Steps:**
-
+## Steps:
 1. Extract all terms that appear in `AGENTS.md` and `README.md` that look like domain-specific concepts (capitalized terms, quoted terms, skill names, etc.).
 2. Cross-reference against existing entries in `CONCEPTS.md`.
 3. Report missing entries and suggest paragraph drafts for each.
@@ -200,94 +228,121 @@ Verify that `CONCEPTS.md` at the root is complete and up to date.
 
 ---
 
+
 ## Workflow
 
+
 - always `audit-docs` first before writing anything, so the user sees the scope of the gap
+
 - prefer `normalize-docs` for partial documentation; use `init-docs` only for new or nearly empty repos
+
 - generate documentation that is accurate to the actual code — do not hallucinate APIs or purposes
+
 - when generating `AGENTS.md` files, read the existing code to infer real invariants and workflows
+
 - cross-references in `AGENTS.md` must use relative paths that actually resolve
+
 - do not generate placeholder sections like "TODO: describe this" — either write real content or omit the section
 
 ---
+
 
 ## AGENTS.md Authoring Rules
 
 An `AGENTS.md` file that fully serves an AI agent contains:
 
 1. **What this directory is** — one sentence.
+
 2. **Layout** — a `tree`-style or table diagram of files and sub-folders with one-line descriptions.
+
 3. **Key workflows** — step-by-step procedures an agent would follow to make changes safely.
+
 4. **Invariants** — a "Do Not Violate" list of structural or semantic rules that must always hold.
+
 5. **Cross-references** — links to parent `AGENTS.md`, sibling `AGENTS.md` files, and any globally relevant files.
 
 Every `AGENTS.md` at directory depth > 0 must include a line such as:
 
 ```markdown
 See also: [parent AGENTS.md](../AGENTS.md) | [root AGENTS.md](../../AGENTS.md)
-```
+```text
 
 ---
+
 
 ## CLAUDE.md Conventions
 
 `CLAUDE.md` at the root is read automatically by the AI agent. It should:
 
+
 - Be a concise stub that points to `AGENTS.md` for authoritative instructions.
+
 - Optionally include any Claude-specific overrides not covered by `AGENTS.md`.
+
 - Never duplicate content from `AGENTS.md`; always defer to it.
 
 For sub-directories, `CLAUDE.md` is a symbolic link to `AGENTS.md` in the same directory, or contains a one-line pointer. This ensures that the agent picks up directory-level guidance regardless of which file it resolves first.
 
 ---
 
+
 ## Common Requests
 
 ```text
 audit-docs
-```
+```text
 
 ```text
 init-docs — this is a new Python project
-```
+```python
 
 ```text
 normalize-docs
-```
+```python
 
 ```text
 add-file-headers src/
-```
+```text
 
 ```text
 add-docstrings src/api/
-```
+```text
 
 ```text
 check-concepts
-```
+```text
 
 ---
+
 
 ## Markdownlint Requirement
 
-**All Markdown files in a well-documented repository must pass markdownlint.**
+## All Markdown files in a well-documented repository must pass markdownlint.
 
 - The project root must contain a markdownlint config file: `.markdownlint.yaml`, `.markdownlint.json`, or `.markdownlint-cli2.jsonc`.
+
 - Use `assets/config/.markdownlint.yaml` as the starting point. Copy it to the project root and adjust rules to match the project conventions.
+
 - Run `scripts/check-markdownlint.sh` (or `markdownlint-cli2 **/*.md`) as part of CI and the development workflow.
+
 - Use `scripts/check-markdownlint.sh --fix` to auto-correct fixable violations before committing.
+
 - `audit-docs` checks for the config file (M01) and runs markdownlint (M02) as part of its scoring.
 
 ---
+
 
 ## Existing File Formatting Takes Precedence
 
 When a file already exists in the repository, its formatting style is the project standard:
 
+
 - **Heading style**: if the project uses ATX (`# Heading`) or Setext (underline) headings, new files must match.
+
 - **Table style**: if the project uses pipe tables, do not introduce HTML tables, and vice versa.
+
 - **List style**: match the existing unordered marker (`-`, `*`, or `+`) used in that file or adjacent files.
+
 - **Code fence style**: match the existing delimiter (`` ``` `` vs `~~~`).
 
 The templates in `assets/templates/` default to ATX headings and pipe tables. If an existing project uses a different style, adjust generated content to match before writing.
@@ -296,19 +351,31 @@ To revert a file to the template defaults, pass `--force-template` to `init-docs
 
 ---
 
+
 ## Safety Notes
 
+
 - do not delete existing documentation content; only extend or correct it
+
 - do not generate `AGENTS.md` or `CONCEPTS.md` content that misrepresents what the code actually does — read the code first
+
 - do not create `CLAUDE.md` as a duplicate of `AGENTS.md`; it should be a stub or symlink
+
 - symbolic links require OS support; on Windows, use a stub file instead of `ln -s`
+
 - do not add file headers or docstrings to generated files, minified files, or vendored dependencies
+
 - confirm before running `add-file-headers` or `add-docstrings` on large trees — these operations touch many files
 
 ## See Also
 
+
 - `$changelog` — CHANGELOG.md authoring and maintenance
+
 - `$semantic-versioning` — version management coordinated with documentation releases
+
 - `$[language]-docstrings` — language-specific docstring conventions
+
 - `$[language]-best-practice` — broader code quality standards
+
 - `$code-smells` — identifying underdocumented or opaque code patterns

@@ -1,0 +1,4 @@
+interface:
+  display_name: "PDD"
+  short_description: "Shape async flows around promises and tasks."
+  default_prompt: "Use $pdd to design async APIs, promise/task lifecycles, cancellation, backpressure, and concurrency boundaries around futures, promises, and tasks."

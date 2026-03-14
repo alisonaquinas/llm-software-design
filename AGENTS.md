@@ -123,13 +123,25 @@ python scripts/validate_skills.py <skill-name>
 
 ## Release Process
 
-Before tagging a release:
+**Local pre-release checklist:**
 
-1. Update `.claude-plugin/plugin.json` so `version` matches the intended tag.
-2. Move the relevant `Unreleased` notes into a dated release entry in `CHANGELOG.md`.
-3. Commit the release metadata.
-4. Create and push the annotated tag.
+1. Run `make lint` — verify markdown, Python, YAML, and skill structure pass.
+2. Run `make test-unit` — verify all Python unit tests pass.
+3. Run `make verify` — verify skill ZIPs can be built and opened.
+4. Update `.claude-plugin/plugin.json` so `version` matches the intended tag.
+5. Move the relevant `Unreleased` notes into a dated release entry in `CHANGELOG.md`.
+6. Commit with a message like `chore(release): bump to v<VERSION>`.
+7. Create an annotated git tag: `git tag -a v<VERSION> -m "Release v<VERSION>"`.
+8. Push both commit and tag: `git push --follow-tags`.
 
-The release workflow publishes the GitHub release and dispatches `plugin-updated` to `alisonaquinas/llm-skills`.
+**GitHub Actions release workflow:**
 
-- It runs `make test`, then `make all`, attaches `built/*.zip`, and skips marketplace dispatch cleanly when the token is absent.
+When a tag matching `v*.*.*` is pushed:
+
+1. The release workflow runs `make test` (lint + validate + unit tests).
+2. Then runs `make build` to generate skill ZIPs.
+3. Extracts release notes from `CHANGELOG.md`.
+4. Creates a GitHub release with the ZIPs attached.
+5. Dispatches `plugin-updated` to `alisonaquinas/llm-skills` (if token is configured).
+
+**Nothing is released without passing lint, test, validate, and build gates.**

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Event Sourcing"
+  short_description: "Model append-only history and projections."
+  default_prompt: "Use $event-sourcing to design event-sourced models, streams, optimistic concurrency, snapshots, and read-model projections across SQL and NoSQL stores."

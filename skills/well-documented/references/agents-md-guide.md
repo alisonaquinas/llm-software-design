@@ -8,6 +8,7 @@ An `AGENTS.md` is not a README. It does not explain the code to a curious human 
 
 ---
 
+
 ## Required sections
 
 ### 1. One-sentence summary
@@ -18,7 +19,7 @@ State what this directory is in a single sentence. No preamble.
 # AGENTS.md — Guide for AI Agents Working in `src/auth/`
 
 Handles authentication and session management for the API layer.
-```
+```text
 
 ### 2. Layout
 
@@ -37,8 +38,8 @@ src/auth/
 │   ├── test_login.py
 │   └── test_tokens.py
 └── AGENTS.md         # This file
-```
-```
+```text
+```text
 
 Update the layout diagram whenever a file is added, removed, or renamed.
 
@@ -56,7 +57,7 @@ Step-by-step procedures for the changes an agent is most likely to make. Write t
 3. Add integration tests in `tests/test_login.py`.
 4. Update the layout diagram above.
 5. Run `make test` before committing.
-```
+```text
 
 ### 4. Invariants
 
@@ -65,11 +66,16 @@ A "Do Not Violate" list. These are hard rules that must always hold, even if the
 ```markdown
 ## Invariants — Do Not Violate
 
+
 - Every public function in `tokens.py` must validate inputs before processing.
+
 - Session tokens must never be logged; use `[REDACTED]` in log lines.
+
 - `middleware.py` must not import from `login.py` (creates a circular dependency).
+
 - All test files must cover both success and rejection paths for each auth method.
-```
+
+```text
 
 ### 5. Cross-references
 
@@ -78,13 +84,19 @@ Links to parent, sibling, and child `AGENTS.md` files, and to any globally relev
 ```markdown
 ## See Also
 
+
 - [Parent AGENTS.md](../AGENTS.md) — API layer conventions
+
 - [Root AGENTS.md](../../AGENTS.md) — Repo-wide invariants and commit rules
+
 - [src/users/ AGENTS.md](../users/AGENTS.md) — User model used by auth middleware
+
 - [CONCEPTS.md](../../CONCEPTS.md) — Definitions of Session, Token, and AuthProvider
-```
+
+```text
 
 ---
+
 
 ## Optional sections
 
@@ -108,10 +120,12 @@ Environment-specific behavior: Windows vs. Unix paths, container vs. bare-metal 
 
 ---
 
+
 ## Anti-patterns to avoid
 
 | Anti-pattern | Why it's harmful |
 | --- | --- |
+
 | Duplicating content from `README.md` | Two files to maintain; they drift; agent gets conflicting info |
 | Vague invariants like "write clean code" | Provides no actionable constraint |
 | Outdated layout diagram | Agent wastes time looking for files that don't exist |
@@ -121,41 +135,56 @@ Environment-specific behavior: Windows vs. Unix paths, container vs. bare-metal 
 
 ---
 
+
 ## Formatting rules
 
+
 - Use Markdown headings (`##`, `###`) for sections.
+
 - Use fenced code blocks with the `text` language for directory trees.
+
 - Use tables for multi-column data (invariants with rationale, file lists with descriptions).
+
 - Use numbered lists for sequential workflows; use bullet lists for non-sequential items.
+
 - Do not use HTML in `AGENTS.md` files.
+
 - Keep the file under 300 lines. If it grows larger, split the content into subtopic files and reference them.
 
 ---
+
 
 ## Keeping AGENTS.md in sync
 
 `AGENTS.md` decays the moment the code diverges from it. Rules:
 
+
 - When adding a file: add it to the layout diagram and update workflows if it changes any procedure.
+
 - When removing a file: remove it from the diagram and update any invariants that referenced it.
+
 - When renaming: update all cross-references in this file and in sibling `AGENTS.md` files.
+
 - When changing an invariant: update the invariant list and commit the change with the code change.
 
 Treat `AGENTS.md` as part of the code, not documentation separate from it.
 
 ---
 
+
 ## CLAUDE.md relationship
 
 `CLAUDE.md` is a Claude Code-specific file that is automatically loaded. At the sub-directory level it should be:
 
+
 - A symbolic link to `AGENTS.md` in the same directory (Linux/macOS).
+
 - A one-line stub file on Windows or in environments where symlinks are unreliable:
 
 ```markdown
 # Claude Guidance
 
 See [AGENTS.md](./AGENTS.md) for the authoritative instructions for this directory.
-```
+```text
 
 Never put substantive content in a sub-directory `CLAUDE.md`. All content belongs in `AGENTS.md`.

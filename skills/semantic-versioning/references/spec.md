@@ -5,19 +5,23 @@ Authors: Tom Preston-Werner et al. — licensed under Creative Commons CC BY 3.0
 
 ---
 
+
 ## Version Format
 
-```
+```text
 MAJOR.MINOR.PATCH[-PRE-RELEASE][+BUILD]
-```
+```text
+
 
 - **MAJOR**, **MINOR**, **PATCH** — non-negative integers, no leading zeros.
+
 - **PRE-RELEASE** — optional; dot-separated identifiers after a hyphen.
+
 - **BUILD** — optional; dot-separated identifiers after a plus sign.
 
 Valid examples:
 
-```
+```text
 1.0.0
 1.0.0-alpha
 1.0.0-alpha.1
@@ -25,9 +29,10 @@ Valid examples:
 1.0.0-x.7.z.92
 1.0.0-beta+exp.sha.5114f85
 1.0.0+20130313144700
-```
+```text
 
 ---
+
 
 ## The Twelve Clauses
 
@@ -62,12 +67,14 @@ incremented after this release is dependent on how the public API changes.
 
 Patch version Z (x.y.Z | x > 0) MUST be incremented if only backward-
 compatible bug fixes are introduced. A bug fix is defined as an internal change
+
 that fixes incorrect behavior.
 
 ### 7 — Minor version
 
 Minor version Y (x.Y.z | x > 0) MUST be incremented if new, backward-
 compatible functionality is introduced to the public API. It MUST be
+
 incremented if any public API functionality is marked as deprecated. It MAY be
 incremented if substantial new functionality or improvements are introduced
 within the private code. It MAY include patch-level changes. Patch version MUST
@@ -77,6 +84,7 @@ be reset to 0 when minor version is incremented.
 
 Major version X (X.y.z | X > 0) MUST be incremented if any backward-
 incompatible changes are introduced to the public API. It MAY also include
+
 minor and patch-level changes. Patch and minor versions MUST be reset to 0 when
 major version is incremented.
 
@@ -181,9 +189,10 @@ Precedence refers to how versions are compared to each other when ordered.
                  | "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i"
                  | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r"
                  | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z"
-```
+```text
 
 ---
+
 
 ## Regex for Validation
 
@@ -194,7 +203,7 @@ The official regex from semver.org (PCRE / ECMAScript compatible):
 (?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)
    (?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))
 (?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$
-```
+```text
 
 For quick shell validation:
 
@@ -204,41 +213,42 @@ semver_valid() {
     '^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)' \
     '(-[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?(\+[0-9A-Za-z-]+(\.[0-9A-Za-z-]+)*)?$'
 }
-```
+```text
 
 ---
 
+
 ## FAQ
 
-**When should I release 1.0.0?**
+## When should I release 1.0.0?
 When the software is used in production or when it has a stable API that users
 depend on. If you are already worrying about backward compatibility, you are
 probably at 1.0.0.
 
-**How should I handle bug fixes that accidentally broke the API?**
+## How should I handle bug fixes that accidentally broke the API?
 Release a minor version that restores backward compatibility as soon as you
 realise the mistake. Even if a release was technically a breaking change, it
 was not intentional and users expect it to work. Only increment the major
 version when you intentionally break compatibility.
 
-**Should I rename a package instead of bumping major?**
+## Should I rename a package instead of bumping major?
 If you frequently break the API, consider whether a major bump or a new package
 name communicates intent better to users.
 
-**What do I do when 0.y.z reaches production readiness?**
+## What do I do when 0.y.z reaches production readiness?
 Release 1.0.0 and start following the full semver rules. Avoid skipping to
 higher numbers (such as jumping from 0.9.0 to 2.0.0) without going through
 1.0.0 first.
 
-**Can I deprecate public API in a patch version?**
+## Can I deprecate public API in a patch version?
 No. Deprecation is a new public API affordance and requires at minimum a minor
 bump. Removal of a deprecated symbol requires a major bump.
 
-**What about lock files and generated code — do they count?**
+## What about lock files and generated code — do they count?
 No. Only changes to the public API surface that consumers depend on affect the
 version number. Lock file updates alone are patch-or-nothing territory.
 
-**When is a pre-release appropriate vs. tagging a release?**
+## When is a pre-release appropriate vs. tagging a release?
 Use pre-release suffixes (alpha, beta, rc) when a release candidate needs
 external testing before becoming stable. Use the normal version once the
 release is intentional and stable.

@@ -1,0 +1,4 @@
+interface:
+  display_name: "BDD"
+  short_description: "Specify behavior with executable examples."
+  default_prompt: "Use $bdd to write executable behavior specifications, examples, Gherkin scenarios, and supporting step design for a product or codebase."

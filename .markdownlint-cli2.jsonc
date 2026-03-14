@@ -13,6 +13,7 @@
         "no-inline-html": false,
         "table-column-style": false,
         "no-duplicate-heading": false,
+        "no-multiple-blanks": false,
         // Makefile recipe examples require hard tabs inside code blocks
         "no-hard-tabs": { "code_blocks": false }
     },
@@ -21,6 +22,22 @@
             "files": ["CHANGELOG.md"],
             "config": {
                 "MD024": false
+            }
+        },
+        {
+            "files": [
+                "skills/well-documented/references/agents-md-guide.md",
+                "skills/well-documented/references/audit-checklist.md",
+                "skills/well-documented/references/file-headers.md",
+                "skills/well-documented/references/structure-standard.md",
+                "skills/well-documented/SKILL.md",
+                "skills/solid/references/principles.md",
+                "skills/code-smells/references/language-examples.md",
+                "skills/semantic-versioning/references/spec.md",
+                "skills/semantic-versioning/references/version-files.md"
+            ],
+            "config": {
+                "MD012": false
             }
         }
     ]

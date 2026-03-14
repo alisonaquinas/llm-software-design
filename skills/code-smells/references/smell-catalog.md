@@ -8,151 +8,151 @@ A code smell is a surface signal that change is becoming risky, expensive, or co
 
 ### Duplicated logic
 
-**Symptoms**
+## Symptoms
 
 - similar branches, formulas, regexes, SQL fragments, or state transitions in several places
 - multiple edits required for one policy change
 
-**Why it matters**
+## Why it matters
 
 Duplication causes policy drift and inconsistent bug fixes.
 
-**Safe first move**
+## Safe first move
 
 Identify the shared knowledge first, then centralize it behind one function, one data table, or one reusable module.
 
 ### Long method or long function
 
-**Symptoms**
+## Symptoms
 
 - one block mixes validation, selection, I/O, formatting, and error handling
 - many temporary variables or nested branches are needed to understand control flow
 
-**Why it matters**
+## Why it matters
 
 Long methods hide responsibilities and make change-scoping hard.
 
-**Safe first move**
+## Safe first move
 
 Extract coherent steps with names that expose intent. If extraction is hard, that is usually useful diagnostic feedback.
 
 ### Large class or large module
 
-**Symptoms**
+## Symptoms
 
 - many dependencies, broad public surface, or unrelated groups of methods
 - high edit frequency from unrelated change requests
 
-**Why it matters**
+## Why it matters
 
 Large units concentrate change risk and create ownership confusion.
 
-**Safe first move**
+## Safe first move
 
 Split by responsibility, not by line count. Separate domain rules from transport, storage, or presentation code.
 
 ### Shotgun surgery
 
-**Symptoms**
+## Symptoms
 
 - one requirement change forces many scattered edits
 - tests fail across unrelated directories for a simple behavior change
 
-**Why it matters**
+## Why it matters
 
 The real business rule has no single home.
 
-**Safe first move**
+## Safe first move
 
 Find the shared concept and move it behind one seam.
 
 ### Divergent change
 
-**Symptoms**
+## Symptoms
 
 - the same file changes for many unrelated reasons
 - a class owns data rules, rendering, persistence, and workflow coordination
 
-**Why it matters**
+## Why it matters
 
 This is often the mirror image of shotgun surgery.
 
-**Safe first move**
+## Safe first move
 
 Separate the responsibilities that evolve independently.
 
 ### Hidden dependencies
 
-**Symptoms**
+## Symptoms
 
 - global variables, statics, implicit environment reads, service locators, singleton access, or ambient transactions
 - code that is hard to test because collaborators are discovered indirectly
 
-**Why it matters**
+## Why it matters
 
 Hidden dependencies blur control flow and make behavior context-sensitive.
 
-**Safe first move**
+## Safe first move
 
 Make important collaborators explicit through parameters, constructor injection, small traits, or module-level adapters.
 
 ### Primitive obsession and magic values
 
-**Symptoms**
+## Symptoms
 
 - free-form strings, integers, booleans, or maps stand in for domain concepts
 - repeated validation of the same shape or sentinel values
 
-**Why it matters**
+## Why it matters
 
 Important invariants live only in scattered conditionals.
 
-**Safe first move**
+## Safe first move
 
 Introduce a focused type, enum, record, or validated wrapper for the concept.
 
 ### Data clumps and long parameter lists
 
-**Symptoms**
+## Symptoms
 
 - the same group of arguments travels together repeatedly
 - positional parameters are easy to mix up
 
-**Why it matters**
+## Why it matters
 
 Missing concepts make APIs noisy and error-prone.
 
-**Safe first move**
+## Safe first move
 
 Bundle the cohesive data into one typed object or struct.
 
 ### Feature envy
 
-**Symptoms**
+## Symptoms
 
 - one function repeatedly drills through another object’s data to make decisions
 - a method seems to know more about another type’s invariants than its own type’s state
 
-**Why it matters**
+## Why it matters
 
 Behavior is far from the data and rules it depends on.
 
-**Safe first move**
+## Safe first move
 
 Move the behavior closer to the data or expose a higher-level method on the owning type.
 
 ### Inheritance abuse or fake polymorphism
 
-**Symptoms**
+## Symptoms
 
 - callers still switch on runtime type after receiving a base abstraction
 - some implementations throw “not supported” for base operations
 
-**Why it matters**
+## Why it matters
 
 The abstraction is dishonest, and LSP is likely broken.
 
-**Safe first move**
+## Safe first move
 
 Shrink the abstraction, split the interface, or replace inheritance with composition.
 

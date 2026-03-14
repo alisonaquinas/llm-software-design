@@ -1,0 +1,4 @@
+interface:
+  display_name: "TDD"
+  short_description: "Drive design with fast, focused tests."
+  default_prompt: "Use $tdd to design or refactor code with a test-first workflow, including red-green-refactor steps and language-appropriate examples."
