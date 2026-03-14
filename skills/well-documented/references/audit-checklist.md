@@ -73,6 +73,17 @@ Target: **90% or higher** for a well-documented repository.
 
 ---
 
+## Markdownlint checklist
+
+| # | Item | FAIL condition | WARN condition |
+| --- | --- | --- | --- |
+| M01 | markdownlint config file exists | None of `.markdownlint.yaml`, `.markdownlint.json`, `.markdownlint-cli2.jsonc` present | Config present but empty or default-only |
+| M02 | All `.md` files pass markdownlint | Any violations | — |
+| M03 | CI runs markdownlint | No CI step for markdown lint | CI step exists but is non-blocking |
+| M04 | markdownlint config is customised for the project | Config is a verbatim copy with no project-specific adjustments | — |
+
+---
+
 ## Quality scoring guidance
 
 ### Score interpretation

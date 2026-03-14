@@ -17,6 +17,27 @@ Use this skill to bring a repository to a thorough, consistent documentation sta
 | AGENTS.md authoring guide for AI-navigable docs | `references/agents-md-guide.md` |
 | Audit checklist and scoring rubric | `references/audit-checklist.md` |
 
+## Scripts
+
+| Script | Purpose |
+| --- | --- |
+| `scripts/audit-docs.sh` | Scan repo; emit PASS/WARN/FAIL/SKIP per item with a final score |
+| `scripts/init-docs.sh` | Bootstrap all required docs from templates |
+| `scripts/normalize-docs.sh` | Non-destructively fill gaps found by audit |
+| `scripts/add-file-headers.sh` | Add language-appropriate file headers to undocumented code files |
+| `scripts/check-markdownlint.sh` | Run markdownlint-cli2 on all `.md` files; exit 1 on violations |
+
+Run all tests: `bash tests/bash/well-documented/run-all-tests.sh`
+
+## Assets
+
+| Asset | Purpose |
+| --- | --- |
+| `assets/templates/README.md.tmpl` | Template for human-centered `README.md` |
+| `assets/templates/AGENTS.md.tmpl` | Template for AI-centered `AGENTS.md` |
+| `assets/templates/CONCEPTS.md.tmpl` | Template for `CONCEPTS.md` domain glossary |
+| `assets/config/.markdownlint.yaml` | Base markdownlint configuration (copy to project root) |
+
 ---
 
 ## The Documentation Standard
@@ -245,6 +266,33 @@ add-docstrings src/api/
 ```text
 check-concepts
 ```
+
+---
+
+## Markdownlint Requirement
+
+**All Markdown files in a well-documented repository must pass markdownlint.**
+
+- The project root must contain a markdownlint config file: `.markdownlint.yaml`, `.markdownlint.json`, or `.markdownlint-cli2.jsonc`.
+- Use `assets/config/.markdownlint.yaml` as the starting point. Copy it to the project root and adjust rules to match the project conventions.
+- Run `scripts/check-markdownlint.sh` (or `markdownlint-cli2 **/*.md`) as part of CI and the development workflow.
+- Use `scripts/check-markdownlint.sh --fix` to auto-correct fixable violations before committing.
+- `audit-docs` checks for the config file (M01) and runs markdownlint (M02) as part of its scoring.
+
+---
+
+## Existing File Formatting Takes Precedence
+
+When a file already exists in the repository, its formatting style is the project standard:
+
+- **Heading style**: if the project uses ATX (`# Heading`) or Setext (underline) headings, new files must match.
+- **Table style**: if the project uses pipe tables, do not introduce HTML tables, and vice versa.
+- **List style**: match the existing unordered marker (`-`, `*`, or `+`) used in that file or adjacent files.
+- **Code fence style**: match the existing delimiter (`` ``` `` vs `~~~`).
+
+The templates in `assets/templates/` default to ATX headings and pipe tables. If an existing project uses a different style, adjust generated content to match before writing.
+
+To revert a file to the template defaults, pass `--force-template` to `init-docs.sh` or `normalize-docs.sh`.
 
 ---
 

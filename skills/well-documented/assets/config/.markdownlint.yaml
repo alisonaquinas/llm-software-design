@@ -1,0 +1,133 @@
+# .markdownlint.yaml — Base markdownlint configuration for well-documented projects
+#
+# This is the baseline config provided by the well-documented skill.
+# Copy it to your project root and adjust to match your project's conventions.
+# See: https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+
+# ── Default: enable all rules, then selectively override ────────────────────
+default: true
+
+# MD001 — Heading levels should only increment by one level at a time
+MD001: true
+
+# MD003 — Heading style (atx = "# Heading", setext = underline style)
+# Allow either style but enforce consistency within a file.
+MD003:
+  style: consistent
+
+# MD004 — Unordered list style
+MD004:
+  style: consistent
+
+# MD007 — Unordered list indentation
+MD007:
+  indent: 2
+
+# MD009 — Trailing spaces
+MD009:
+  br_spaces: 2        # Allow 2 trailing spaces for line breaks
+  strict: false
+
+# MD010 — Hard tabs
+MD010: true
+
+# MD012 — Multiple consecutive blank lines
+MD012:
+  maximum: 1
+
+# MD013 — Line length
+# Disabled: long lines in tables and code blocks are unavoidable.
+MD013: false
+
+# MD022 — Headings should be surrounded by blank lines
+MD022:
+  lines_above: 1
+  lines_below: 1
+
+# MD024 — Multiple headings with the same content
+# Disabled: "See Also", "Usage", etc. appear in many files legitimately.
+MD024: false
+
+# MD025 — Multiple top-level headings
+MD025:
+  front_matter_title: ""  # Don't require title in YAML front matter
+
+# MD026 — Trailing punctuation in headings
+# Disabled: "Do Not Violate" and other imperative headings need punctuation.
+MD026: false
+
+# MD029 — Ordered list item prefix
+MD029:
+  style: ordered       # 1. 2. 3. (not 1. 1. 1.)
+
+# MD033 — Inline HTML
+# Disabled: HTML comments (<!-- -->) are used extensively in templates.
+MD033: false
+
+# MD034 — Bare URL used
+MD034: true
+
+# MD035 — Horizontal rule style
+MD035:
+  style: consistent
+
+# MD036 — Emphasis used instead of a heading
+MD036: true
+
+# MD037 — Spaces inside emphasis markers
+MD037: true
+
+# MD038 — Spaces inside code span elements
+MD038: true
+
+# MD039 — Spaces inside link text
+MD039: true
+
+# MD040 — Fenced code blocks should have a language specified
+MD040: true
+
+# MD041 — First line in file should be a top-level heading
+# Disabled: AGENTS.md files often have front matter or preamble comments.
+MD041: false
+
+# MD042 — No empty links
+MD042: true
+
+# MD043 — Required heading structure
+# Disabled: different file types have different required structures.
+MD043: false
+
+# MD044 — Proper names should have the correct capitalization
+# Enable and list project-specific proper names as needed.
+MD044: false
+
+# MD045 — Images should have alternate text
+MD045: true
+
+# MD046 — Code block style
+MD046:
+  style: consistent
+
+# MD047 — Files should end with a single newline character
+MD047: true
+
+# MD048 — Code fence style
+MD048:
+  style: consistent
+
+# MD049 — Emphasis style should be consistent
+MD049:
+  style: consistent
+
+# MD050 — Strong style should be consistent
+MD050:
+  style: consistent
+
+# MD051 — Link fragments should be valid
+MD051: true
+
+# MD052 — Reference links and images should use a label that is defined
+MD052: true
+
+# MD053 — Link and image reference definitions should be needed
+MD053: true

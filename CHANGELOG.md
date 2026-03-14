@@ -7,6 +7,66 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-03-14
+
+### Added
+
+- expanded `design-patterns` skill with richer SKILL.md, updated `pattern-guide.md`,
+  and new `references/language-examples.md` (Python, TypeScript, JavaScript, C, C++, C#, Rust)
+- expanded `oop` skill with richer SKILL.md, updated `modeling.md`,
+  and new `references/language-examples.md` covering the same 7 language family
+- expanded `solid` skill with richer SKILL.md, updated `principles.md`,
+  and new `references/language-examples.md`
+- expanded `code-smells` skill with richer SKILL.md, updated `smell-catalog.md`,
+  and new `references/language-examples.md`
+- moved `well-documented` bash test suites to `tests/bash/well-documented/`
+  so they run alongside existing Python tests under the repo test gate
+
+### Changed
+
+- bumped major version to 1.0.0 — public API (skill names, front matter, agents YAML
+  structure) is now considered stable; future breaking changes will increment MAJOR
+
+## [0.5.1] - 2026-03-14
+
+### Added
+
+- added five helper scripts to `well-documented`:
+  - `scripts/audit-docs.sh` — PASS/WARN/FAIL/SKIP scan with percentage score;
+    includes M01/M02 markdownlint checks
+  - `scripts/init-docs.sh` — bootstrap README, AGENTS.md, CLAUDE.md, CONCEPTS.md,
+    CHANGELOG.md, and `.markdownlint.yaml` from templates; never overwrites existing files
+  - `scripts/normalize-docs.sh` — non-destructive gap-filling driven by audit output
+  - `scripts/add-file-headers.sh` — prepend language-appropriate headers to undocumented
+    code files across 18+ languages; detects existing headers and skips them
+  - `scripts/check-markdownlint.sh` — runs markdownlint-cli2 with auto-resolved project
+    config; falls back to bundled base config
+- added `scripts/lib-common.sh` — shared utilities (colour output, counters, exclusion
+  detection, template rendering, header detection)
+- added four test suites in `tests/`:
+  - `tests/test-init-docs.sh` — 9 tests covering creation, idempotency, force-template,
+    per-directory bootstrapping, and excluded-directory skipping
+  - `tests/test-audit-docs.sh` — 12 tests covering FAIL/WARN detection, SCORE line,
+    excluded-directory handling, and markdownlint config check
+  - `tests/test-add-file-headers.sh` — 8 tests covering header generation per language,
+    idempotency for existing headers, and dry-run mode
+  - `tests/test-check-markdownlint.sh` — 6 tests (auto-skipped when tool absent)
+    covering pass/fail detection, auto-fix, bundled config fallback
+- added `tests/lib-test.sh` — minimal test framework with `assert_eq`, `assert_contains`,
+  `assert_file_exists`, `assert_exit_code`, and `test_summary`
+- added `tests/run-all-tests.sh` — runs all four suites and reports a pass/fail summary
+- added three document templates in `assets/templates/`:
+  `README.md.tmpl`, `AGENTS.md.tmpl`, `CONCEPTS.md.tmpl`
+- added `assets/config/.markdownlint.yaml` — commented base markdownlint config with
+  sensible defaults (MD013 line-length disabled, MD026/MD033 disabled, MD040 enabled)
+
+### Changed
+
+- updated `SKILL.md` with Scripts table, Assets table, Markdownlint Requirement section
+  (all Markdown must pass; project root must have a config), and Existing File Formatting
+  Takes Precedence section (heading style, table style, list style, fence style)
+- updated `references/audit-checklist.md` with M-series markdownlint checklist (M01–M04)
+
 ## [0.5.0] - 2026-03-14
 
 ### Added
