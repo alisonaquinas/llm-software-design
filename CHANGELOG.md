@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-03-14
+
+### Added
+
+- `skill-test-drive` — Test-drive skills on real scenarios to validate coverage, clarity, safety, and reliability before release
+  - Includes scenario patterns, evaluation rubric, and report templates
+  - Pairs with skill-linting and skill-validation for comprehensive skill QA
+
 ## [1.1.0] - 2026-03-14
 
 ### Added
