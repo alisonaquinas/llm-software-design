@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-03-14
+
+### Added
+
+- seven new design methodology skills:
+  - `bdd` — Behavior-driven development practices and workflows
+  - `tdd` — Test-driven development methodology and patterns
+  - `ddd` — Domain-driven design and strategic modeling
+  - `dependency-injection` — Dependency injection patterns and practices
+  - `event-sourcing` — Event sourcing architecture and event stores
+  - `idd` — Interface-driven development principles
+  - `pdd` — Property-driven development and generative testing
+
+### Fixed
+
+- resolved all markdown linting violations (48 errors across code-smells, semantic-versioning, solid, well-documented skills)
+- converted bold section headers to proper markdown headings in `code-smells/smell-catalog.md`
+- added blank lines around headings and lists per MD022/MD032 standards
+- configured markdownlint to allow intentional blank-line spacing in reference documentation
+
+### Changed
+
+- updated AGENTS.md with explicit release process gates: lint → test → validate → build
+- all 257 markdown files now pass linting (0 errors)
+- repository now contains 114 skills (up from 107)
+
 ## [1.0.0] - 2026-03-14
 
 ### Added
