@@ -181,7 +181,7 @@ private:
 
 This decorator is worthwhile only when wrappers need to stack. For one-off logging, a direct helper may be simpler.
 
-## C#
+## `C#`
 
 ### Typical fit
 
