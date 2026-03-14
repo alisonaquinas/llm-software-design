@@ -1,4 +1,4 @@
-## Smell Catalog
+# Smell Catalog
 
 - **Long Method**: too many decisions or abstraction levels in one routine.
 - **Large Class**: too many responsibilities gathered into one type.

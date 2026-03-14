@@ -1,4 +1,4 @@
-## Architecture Checklist
+# Architecture Checklist
 
 - What must change independently?
 - Which teams or owners need clear boundaries?

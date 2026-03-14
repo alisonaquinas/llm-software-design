@@ -123,4 +123,5 @@ Before tagging a release:
 4. Create and push the annotated tag.
 
 The release workflow publishes the GitHub release and dispatches `plugin-updated` to `alisonaquinas/llm-skills`.
+
 - It now runs `make test`, then `make all`, attaches `built/*.zip`, and skips marketplace dispatch cleanly when the token is absent.

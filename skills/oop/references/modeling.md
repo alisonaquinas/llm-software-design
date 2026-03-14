@@ -1,4 +1,4 @@
-## Modeling Heuristics
+# Modeling Heuristics
 
 - Use entities when identity matters across time.
 - Use value objects when equality and immutability communicate intent.

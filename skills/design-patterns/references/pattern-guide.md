@@ -1,4 +1,4 @@
-## Pattern Guide
+# Pattern Guide
 
 - **Strategy**: vary behavior without condition-heavy callers.
 - **Factory**: isolate creation choices and dependency assembly.

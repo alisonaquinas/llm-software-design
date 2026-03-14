@@ -1,4 +1,4 @@
-## Principle Checklist
+# Principle Checklist
 
 - **Single Responsibility Principle**: one reason to change per unit.
 - **Open/Closed Principle**: extend behavior through composition, policy, or strategy rather than repeated conditional edits.
