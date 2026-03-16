@@ -293,10 +293,12 @@ GENERIC
   esac
 }
 
+
 prepend_header() {
   local file="$1" header="$2" lang="$3"
-  local tmp
+  local tmp mode
   tmp=$(mktemp)
+  mode=$(stat -c '%a' "$file" 2>/dev/null || echo '')
   if head -1 "$file" | grep -qP '^#!'; then
     head -1 "$file" > "$tmp"
     printf '\n%s\n' "$header" >> "$tmp"
@@ -309,6 +311,9 @@ prepend_header() {
       printf '%s\n' "$header" > "$tmp"
       cat "$file" >> "$tmp"
     fi
+  fi
+  if [[ -n "$mode" ]]; then
+    chmod "$mode" "$tmp"
   fi
   mv "$tmp" "$file"
 }

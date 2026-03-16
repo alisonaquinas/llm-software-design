@@ -80,3 +80,7 @@ A later pass should spend deeper live time on:
 - higher-fidelity language examples for the least-common language pairs
 - multi-skill workflows that chain `well-documented`, docstring, and best-practice skills together
 - additional design-methodology scenarios that compare overlapping choices such as `ddd` vs `software-architecture` and `idd` vs `dependency-injection`
+
+## Well-Documented Follow-Up Test Drive
+
+A focused second pass on `well-documented` exposed three practical issues in live use: freshly bootstrapped READMEs linked to license files that did not exist yet, `add-file-headers.sh` dropped executable bits on rewritten shell scripts, and quiet-mode audit scores under-counted PASS items. The fix set removed the broken default license links, made bootstrap notes explicit in the README and agent templates, preserved file permissions during header insertion, and corrected quiet-mode scoring so the audit summary remains truthful. The bash harness for `well-documented` was also refreshed to match the maturity-level model and the current audit semantics.

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - added evidence-first tooling and references to `well-documented`, including documentation maturity levels, project-type README templates, truth-and-freshness audit guidance, and new unit tests for the helper scripts
+- added a second well-documented test-drive pass focused on bootstrap honesty, audit signal quality, and script reliability
 
 ### Changed
 
@@ -29,6 +30,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `well-documented/scripts/add-file-headers.sh` now preserves executable file modes when rewriting scripts with generated headers
+- `well-documented/scripts/audit-docs.sh` now keeps PASS and SKIP counters accurate in quiet mode so score summaries remain truthful
+- `well-documented/scripts/init-docs.sh` no longer bootstraps root README templates with broken license links that immediately fail the evidence audit
 - `well-documented/scripts/audit-docs.sh` R06 abort: added `|| true` guard to
   `fname=$(... | grep -oP ...)` command substitution so the script no longer
   exits early under `set -euo pipefail` when a line in AGENTS.md contains no

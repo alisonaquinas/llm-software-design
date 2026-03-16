@@ -75,10 +75,16 @@ case "$MATURITY" in
   *) printf 'invalid maturity: %s\n' "$MATURITY" >&2; exit 2 ;;
 esac
 
-emit_pass() { $QUIET || log_pass "$@"; }
+emit_pass() {
+  (( PASS_COUNT++ )) || true
+  $QUIET || printf "${GRN}PASS${RST}  %s\n" "$*"
+}
 emit_warn() { log_warn "$@"; }
 emit_fail() { log_fail "$@"; }
-emit_skip() { $QUIET || log_skip "$@"; }
+emit_skip() {
+  (( SKIP_COUNT++ )) || true
+  $QUIET || printf "${DIM}SKIP${RST}  %s\n" "$*"
+}
 
 markdown_docs() {
   find "$ROOT" -type f \( -name '*.md' -o -name '*.markdown' \) 2>/dev/null | while IFS= read -r file; do
@@ -441,18 +447,17 @@ PY
   fi
 }
 
+
 check_bootstrap_markers() {
   local count
-  count=$( (find "$ROOT" -type f \( -name '*.md' -o -name '*.py' -o -name '*.ts' -o -name '*.js' -o -name '*.sh' -o -name '*.go' -o -name '*.rs' -o -name '*.java' -o -name '*.cs' \) \
-    ! -path '*/node_modules/*' ! -path '*/vendor/*' ! -path '*/dist/*' ! -path '*/build/*' ! -path '*/out/*' ! -path '*/.git/*' \
-    ! -path '*/assets/templates/*' \
-    -exec grep -lE 'BOOTSTRAP HEADER|BOOTSTRAP NOTE|<TODO:' {} + 2>/dev/null || true) | wc -l)
+  count=$( (find "$ROOT" -type f \( -name '*.md' -o -name '*.py' -o -name '*.ts' -o -name '*.js' -o -name '*.sh' -o -name '*.go' -o -name '*.rs' -o -name '*.java' -o -name '*.cs' \)     ! -path '*/node_modules/*' ! -path '*/vendor/*' ! -path '*/dist/*' ! -path '*/build/*' ! -path '*/out/*' ! -path '*/.git/*'     ! -path '*/assets/templates/*'     -exec grep -lE 'BOOTSTRAP HEADER|BOOTSTRAP NOTE|<TODO:|Replace this opening|replace with the main job|replace with the files or subdirectories|replace with the edits|Describe this project\.|Provides: TODO|@link TODO|<see cref="TODO"/>|\[TODO\]|<describe how this file fits into the system>|<describe how this file fits into the data model>|<describe how this module fits into the system>' {} + 2>/dev/null || true) | wc -l)
   if (( count > 0 )); then
     emit_warn "E04  bootstrap markers — $count live file(s) still contain bootstrap or strong placeholder text"
   else
     emit_pass "E04  bootstrap markers"
   fi
 }
+
 
 check_git_freshness() {
   if ! $CHECK_GIT_FRESHNESS; then
