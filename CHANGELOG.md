@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-03-16
+
 ### Added
 
 - added evidence-first tooling and references to `well-documented`, including documentation maturity levels, project-type README templates, truth-and-freshness audit guidance, and new unit tests for the helper scripts
@@ -18,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - upgraded `well-documented/scripts/init-docs.sh` and `normalize-docs.sh` to use project-type-aware root README templates and a lighter default baseline
 - upgraded `well-documented/scripts/add-file-headers.sh` so generated headers are explicitly marked as bootstrap text and shell shebangs are preserved cleanly
 - replaced placeholder-heavy `well-documented` templates with more actionable scaffolds and added root README variants for library, cli, service, web app, monorepo package, and data pipeline repositories
+- test-drove the full 114-skill catalog and added explicit verification or recovery guidance to every skill so common requests now end with a clearer follow-through path
+- rewrote `well-documented` for cleaner command selection, stronger safety notes, and a proper Quick Start flow
+- deepened 42 thinner `*-docstrings` skills with family-specific depth sections, anti-patterns, and reference starting points so they better match the richness of the strongest catalog anchors
+- added `docs/skill-test-drive-report.md`, `docs/docstrings-depth-test-drive.md`, `scripts/skill_affordance_report.py`, `tests/test_skill_affordances.py`, and `tests/test_docstring_reference_depth.py` to preserve the new usability baseline
+- updated `AGENTS.md` with `skill_affordance_report.py` usage guidance and a pointer to `docs/skill-test-drive-report.md`
+- updated `README.md` to link to the new test-drive report
 
 ### Fixed
 
@@ -31,15 +39,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   actionable message rather than counting error stack lines as "violations"
 - `well-documented/SKILL.md`: document Node.js ≥ 20 requirement for
   `markdownlint-cli2`; include `nvm` workaround note
-
-### Changed
-
-- test-drove the full 114-skill catalog and added explicit verification or recovery guidance to every skill so common requests now end with a clearer follow-through path
-- rewrote `well-documented` for cleaner command selection, stronger safety notes, and a proper Quick Start flow
-- deepened 42 thinner `*-docstrings` skills with family-specific depth sections, anti-patterns, and reference starting points so they better match the richness of the strongest catalog anchors
-- added `docs/skill-test-drive-report.md`, `docs/docstrings-depth-test-drive.md`, `scripts/skill_affordance_report.py`, `tests/test_skill_affordances.py`, and `tests/test_docstring_reference_depth.py` to preserve the new usability baseline
-- updated `AGENTS.md` with `skill_affordance_report.py` usage guidance and a pointer to `docs/skill-test-drive-report.md`
-- updated `README.md` to link to the new test-drive report
 
 ## [1.1.3] - 2026-03-14
 
