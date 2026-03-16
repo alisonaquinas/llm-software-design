@@ -43,6 +43,18 @@ int add(int a, int b);
 ReportSnapshot build(ReportRequest request);
 ```
 
+
+## Core tag set
+
+Use the smallest truthful Javadoc tag set that still serves callers.
+
+- `@param` and `@return` for argument and result meaning
+- `@throws` only when the declared exception path matters to callers
+- `@see` and inline `{@link ...}` for navigation
+- `@param <T>` for meaningful type parameters
+- `{@inheritDoc}` when an override should inherit the parent contract instead of duplicating text
+- package and class docs when callers need entry-point guidance beyond member-level comments
+
 ## External tool access
 
 javadoc, Maven and Gradle plugins, IDE help
@@ -68,3 +80,17 @@ javadoc -d build/docs src/main/java/**/*.java
 ## Notes
 
 Write documentation on the API surface that external callers use. Keep implementation-detail comments separate from Javadoc.
+
+## Anti-patterns
+
+- treating Javadoc as a place to restate the method name instead of the contract
+- omitting type-parameter or throws information where the generic surface is the whole point
+- copying comments onto overrides instead of inheriting or adjusting them truthfully
+- leaving package-level docs empty while over-documenting tiny private helpers
+- using tags that the repository's chosen doclet or build does not render as expected
+
+## Reference starting points
+
+- [Javadoc tool](https://docs.oracle.com/javase/8/docs/technotes/tools/unix/javadoc.html)
+- [Documentation Comment Specification for the Standard Doclet](https://docs.oracle.com/en/java/javase/22/docs/specs/javadoc/doc-comment-spec.html)
+- build-plugin configuration for Maven or Gradle in the current repository

@@ -59,6 +59,12 @@ Review this container setup or service graph for hidden dependencies, service lo
 Show dependency-injection patterns in .NET, Angular, FastAPI/Python, JavaScript, TypeScript, C, C++, or Rust.
 ```
 
+## Verification and Next Steps
+
+- verify dependencies are assembled at the composition root and lifetimes match ownership
+- show how tests use fakes or small manual composition without invoking the full container
+- name the point where plain constructor wiring would be enough and a container would be overkill
+
 ## Safety Notes
 
 - do not introduce a container where plain function or constructor composition is enough

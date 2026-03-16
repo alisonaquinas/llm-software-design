@@ -33,6 +33,17 @@ Routine description: Build the current report snapshot and publish the result to
 Instruction comment: Scale raw encoder counts to engineering units.
 ```
 
+
+## What to document
+
+Ladder logic comments are most valuable when they explain operator-visible and safety-relevant intent.
+
+- routine purpose and plant-area context
+- rung intent, permissives, interlocks, and fail-safe behavior
+- tag meaning, engineering units, scaling assumptions, and alarm semantics
+- start-up, shutdown, manual-mode, and fault-recovery behavior when it affects operators or technicians
+- historian or HMI side effects when the logic feeds downstream reporting
+
 ## External tool access
 
 controller project exports, engineering reports, tag databases
@@ -58,3 +69,17 @@ controller project export, engineering documentation tools, tag reports
 ## Notes
 
 Document intent, interlocks, fail-safe behavior, and operator-visible effects. Those annotations are more useful than generic prose in control logic.
+
+## Anti-patterns
+
+- commenting only that a rung "turns output on" without naming the permissive or interlock logic
+- omitting fail-safe or manual-mode behavior that maintenance staff rely on
+- using generic tag descriptions that do not explain engineering units or equipment mapping
+- leaving alarm and acknowledgment semantics implicit
+- mixing controller, HMI, and electrical drawing terminology without clarifying the intended operator view
+
+## Reference starting points
+
+- controller vendor export documentation and comment fields for the active platform
+- plant alarm philosophy, interlock matrix, and tag naming standards
+- integrator or maintenance documentation for the controlled equipment

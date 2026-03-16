@@ -39,6 +39,18 @@ BUILD-REPORT SECTION.
 ...
 ```
 
+
+## Recommended header fields
+
+In COBOL, good documentation usually explains data movement, files, and batch behavior.
+
+- NAME or SECTION identifier
+- PURPOSE in one sentence
+- INPUTS and OUTPUTS including copybooks or file layouts
+- FILES used, datasets touched, and batch dependencies
+- SIDE EFFECTS such as status flags, return codes, or job-control expectations
+- ERROR or ABEND handling paths that operations staff need to understand
+
 ## External tool access
 
 enterprise analyzers, repository scanners, generated listings
@@ -65,3 +77,17 @@ source scanners that parse fixed-format comment headers
 ## Notes
 
 Document data layout, side effects, file usage, and batch dependencies explicitly. Those details are often the most valuable external documentation in COBOL estates.
+
+## Anti-patterns
+
+- documenting paragraph names without explaining file or record effects
+- leaving copybook assumptions implicit when they shape every caller interaction
+- scattering duplicate headers across sections so they drift apart
+- banner comments that are easy for humans to skim but hard for scanners to parse
+- describing batch flow optimistically while omitting restart or failure semantics
+
+## Reference starting points
+
+- enterprise analyzer or impact-analysis tooling used on the COBOL estate
+- copybook, file-layout, and batch-control documentation for the target program family
+- internal standards for fixed-format comment fields and operational handoff notes

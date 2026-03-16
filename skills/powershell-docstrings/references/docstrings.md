@@ -53,6 +53,18 @@ param($Request)
 }
 ```
 
+
+## Help section map
+
+Comment-based help is most useful when it mirrors the way PowerShell users ask for help.
+
+- `.SYNOPSIS` for the one-line summary
+- `.DESCRIPTION` for longer behavioral context when needed
+- `.PARAMETER`, `.INPUTS`, and `.OUTPUTS` for command contracts
+- `.EXAMPLE` for concrete usage that can survive real testing
+- `.LINK` or related sections for navigation to sibling commands or external docs
+- keep help blocks adjacent to the function or script entry point that `Get-Help` resolves
+
 ## External tool access
 
 Get-Help, platyPS, MAML-based help generation
@@ -79,3 +91,17 @@ platyPS for external markdown help
 ## Notes
 
 Keep parameter names and examples current. Operators often experience the documentation first through `Get-Help`, not through the source file.
+
+## Anti-patterns
+
+- writing a strong synopsis but leaving parameters undocumented or stale
+- using examples that depend on hidden session state or missing module imports
+- documenting wrapper functions while the public advanced function users invoke has no help block
+- treating `.INPUTS` and `.OUTPUTS` as optional when pipeline semantics are part of the contract
+- forgetting to re-run `Get-Help` after signature or parameter-set changes
+
+## Reference starting points
+
+- [about_Comment_Based_Help](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_comment_based_help)
+- [Get-Help](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/get-help)
+- [platyPS](https://github.com/PowerShell/platyPS)

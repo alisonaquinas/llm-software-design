@@ -36,6 +36,17 @@ Sprite comment:
 - Side effects: updates x and y position
 ```
 
+
+## What to document
+
+For Scratch projects, the goal is to explain the behavior other people encounter in the editor.
+
+- sprite or stage purpose
+- variable meaning, especially global versus sprite-local state
+- broadcasts, clone behavior, and major event entry points
+- level flow, win or loss conditions, and scoring rules
+- assumptions about costumes, backdrops, timing, or hidden setup blocks that affect gameplay
+
 ## External tool access
 
 Scratch editor comments, sb3 project JSON inspection, educational tooling
@@ -62,3 +73,17 @@ inspect project.json for comment metadata
 ## Notes
 
 Keep comments task-oriented and visual. Add a project-level overview when the logic spans multiple sprites or broadcasts.
+
+## Anti-patterns
+
+- adding comments to many small blocks while leaving the main sprite or game loop unexplained
+- using comments that say what a block literally does instead of why the behavior matters
+- omitting broadcast semantics or clone lifecycle notes that make the project understandable
+- leaving project notes stale after control-flow or variable changes
+- documenting a sprite in isolation when stage variables or shared messages are the real contract
+
+## Reference starting points
+
+- [Scratch Wiki](https://en.scratch-wiki.info/)
+- project notes, remix instructions, and classroom handoff standards already used by the team
+- gameplay or learning-objective requirements that explain the intended experience

@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- test-drove the full 114-skill catalog and added explicit verification or recovery guidance to every skill so common requests now end with a clearer follow-through path
+- rewrote `well-documented` for cleaner command selection, stronger safety notes, and a proper Quick Start flow
+- deepened 42 thinner `*-docstrings` skills with family-specific depth sections, anti-patterns, and reference starting points so they better match the richness of the strongest catalog anchors
+- added `docs/skill-test-drive-report.md`, `docs/docstrings-depth-test-drive.md`, `scripts/skill_affordance_report.py`, `tests/test_skill_affordances.py`, and `tests/test_docstring_reference_depth.py` to preserve the new usability baseline
+- updated `AGENTS.md` with `skill_affordance_report.py` usage guidance and a pointer to `docs/skill-test-drive-report.md`
+- updated `README.md` to link to the new test-drive report
+
 ## [1.1.3] - 2026-03-14
 
 ### Fixed

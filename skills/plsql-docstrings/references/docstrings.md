@@ -40,6 +40,17 @@ END report_api;
 /
 ```
 
+
+## Metadata boundaries
+
+Treat the schema dictionary and the package specification as the durable caller contract.
+
+- Prefer `COMMENT ON` metadata for tables, views, columns, and other dictionary-visible objects.
+- Document package specifications rather than package bodies when describing callable APIs.
+- Record units, nullability meaning, status vocabularies, and identifier semantics when callers cannot infer them.
+- Keep procedural header comments short and contract-focused when the dictionary cannot carry enough information by itself.
+- Verify that metadata is visible through the data dictionary or schema browser the team actually uses.
+
 ## External tool access
 
 data dictionary views, schema browsers, migration tools
@@ -66,3 +77,17 @@ DBMS_METADATA for DDL inspection
 ## Notes
 
 Use package specifications as the documentation boundary. Keep package body commentary focused on implementation details.
+
+## Anti-patterns
+
+- relying on body comments while the package specification remains undocumented
+- using free-form inline prose where durable dictionary metadata would be queryable and safer
+- documenting object names tautologically without business meaning or units
+- letting comments and package signatures drift across migration files and manual patches
+- storing operational secrets or incident notes in comment metadata visible to many readers
+
+## Reference starting points
+
+- [Oracle `COMMENT` statement](https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/COMMENT.html)
+- `USER_TAB_COMMENTS`, `USER_COL_COMMENTS`, and related dictionary views in the target schema
+- repository conventions for package specs, migration files, and database API documentation

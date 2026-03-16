@@ -41,6 +41,17 @@ function report = buildReport(request)
 end
 ```
 
+
+## Help text shape
+
+MATLAB help text works best when the first lines act like a stable command synopsis.
+
+- Start with a concise H1 line that names the function or script and its purpose.
+- Follow with syntax, inputs, outputs, examples, and "See also" material when those sections add real value.
+- Keep the help block immediately after the function signature or at the top of the script.
+- Document name-value pairs, units, table variables, and side effects when users cannot infer them from the signature alone.
+- Treat class methods and package functions the same way users encounter them through `help` and editor tooltips.
+
 ## External tool access
 
 help, doc, publish, toolbox reference generation
@@ -68,3 +79,17 @@ publish(script.m)
 ## Notes
 
 Make the first help line a compact signature-style summary. Keep usage examples close to the public entry point.
+
+## Anti-patterns
+
+- burying the H1 line under decorative comments so `help` shows an unhelpful summary
+- documenting examples that require hidden workspace state or undocumented paths
+- using the help block for implementation notes instead of caller-facing behavior
+- leaving name-value options or output shapes implicit when they are central to correct use
+- splitting help text away from the function it documents so extraction becomes fragile
+
+## Reference starting points
+
+- MathWorks documentation on function help text and code analyzer guidance
+- repository conventions for H1 lines, examples, and published scripts
+- CI or review checks that verify help text after signature changes

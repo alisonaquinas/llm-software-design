@@ -53,6 +53,12 @@ Evaluate this class or module design against SOLID and point out the highest-lev
 Refactor this design to improve dependency direction or substitutability without adding unnecessary abstractions.
 ```
 
+## Verification and Next Steps
+
+- verify the recommendation with characterization tests, substitution checks, or interface contract tests around the changed seam
+- show which responsibility moved, which dependency inverted, or which interface narrowed
+- name the smallest follow-up refactor that would confirm the design really became easier to change
+
 ## Safety Notes
 
 - do not force interface extraction, trait splitting, or indirection without a clear change driver

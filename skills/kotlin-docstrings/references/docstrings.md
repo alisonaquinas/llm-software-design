@@ -44,6 +44,18 @@ fun add(a: Int, b: Int): Int = a + b
 fun build(request: ReportRequest): ReportSnapshot = TODO()
 ```
 
+
+## Core tag set
+
+KDoc stays close to Javadoc, but Kotlin surfaces some additional useful tags.
+
+- `@param` and `@return` for contract essentials
+- `@property` when public constructor properties need explanation
+- `@throws` when Java or Kotlin callers must plan for failure
+- `@sample` when a real checked example adds clarity
+- `@see` for related APIs
+- document receivers, extension functions, and type parameters when the public contract depends on them
+
 ## External tool access
 
 Dokka, IDE hover help, generated API sites
@@ -70,3 +82,17 @@ dokkaHtml
 ## Notes
 
 Use Markdown sparingly and keep tag names aligned with the real signature so generated docs stay trustworthy.
+
+## Anti-patterns
+
+- documenting data-class boilerplate while leaving the meaningful extension or DSL surface thin
+- skipping receiver or type-parameter semantics on extension-heavy APIs
+- copying JavaDoc habits that do not fit Kotlin property or constructor conventions
+- relying on prose that disagrees with nullability or default parameters in the signature
+- shipping samples that no longer compile under the current package imports
+
+## Reference starting points
+
+- [Kotlin documentation comments](https://kotlinlang.org/docs/kotlin-doc.html)
+- [Dokka](https://kotlinlang.org/docs/dokka-introduction.html)
+- repository conventions for public properties, receivers, and sample snippets

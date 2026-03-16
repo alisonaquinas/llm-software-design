@@ -42,6 +42,17 @@ def build(request)
 end
 ```
 
+
+## Core tag set
+
+YARD works best when it documents Ruby's dynamic surface without pretending the code is static.
+
+- `@param` and `@return` for method contracts
+- `@option` for hash options and DSL-like call sites
+- `@yield` or `@yieldparam` when blocks are part of the API
+- `@raise` when callers truly need to handle an error case
+- `@example` and `@see` for navigation and usage that survive rendered docs
+
 ## External tool access
 
 YARD, IDEs, generated API sites
@@ -68,3 +79,17 @@ yard server --reload
 ## Notes
 
 Use explicit tags for parameters and return values when the method contract is not obvious from naming alone.
+
+## Anti-patterns
+
+- documenting only the happy path while ignoring yielded blocks, option hashes, or mutation
+- pretending a duck-typed API is stricter or safer than the runtime behavior actually is
+- describing internal metaprogramming helpers instead of the public DSL entry points callers see
+- copying examples that use old constant names or namespaces
+- mixing free-form comments and YARD tags inconsistently across similar modules
+
+## Reference starting points
+
+- [YARD](https://yardoc.org/)
+- Ruby project conventions for blocks, option hashes, and public DSL surfaces
+- CI or review checks that validate generated API docs and examples

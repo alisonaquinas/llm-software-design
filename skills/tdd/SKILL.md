@@ -60,6 +60,12 @@ Review this test suite for TDD drift, overspecification, brittle mocks, or desig
 Show a red-green-refactor sequence in Python, TypeScript, JavaScript, C, C++, C#, or Rust.
 ```
 
+## Verification and Next Steps
+
+- verify the next test fails for the intended reason before implementing
+- keep the green step minimal, then run the full relevant test slice before refactoring
+- name the seam or design improvement that the test-first step exposed
+
 ## Safety Notes
 
 - do not start with broad end-to-end scenarios when a focused unit or slice test would reveal the design faster

@@ -41,6 +41,18 @@ public ReportSnapshot build(ReportRequest request)
 }
 ```
 
+
+## Recommended header fields
+
+In X++, comment headers are most useful when they explain business and data contracts.
+
+- class or method name
+- purpose in one sentence
+- parameters, return value, and affected tables or buffers
+- side effects such as database writes, infolog messages, or transaction scope
+- security or role assumptions when the method is part of a service boundary
+- dependencies on forms, queries, classes, or configuration keys
+
 ## External tool access
 
 model export, repository indexing, IDE navigation
@@ -66,3 +78,17 @@ repository search, model export, internal documentation extraction
 ## Notes
 
 Keep comment templates short and consistent. Put integration effects, table access, and transaction expectations in the header when external reviewers need that context.
+
+## Anti-patterns
+
+- documenting business logic only as technical plumbing without naming the affected tables or transactions
+- hiding `ttsbegin` or `ttscommit` implications and infolog side effects from callers
+- using inconsistent field labels across service classes and table methods
+- placing comments above helper locals instead of the public method or class boundary
+- copying comments after a refactor without checking renamed tables, queries, or forms
+
+## Reference starting points
+
+- Dynamics or Finance and Operations coding standards used by the team
+- repository guidance for service classes, table methods, and transaction scopes
+- code review checklists for security, data writes, and business-event side effects

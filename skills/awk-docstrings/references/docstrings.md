@@ -37,6 +37,18 @@ function build_report(request) {
 }
 ```
 
+
+## Recommended header fields
+
+For Awk, document the data contract as carefully as the function name.
+
+- function or script name
+- purpose in one sentence
+- expected record shape, field separator assumptions, and required variables
+- outputs, printed columns, or changed files
+- global arrays or state that the script reads or mutates
+- environment assumptions such as `gawk` extensions or required command-line variables
+
 ## External tool access
 
 repository search, lightweight parsers, generated script docs
@@ -62,3 +74,17 @@ repository indexing, awkdoc-style parsers, generated manpages
 ## Notes
 
 Document input record shape, required variables, and output side effects. Those details matter more than boilerplate prose in most Awk programs.
+
+## Anti-patterns
+
+- documenting a function name but not the expected input record shape
+- hiding global array mutation or output formatting side effects
+- scattering partial comments across `BEGIN`, main, and `END` blocks without a clear entry summary
+- switching header field names across files so simple parsers cannot stay reliable
+- claiming portability while depending on `gawk`-specific behavior without saying so
+
+## Reference starting points
+
+- project conventions for `awk`, `gawk`, or `mawk` compatibility
+- any awkdoc-style parser or internal script catalog the repository already uses
+- data format specifications for the files the script reads and emits

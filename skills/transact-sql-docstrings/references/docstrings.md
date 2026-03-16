@@ -40,6 +40,17 @@ EXEC sys.sp_addextendedproperty
 @level2type = N'COLUMN', @level2name = N'Total';
 ```
 
+
+## Metadata boundaries
+
+Use SQL Server metadata for durable schema docs and reserve inline prose for what metadata cannot express.
+
+- Prefer `MS_Description` or another stable extended-property scheme for tables, columns, views, procedures, and functions.
+- Document units, nullability meaning, status vocabularies, and identifier semantics where downstream tools need them.
+- Keep stored-procedure header comments short and contract-focused when catalog metadata is not enough.
+- Version metadata changes alongside schema migrations so the contract evolves with the object.
+- Verify the chosen metadata path through `sys.extended_properties`, SSMS, or the schema tools the team actually uses.
+
 ## External tool access
 
 sys.extended_properties, SSMS, ERD tooling, schema diff tools
@@ -66,3 +77,17 @@ SSMS object properties and schema extraction tools
 ## Notes
 
 Use a predictable property name such as `MS_Description`. Supplement stored procedure metadata with a structured header comment only when catalog metadata is not enough.
+
+## Anti-patterns
+
+- relying only on inline comments for information schema browsers should be able to query
+- using inconsistent property names across objects that should share one metadata convention
+- documenting object names tautologically without business meaning, units, or null semantics
+- letting procedure header comments drift away from actual parameter lists
+- storing secrets, incident notes, or operational trivia in broadly visible extended properties
+
+## Reference starting points
+
+- [sp_addextendedproperty](https://learn.microsoft.com/en-us/sql/relational-databases/system-stored-procedures/sp-addextendedproperty-transact-sql)
+- SQL Server catalog views and `sys.extended_properties` queries used by the current team
+- repository conventions for migration scripts, ERDs, and SSMS-visible documentation

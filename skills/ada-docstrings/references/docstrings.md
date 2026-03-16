@@ -36,6 +36,18 @@ function Add (A, B : Integer) return Integer;
 function Build (Request : Report_Request) return Report_Snapshot;
 ```
 
+
+## Core tag set
+
+Use the smallest truthful GNATdoc tag set that still explains the contract.
+
+- `@summary` for the one-line purpose
+- `@description` when a longer narrative actually helps callers
+- `@param` for meaningful input or in out arguments
+- `@return` for function result meaning
+- `@exception` when callers truly need to plan for a raised exception
+- place comments on package specs and visible declarations, not only on bodies
+
 ## External tool access
 
 GNATdoc, IDE help, generated reference sites
@@ -61,3 +73,17 @@ gnatdoc -P project.gpr
 ## Notes
 
 Document the specification package, not the body, whenever the declaration is what external callers consume.
+
+## Anti-patterns
+
+- documenting package bodies while leaving the package specification thin
+- letting `@param` names differ from the declaration spelling or casing
+- using GNATdoc tags to describe behavior that the spec does not actually expose
+- repeating implementation commentary where a stable contract summary would be clearer
+- mixing free-form banner comments with tagged GNATdoc blocks on the same surface without a migration plan
+
+## Reference starting points
+
+- [GNATdoc User's Guide](https://docs.adacore.com/gnatdoc-docs/users_guide/_build/html/gnatdoc.html)
+- Ada project guidance for package specifications, contracts, and exception documentation
+- house rules for when to document protected and private operations in safety-critical code

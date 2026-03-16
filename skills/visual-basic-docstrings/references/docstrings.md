@@ -38,6 +38,18 @@ Function Add(a As Integer, b As Integer) As Integer
 Public Function Build(request As ReportRequest) As ReportSnapshot
 ```
 
+
+## Core tag set
+
+Use a compact XML block that downstream .NET tools can trust.
+
+- `<summary>` for the one-line contract
+- `<param>` for each meaningful parameter name
+- `<returns>` for result meaning
+- `<value>` for properties when the meaning is not obvious
+- `<remarks>` or `<example>` only when they add real value to IntelliSense or generated docs
+- `<exception>` when callers truly need to handle a declared failure path
+
 ## External tool access
 
 compiler XML output, IntelliSense, .NET doc generators
@@ -63,3 +75,17 @@ dotnet build -p:GenerateDocumentationFile=true
 ## Notes
 
 Keep the comment block immediately above the symbol. Correct XML tag names and exact parameter names are important for downstream tooling.
+
+## Anti-patterns
+
+- malformed XML or misspelled parameter names that silently drop metadata from IntelliSense
+- documenting implementation trivia instead of the public contract visible to callers
+- copying summaries across overloads or overrides without checking behavior differences
+- mixing XML doc comments with unrelated legacy header schemes in the same file without a migration plan
+- leaving generated XML output disabled while assuming downstream tools will still see the docs
+
+## Reference starting points
+
+- [Generate XML API documentation comments](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/)
+- [Recommended XML documentation tags](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/xmldoc/recommended-tags)
+- repository build settings for XML documentation file generation and IntelliSense validation

@@ -213,6 +213,12 @@ What version should I bump to? Here are the changes since 1.3.2: ...
 ---
 
 
+## Verification and Next Steps
+
+- verify every discovered version file, `CHANGELOG.md`, and the planned git tag before writing changes
+- stop when version files disagree or the release intent is unclear
+- report the exact bump rationale so the next maintainer can audit why the version moved
+
 ## Safety Notes
 
 

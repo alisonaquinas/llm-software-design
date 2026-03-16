@@ -39,6 +39,18 @@ build_report:
 ...
 ```
 
+
+## Recommended header fields
+
+For assembly, the most valuable documentation is usually the machine contract rather than general prose.
+
+- symbol or macro name
+- purpose in one sentence
+- inputs and their locations such as registers, stack slots, flags, or memory buffers
+- outputs and observable side effects
+- clobbers, preserved registers, calling convention, and alignment assumptions
+- privileged instructions, I/O ports, memory-mapped devices, or interrupt expectations when relevant
+
 ## External tool access
 
 Doxygen filters, symbol browsers, code review tooling
@@ -65,3 +77,17 @@ assembler listing and symbol export tools
 ## Notes
 
 Always document inputs, outputs, clobbers, calling convention, and side effects. That information is often more useful than prose summaries alone.
+
+## Anti-patterns
+
+- describing a routine only as "does work" without the register or memory contract
+- omitting clobbers, preserved registers, or calling convention details
+- placing comments far from the exported label or macro they document
+- documenting pseudo-code intent but not hardware-visible side effects
+- using different header field names for similar routines with no migration plan
+
+## Reference starting points
+
+- assembler or compiler listing documentation for the target platform
+- Doxygen or internal filter configuration when the codebase generates reference docs from assembly
+- calling-convention, ABI, and interrupt reference material for the target architecture

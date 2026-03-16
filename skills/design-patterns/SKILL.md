@@ -72,6 +72,12 @@ Show how this pattern should look in Python, TypeScript, JavaScript, C, C++, C#,
 Give me a practical implementation of strategy, state, facade, decorator, adapter, builder, or observer.
 ```
 
+## Verification and Next Steps
+
+- verify the chosen pattern makes extension, substitution, or construction easier in one concrete scenario
+- compare the pattern result against the simpler rejected alternative
+- call out the exact extra roles, configuration, or indirection introduced
+
 ## Safety Notes
 
 - do not prescribe a pattern when a simpler function, module, enum, or conditional is clearer

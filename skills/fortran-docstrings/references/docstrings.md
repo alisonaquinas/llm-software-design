@@ -41,6 +41,17 @@ module function build_report(request) result(report)
 end function build_report
 ```
 
+
+## Structural expectations
+
+FORD-friendly comments should stay close to the interface callers see.
+
+- use a consistent comment style such as `!>` or `!!` across a file or module
+- document module procedures, public interfaces, and derived types before private helper routines
+- keep parameter intent, units, shapes, and allocatable behavior aligned with the real declaration
+- prefer comments on interface-visible declarations when generic interfaces or module procedures hide the implementation detail
+- use markup and tags only when the active FORD configuration actually renders them usefully
+
 ## External tool access
 
 FORD, compatible source documentation generators, IDE readers
@@ -66,3 +77,17 @@ ford project.md
 ## Notes
 
 Place documentation in interface-visible declarations. Keep fixed-form and free-form source differences in mind when editing legacy code.
+
+## Anti-patterns
+
+- mixing fixed-form and free-form comment conventions in ways that break extraction
+- documenting only the implementation body when callers consume a generic interface or module procedure
+- omitting array shape, units, or intent details that scientific callers actually need
+- claiming numerical guarantees or side effects the procedure does not enforce
+- using elaborate markup that the repository's FORD pipeline does not render or test
+
+## Reference starting points
+
+- [FORD](https://forddocs.readthedocs.io/)
+- compiler and IDE guidance for modern free-form Fortran comments
+- project conventions for scientific units, array shapes, and module interface docs

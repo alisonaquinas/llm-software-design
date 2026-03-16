@@ -45,6 +45,18 @@ Outputs: WORK.REPORT
 %mend;
 ```
 
+
+## Recommended header fields
+
+SAS comments are much more useful when they expose data flow, dependencies, and side effects.
+
+- macro or step name
+- purpose in one sentence
+- input datasets, libraries, macro variables, and required options
+- outputs, created datasets, reports, or files
+- side effects such as WORK table creation, option changes, or log behavior
+- external dependencies including formats, autocall macros, or scheduling assumptions
+
 ## External tool access
 
 repository search, internal code scanners, generated listings
@@ -70,3 +82,17 @@ code scanners, repository indexing, generated listings
 ## Notes
 
 Record inputs, outputs, dependencies, and side effects explicitly. Those fields make free-form SAS comments much more useful to external tooling.
+
+## Anti-patterns
+
+- documenting only the macro name and skipping required datasets, libraries, or variables
+- hiding option changes or WORK-table side effects in unstructured prose
+- scattering partial comments across macros and data steps without a clear entry summary
+- using different field labels in similar jobs so parsers and reviewers lose consistency
+- letting report names or dataset outputs drift after refactors
+
+## Reference starting points
+
+- internal batch or ETL standards for macro headers and data-step comments
+- scheduler, autocall, and dataset contract documentation used by the team
+- code review checklists for library dependencies, outputs, and side effects

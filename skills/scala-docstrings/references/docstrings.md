@@ -42,6 +42,17 @@ def add(a: Int, b: Int): Int = a + b
 def build(request: ReportRequest): ReportSnapshot = ???
 ```
 
+
+## Core tag set
+
+Scaladoc is at its best when it explains the type-level contract, not just the method name.
+
+- `@param` and `@tparam` for value and type parameters
+- `@return` and `@throws` for contract essentials
+- `@constructor`, `@note`, and `@example` when they materially improve navigation or usage
+- `@see` for related APIs
+- document givens, extension methods, and opaque or abstract types when they are part of the public surface
+
 ## External tool access
 
 scaladoc, IDE hover help, generated API sites
@@ -67,3 +78,17 @@ scaladoc src/main/scala/**/*.scala
 ## Notes
 
 Document the library boundary that external callers consume. Avoid burying important contracts in private implementation comments.
+
+## Anti-patterns
+
+- explaining only the method name while leaving type parameters or context bounds mysterious
+- documenting implementation tricks instead of the stable public algebra or type contract
+- skipping extension methods or givens even though they are how callers actually experience the API
+- using tags or markup the active Scaladoc version does not render the way you expect
+- leaving examples behind after package or import changes
+
+## Reference starting points
+
+- [Scala documentation](https://docs.scala-lang.org/)
+- Scaladoc guidance for the Scala version used by the repository
+- project conventions for givens, extension methods, and type-level contracts

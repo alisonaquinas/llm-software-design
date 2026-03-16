@@ -37,6 +37,17 @@ build_report(Request, Report) :-
 ...
 ```
 
+
+## Predicate contract shape
+
+PlDoc becomes much more useful when the predicate indicator carries real contract detail.
+
+- Keep modes such as `+`, `-`, `?`, or `:` accurate.
+- State determinism such as `det`, `semidet`, or `nondet` when callers need to reason about backtracking.
+- Document module exports, multifile hooks, and predicates other code imports directly before helper predicates.
+- Explain side effects such as database updates, I/O, or dynamic predicate mutation when they matter.
+- Keep examples aligned with the real predicate arity and module qualification.
+
 ## External tool access
 
 PlDoc, generated HTML and LaTeX, in-process doc server
@@ -63,3 +74,17 @@ swipl -g doc_save -t halt
 ## Notes
 
 Keep mode indicators and determinism accurate. External tools rely on that structure as much as the prose summary.
+
+## Anti-patterns
+
+- giving a good prose summary but inaccurate modes or determinism
+- documenting helper predicates while leaving exported predicates sparse
+- hiding database updates or dynamic state changes behind a simple deterministic summary
+- letting module exports, predicate arities, and examples drift apart
+- writing PlDoc comments that attach to the wrong predicate after refactoring
+
+## Reference starting points
+
+- [PlDoc](https://www.swi-prolog.org/pldoc/)
+- SWI-Prolog project guidance for module exports and determinism annotations
+- repository conventions for dynamic predicates, side effects, and example queries

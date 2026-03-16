@@ -60,6 +60,12 @@ Review this schema or architecture for event-sourcing pitfalls, including event 
 Show event-sourcing patterns for PostgreSQL, SQL Server, MySQL, MongoDB, Cosmos DB, or a dedicated event store.
 ```
 
+## Verification and Next Steps
+
+- verify append ordering, optimistic concurrency, replay, and projection rebuild behavior with one concrete stream
+- show the idempotency or duplicate-delivery rule for writes and projections
+- name the retention, privacy, or schema-evolution concern that needs explicit governance before rollout
+
 ## Safety Notes
 
 - do not choose event sourcing for a simple CRUD system without a real need for history, replay, or complex temporal reasoning

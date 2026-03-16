@@ -39,6 +39,18 @@ FUNCTION BuildReport(request)
 ENDFUNC
 ```
 
+
+## Recommended header fields
+
+Keep Visual FoxPro headers stable so the wizard or scanner can stay predictable.
+
+- Name
+- Purpose
+- Inputs or Parameters
+- Returns or produced state
+- Side effects such as table updates, cursor changes, or UI behavior
+- Dependencies on forms, classes, environment settings, or work areas
+
 ## External tool access
 
 Documenting Wizard, code analysis tooling, generated text docs
@@ -64,3 +76,17 @@ Visual FoxPro Documenting Wizard and code analysis tools
 ## Notes
 
 Keep header field names stable when the legacy tooling already expects a specific template. Migration-friendly consistency matters most.
+
+## Anti-patterns
+
+- documenting a function name but not the cursor, table, or UI state it mutates
+- using slightly different field labels across forms and program files so extraction becomes inconsistent
+- leaving wizard-visible headers stale after refactors or renamed procedures
+- scattering related comments across methods when a single entry summary should define the contract
+- hiding environment assumptions such as work area or SET command requirements
+
+## Reference starting points
+
+- Visual FoxPro Documenting Wizard or equivalent legacy extraction settings
+- form, cursor, and data-environment standards already used by the codebase
+- migration notes for FoxPro code that feeds reports, COM objects, or external automation

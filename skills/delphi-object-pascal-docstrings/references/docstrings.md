@@ -38,6 +38,18 @@ function Add(A, B: Integer): Integer;
 function Build(const Request: TReportRequest): TReportSnapshot;
 ```
 
+
+## Core tag set
+
+Use a compact XML block that stays truthful and tool-friendly.
+
+- `<summary>` for the main intent
+- `<param>` for meaningful inputs
+- `<returns>` for result meaning
+- `<remarks>` for longer context only when it adds real value
+- `<exception>` when callers truly need to plan around an error path
+- `<example>` when a short usage snippet materially improves generated help
+
 ## External tool access
 
 IDE help, XML doc output, PasDoc-style generators
@@ -64,3 +76,17 @@ compiler XMLDoc generation when enabled
 ## Notes
 
 Comment declarations in interface sections first. Keep narrative implementation commentary separate from exported API documentation.
+
+## Anti-patterns
+
+- malformed XML that downstream generators quietly drop
+- documenting implementation sections while leaving interface declarations thin
+- copying parameter prose from similar overloads without checking names or semantics
+- mixing XML comments and unrelated legacy header schemas in the same unit without a migration reason
+- restating the member name instead of explaining the contract
+
+## Reference starting points
+
+- [PasDoc](https://pasdoc.github.io/)
+- Embarcadero DocWiki and IDE help for XML documentation support in the current toolchain
+- project conventions for interface sections, packages, and generated API help

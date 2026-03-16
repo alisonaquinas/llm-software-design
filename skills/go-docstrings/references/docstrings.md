@@ -44,6 +44,17 @@ func (Builder) Build(request Request) Snapshot {
 }
 ```
 
+
+## Structural expectations
+
+Go doc comments have strong conventions beyond just "put a comment here".
+
+- Every exported name should have a doc comment that begins with the identifier it documents.
+- Package comments should explain the package as a whole and usually live in a single source file.
+- Use Go's lightweight doc syntax for links, lists, headings, and examples instead of ad hoc Markdown features.
+- Prefer comments on exported declarations, fields, and interfaces that appear in the public contract.
+- When examples matter, keep them aligned with runnable `Example...` tests where possible.
+
 ## External tool access
 
 go doc, pkgsite, godoc-compatible tooling, IDE help
@@ -70,3 +81,17 @@ pkgsite -open .
 ## Notes
 
 Start the comment with the identifier name so generated documentation reads naturally in package indexes.
+
+## Anti-patterns
+
+- comments that do not begin with the exported identifier name
+- documenting unexported helpers more carefully than the package-level public surface
+- scattering multiple package comments across files without intending them to concatenate
+- using raw Markdown or HTML features that the Go doc formatter does not preserve well
+- letting examples, links, or field comments drift after renames
+
+## Reference starting points
+
+- [Go Doc Comments](https://go.dev/doc/comment)
+- [go/doc/comment package](https://pkg.go.dev/go/doc/comment)
+- `go doc` and `pkgsite` usage within the current module or workspace

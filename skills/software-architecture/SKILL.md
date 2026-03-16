@@ -46,6 +46,12 @@ Compare a modular monolith and services for this system and recommend boundaries
 Review this architecture for boundary clarity, integration risk, and unnecessary distribution.
 ```
 
+## Verification and Next Steps
+
+- verify the proposed boundaries against ownership, deploy cadence, data consistency, and failure isolation
+- show one incremental migration step rather than only the target-state architecture
+- name the future signal that would justify the next split or consolidation
+
 ## Safety Notes
 
 - avoid distributed systems when a modular monolith will do

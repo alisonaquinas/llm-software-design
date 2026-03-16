@@ -33,6 +33,17 @@ let add a b = a + b
 let build request = ...
 ```
 
+
+## Interface-first expectations
+
+`odoc` works best when comments follow the interface that users consume.
+
+- Prefer comments on `.mli` signatures and public module interfaces when they exist.
+- Use `(** ... *)` comments attached to the next significant item that `odoc` will render.
+- Keep module, type, value, and functor docs aligned with the exported surface instead of the implementation detail hidden behind it.
+- Use `.mld` pages for package-level narrative only when the repository already publishes those docs.
+- Check hidden or internal modules so comments do not accidentally promise APIs that the package does not expose.
+
 ## External tool access
 
 odoc, generated HTML docs, IDE navigation
@@ -59,3 +70,17 @@ odoc html-generate
 ## Notes
 
 Document `.mli` signatures when they exist. Treat implementation comments as secondary to the externally consumed interface.
+
+## Anti-patterns
+
+- documenting `.ml` implementation details while leaving the `.mli` contract sparse
+- attaching a comment where `odoc` associates it with the wrong item
+- leaving functor arguments, abstract types, or canonical module paths unexplained when they are central to use
+- mixing package-level prose and API comments in a way that duplicates or contradicts the rendered docs
+- forgetting to re-check generated docs after hiding or re-exporting modules
+
+## Reference starting points
+
+- [Generating Documentation With odoc](https://ocaml.org/docs/generating-documentation)
+- [odoc package](https://ocaml.org/p/odoc/3.1.0/features.html)
+- Dune or opam configuration that controls the public documentation surface

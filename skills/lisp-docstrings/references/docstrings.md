@@ -34,6 +34,17 @@ functions, variables, classes, generic functions, methods, packages
   (:documentation "Build report snapshots from immutable requests."))
 ```
 
+
+## Structural expectations
+
+In Common Lisp, the docstring is part of the definition form itself.
+
+- Put the string in the position the defining form expects so tools can retrieve it with `documentation`.
+- Prefer documenting public operators, packages, classes, and generic functions before internal helper forms.
+- Explain side effects, mutability, dynamic variables, or conditions when callers need that information.
+- Keep method-specific behavior aligned with the relevant generic function or class-level contract.
+- Use package and system-level docs when a set of operators only makes sense together.
+
 ## External tool access
 
 documentation function, SLIME or SLY help, DECLT-style generators
@@ -60,3 +71,17 @@ DECLT or implementation-specific doc extractors
 ## Notes
 
 Document the public operator and package surface first. Keep the docstring synchronized with argument semantics and side effects.
+
+## Anti-patterns
+
+- using ordinary comments where a real docstring literal should be attached to the definition
+- documenting every helper macro while leaving the exported package surface thin
+- hiding dynamic variable effects or mutation behind a cheerful one-line summary
+- copying generic-function prose into methods that actually behave differently
+- letting examples assume a package context or reader state the docs never mention
+
+## Reference starting points
+
+- Common Lisp implementation documentation for `documentation` and supported definition forms
+- DECLT or other Lisp documentation generator guidance used by the project
+- package-system conventions for public operators, generic functions, and conditions

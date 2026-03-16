@@ -68,6 +68,19 @@ Add or normalize TypeScript source documentation for this public API without cha
 Review this TypeScript file for missing or misleading machine-readable documentation that external tools depend on.
 ```
 
+## Verification and Migration Checks
+
+- verify the generated docs with the extraction path, metadata query, or generator named in `references/docstrings.md`
+- compare parameter names, return values, exceptions, ownership notes, and examples against the real declaration after editing
+- migrate one contiguous public surface at a time when a file mixes styles
+- preserve an existing machine-readable convention when external tooling already depends on it, and state that choice explicitly
+
+## Recovery Cues
+
+- if the repository already standardizes on another adjacent format, keep that format instead of forcing a conversion
+- if a declaration is still unstable or private, document only the parts external tools or callers actually consume
+- if behavior is unclear, reduce the prose to verified facts and mark open questions instead of inventing guarantees
+
 ## Safety Notes
 
 - do not invent behavior, preconditions, side effects, performance guarantees, or error modes that the code does not actually implement

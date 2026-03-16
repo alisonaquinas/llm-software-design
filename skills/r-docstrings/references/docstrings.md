@@ -45,6 +45,17 @@ build_report <- function(request) {
 }
 ```
 
+
+## Core tag set
+
+roxygen2 pays off most when the tags line up with package exports and examples.
+
+- `@param`, `@return`, and `@examples` for core usage
+- `@export`, `@method`, and class tags when S3 or S4 dispatch matters
+- `@inheritParams` or related helpers only when inheritance stays truthful
+- `@seealso` for related APIs worth surfacing in package help
+- keep the generated Rd and NAMESPACE output in mind while editing the source comments
+
 ## External tool access
 
 roxygen2, pkgdown, IDE help, generated Rd pages
@@ -71,3 +82,17 @@ devtools::document()
 ## Notes
 
 Keep the roxygen block directly above the object definition. Use package-level docs when the public entry point is the package itself.
+
+## Anti-patterns
+
+- using roxygen comments that generate the wrong export surface or stale NAMESPACE entries
+- leaving examples un-runnable under the package's real dependencies or test setup
+- documenting only the generic while method-specific behavior differs materially
+- hiding data shape, factor levels, or units that the function contract depends on
+- copying tag blocks across functions without checking actual argument names
+
+## Reference starting points
+
+- [roxygen2](https://roxygen2.r-lib.org/)
+- [pkgdown](https://pkgdown.r-lib.org/)
+- package development conventions already used for S3, S4, datasets, and examples

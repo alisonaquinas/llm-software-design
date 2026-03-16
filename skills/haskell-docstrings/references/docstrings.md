@@ -35,6 +35,17 @@ build :: ReportRequest -> ReportSnapshot
 build request = ...
 ```
 
+
+## Structural expectations
+
+Haddock supports more than one placement pattern, and placement matters.
+
+- Use `-- |` before a declaration for the main comment on a function, type, or module item.
+- Use `-- ^` only for trailing documentation of the preceding item when that shape is clearer.
+- Keep module export lists and comments aligned so generated docs reflect the intended public surface.
+- Document type classes, instances, operators, and records only when the surrounding package surface actually exposes them.
+- Prefer one clear summary plus a truthful note on laws, partiality, or effects over long filler text.
+
 ## External tool access
 
 Haddock, Hackage-style docs, IDE support
@@ -61,3 +72,17 @@ stack haddock
 ## Notes
 
 Keep module export lists and comments aligned so generated documentation reflects the intended public surface.
+
+## Anti-patterns
+
+- putting comments in a place Haddock associates with the wrong symbol
+- documenting partial or effectful behavior as if it were total and harmless
+- leaving operator semantics implicit when the name alone is not enough
+- drifting export lists and docs so generated pages imply the wrong public surface
+- mixing literate Haskell and comment conventions without checking the rendered result
+
+## Reference starting points
+
+- Haddock documentation and the package's Cabal or Stack doc build configuration
+- Hackage rendering of similar public APIs in the same ecosystem
+- project conventions for laws, partial functions, and effect descriptions

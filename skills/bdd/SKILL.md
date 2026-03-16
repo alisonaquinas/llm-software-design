@@ -59,6 +59,12 @@ Review this Gherkin or step-definition suite for brittle wording, technical leak
 Show how to automate these scenarios with Cucumber, Reqnroll, behave, or a related BDD stack.
 ```
 
+## Verification and Next Steps
+
+- verify each scenario has one clear actor, trigger, and observable outcome
+- keep a thin mapping from scenario text to automation so wording stays stable while code evolves
+- when rules multiply, add lower-level tests instead of bloating one scenario with many hidden branches
+
 ## Safety Notes
 
 - do not turn every unit-level rule into Gherkin; keep executable specifications focused on behaviors worth shared review

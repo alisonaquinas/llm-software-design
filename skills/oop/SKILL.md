@@ -64,6 +64,12 @@ Review this object-oriented design for misplaced behavior, low cohesion, unclear
 Show how this design should look in Python, TypeScript, JavaScript, C, C++, C#, or Rust.
 ```
 
+## Verification and Next Steps
+
+- verify object invariants with constructor or factory tests and one representative use-case path
+- show where state now lives, who owns lifecycle transitions, and which collaborator changed
+- name the lighter alternative when a full object model still looks too heavy
+
 ## Safety Notes
 
 - do not invent deep inheritance trees when composition or data-oriented modeling is clearer

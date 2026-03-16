@@ -39,6 +39,18 @@ Function BuildReport(request)
 End Function
 ```
 
+
+## Recommended header fields
+
+VBScript extractors are usually simple, so stable field names matter.
+
+- Name
+- Purpose
+- Inputs or Parameters
+- Returns when the function computes a result
+- Side effects such as file writes, COM automation, or environment use
+- Dependencies or assumptions such as required host, objects, or global variables
+
 ## External tool access
 
 VBDOX-like tooling, repository scanners, code review indexing
@@ -64,3 +76,17 @@ legacy documentation generators and repository scanners
 ## Notes
 
 Use a predictable header vocabulary such as Name, Purpose, Inputs, and Returns so simple extractors can remain reliable.
+
+## Anti-patterns
+
+- documenting only the script name while hiding COM or file-system side effects
+- changing field labels between scripts so simple scanners become brittle
+- placing a header above the wrong function in long administrative scripts
+- omitting host assumptions such as WSH, cscript, or external object availability
+- copying a template header without updating parameter or return details
+
+## Reference starting points
+
+- legacy script catalog or repository index conventions already used by the team
+- host-environment documentation for WSH, COM automation, and scheduled execution
+- code review standards for administrative scripts, file writes, and external dependencies

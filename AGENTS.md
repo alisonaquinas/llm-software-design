@@ -41,6 +41,7 @@ llm-software-design/
 - `docs/language-best-practice-skills.md` catalogs the generated language review skills.
 - `docs/docstring-skills.md` catalogs the generated source-documentation skills.
 - `docs/language-skill-matrix.md` aligns the two generated language families by rank and language name.
+- `docs/skill-test-drive-report.md` captures the latest live test-drive findings and the repo-wide fixes that resulted from that pass.
 
 ## Modifying Skills
 
@@ -96,6 +97,12 @@ python scripts/lint_skills.py <skill-name>
 python scripts/validate_skills.py <skill-name>
 ```
 
+To inspect the current affordance baseline across a subset of skills, use:
+
+```bash
+python scripts/skill_affordance_report.py <skill-name>
+```
+
 Compatibility wrappers remain available for one release cycle:
 
 ```bash
@@ -108,6 +115,12 @@ To validate a skill qualitatively:
 
 ```bash
 python scripts/validate_skills.py <skill-name>
+```
+
+To inspect the current affordance baseline across a subset of skills, use:
+
+```bash
+python scripts/skill_affordance_report.py <skill-name>
 ```
 
 ## Git Workflow

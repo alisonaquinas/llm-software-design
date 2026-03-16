@@ -44,6 +44,8 @@ See [docs/docstring-skills.md](docs/docstring-skills.md) for the full catalog.
 
 See [docs/language-skill-matrix.md](docs/language-skill-matrix.md) to align each ranked language across the best-practice and docstring skill families.
 
+See [docs/skill-test-drive-report.md](docs/skill-test-drive-report.md) for the latest repository-wide test-drive findings and the improvements that came out of that pass.
+
 ## Installation
 
 See [INSTALL.md](INSTALL.md) for full setup guidance.

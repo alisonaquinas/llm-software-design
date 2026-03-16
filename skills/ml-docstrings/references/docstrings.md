@@ -35,6 +35,17 @@ fun add a b = a + b
 fun build_report request = ...
 ```
 
+
+## Signature-first expectations
+
+Standard ML ecosystems usually document the interface boundary rather than every implementation detail.
+
+- Prefer comments adjacent to signature items and exported declarations.
+- Keep the signature text, type variables, and prose aligned so readers can trust the contract.
+- Document functors, structures, and datatypes when they are part of the externally consumed surface.
+- Explain invariants, mutation, and exceptions when callers must know them.
+- When `.sig` files exist, treat them as the primary documentation surface and keep implementation comments secondary.
+
 ## External tool access
 
 signature browsers, repository indexing, literate documentation tools
@@ -60,3 +71,17 @@ signature files, literate build tooling, internal doc extraction
 ## Notes
 
 Document the signature boundary first. When `.sig` files exist, treat them as the canonical place for externally consumed documentation.
+
+## Anti-patterns
+
+- documenting an implementation function while leaving the signature item undocumented
+- repeating type syntax without explaining invariants or exception behavior
+- letting `.sig` and `.sml` comments diverge on the public contract
+- over-documenting local helper bindings that external readers never see
+- mixing comment schemas within one component so simple extractors cannot stay predictable
+
+## Reference starting points
+
+- project guidance for `.sig` versus implementation-file documentation
+- build or literate tooling used to publish ML API notes in the repository
+- code review checklists for exception behavior, mutation, and abstract type invariants

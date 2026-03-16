@@ -53,6 +53,12 @@ Review this code for maintainability smells and prioritize the cleanup sequence.
 Explain which smells matter most here and suggest pragmatic refactors that preserve behavior.
 ```
 
+## Verification and Next Steps
+
+- verify the cleanup order with characterization tests around the smelliest path first
+- show which smell is the root cause and which symptoms should disappear after the first refactor
+- keep refactors behavior-preserving until the maintenance risk is back under control
+
 ## Safety Notes
 
 - do not label every disagreement in style as a code smell

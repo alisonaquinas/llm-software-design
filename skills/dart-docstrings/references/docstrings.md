@@ -35,6 +35,17 @@ ReportSnapshot build(ReportRequest request) {
 }
 ```
 
+
+## Structural expectations
+
+Dart doc comments are lightweight, but they still have strong conventions.
+
+- Prefer `///` comments so `dart doc` and the linter can discover them cleanly.
+- Keep the first sentence concise because package indexes and hover help often surface only that line.
+- Use Markdown sparingly for examples, lists, and links that survive into generated docs.
+- Document public libraries, classes, extensions, enums, and members before private helpers.
+- When cross-library references matter, use the repository's chosen doc-reference pattern instead of inventing ad hoc names.
+
 ## External tool access
 
 dartdoc, IDE hover help, package reference sites
@@ -60,3 +71,17 @@ dart doc
 ## Notes
 
 Keep the first sentence concise because it becomes the summary line in generated package indexes.
+
+## Anti-patterns
+
+- using ordinary `//` comments for public API docs that `dart doc` should discover
+- forcing `/** ... */` blocks into a codebase that already standardizes on `///`
+- writing a long first paragraph that hides the useful summary line in generated docs
+- documenting private implementation detail more carefully than the exported package surface
+- letting intra-doc references drift when symbols or imports change
+
+## Reference starting points
+
+- [Effective Dart: Documentation](https://dart.dev/effective-dart/documentation)
+- [dart doc](https://dart.dev/tools/dart-doc)
+- [Documentation comment references](https://dart.dev/tools/doc-comments/references)

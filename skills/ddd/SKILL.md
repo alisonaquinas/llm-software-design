@@ -59,6 +59,12 @@ Review this service or schema design for an anemic model, leaky context boundari
 Map this domain model into Python, TypeScript, JavaScript, C#, or Rust without losing domain intent.
 ```
 
+## Verification and Next Steps
+
+- verify ubiquitous language with concrete example use cases and team-specific term differences
+- show which invariants belong inside an aggregate and which translations happen at context boundaries
+- name the simplest data-centric alternative when the domain is too small for full DDD ceremony
+
 ## Safety Notes
 
 - do not force full DDD ceremony onto a simple CRUD or reporting domain

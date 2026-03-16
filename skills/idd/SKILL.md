@@ -59,6 +59,12 @@ Review this interface for leakage of internal details, oversized responsibilitie
 Show ports-and-adapters or contract-first examples in TypeScript, JavaScript, Python, C#, C++, C, or Rust.
 ```
 
+## Verification and Next Steps
+
+- verify the contract with consumer-focused examples, contract tests, or fake adapters
+- show which internal details stay behind the boundary and which compatibility promise remains public
+- name the additive evolution path before recommending a breaking change
+
 ## Safety Notes
 
 - do not let database schema or framework objects become the public contract by accident

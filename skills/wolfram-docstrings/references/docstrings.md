@@ -31,6 +31,17 @@ AddTotal::usage = "AddTotal[a, b] returns the sum of a and b.";
 BuildReport::usage = "BuildReport[request] returns the current report snapshot.";
 ```
 
+
+## Package structure expectations
+
+In Wolfram packages, usage messages are part of the exported symbol contract.
+
+- Put usage messages for public symbols between `BeginPackage[...]` and `Begin["`Private`"]`.
+- Keep the usage string concise and signature-shaped so `?symbol` output stays readable.
+- Document public options, symbols, and major message groups before private helper definitions.
+- Use richer notebook, paclet, or guide documentation only when the project already ships that layer.
+- Keep usage messages aligned with actual argument structure, option names, and package context.
+
 ## External tool access
 
 question-mark help queries, notebook help integration, paclet documentation workflows
@@ -57,3 +68,17 @@ DocumentationTools or paclet workflows when the codebase uses them
 ## Notes
 
 Keep the usage string concise and signature-shaped. Add richer notebook or paclet docs only when the project already invests in that packaging layer.
+
+## Anti-patterns
+
+- defining public functions without usage messages in the exported package section
+- writing long narrative usage strings that obscure the signature and main contract
+- describing option defaults or argument patterns that no longer match the real definition
+- documenting private symbols as if they were public package surface
+- splitting the authoritative contract between usage messages and notebook prose without checking consistency
+
+## Reference starting points
+
+- [Create a Package File](https://reference.wolfram.com/language/workflow/CreateAPackageFile.html)
+- [Messages guide](https://reference.wolfram.com/language/guide/Messages.html.en)
+- project conventions for paclets, guide pages, and public symbol usage messages

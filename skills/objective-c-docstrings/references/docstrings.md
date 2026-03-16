@@ -44,6 +44,17 @@ public headers, classes, protocols, properties, methods, categories
 - (ReportSnapshot *)build:(ReportRequest *)request;
 ```
 
+
+## Core tag set
+
+Objective-C API docs are usually consumed from headers and Xcode Quick Help.
+
+- `@param` and `@return` for method contracts
+- `@discussion` for longer narrative context when a summary is not enough
+- `@see` for related APIs or categories
+- `@warning` and `@note` only when they surface real caller risk or nuance
+- document public headers, protocols, categories, and properties before private implementation files
+
 ## External tool access
 
 Jazzy, Xcode Quick Help, generated Apple-style docs
@@ -70,3 +81,17 @@ Xcode Quick Help from header comments
 ## Notes
 
 Document declarations in `.h` files first. Keep implementation-file comments for internal behavior rather than external API contracts.
+
+## Anti-patterns
+
+- placing the best documentation in `.m` files while the public `.h` stays thin
+- omitting nullability or ownership expectations that callers actually need
+- documenting selector pieces loosely so the prose no longer matches the signature
+- copying comments across categories or convenience APIs without checking behavior differences
+- using AppleDoc or Jazzy tags the active generator does not actually render
+
+## Reference starting points
+
+- [Documenting source code in Xcode](https://developer.apple.com/documentation/xcode/documenting-source-code-in-xcode)
+- [Jazzy](https://github.com/realm/jazzy)
+- repository rules for public headers, nullability, and designated initializers

@@ -47,6 +47,17 @@ my ($request) = @_;
 }
 ```
 
+
+## POD section map
+
+POD works best when it describes the package surface in recognizable sections.
+
+- `=head1 NAME`, `SYNOPSIS`, and `DESCRIPTION` for module or script overviews
+- `=head2` or itemized sections for exported subs or important entry points
+- `=over`, `=item`, and `=back` for option tables or structured argument details
+- `=cut` to return cleanly to code when the prose block ends
+- keep package-level POD coherent so `perldoc`, manpage generation, and CPAN tooling render it predictably
+
 ## External tool access
 
 perldoc, pod2html, pod2man, CPAN tooling
@@ -73,3 +84,17 @@ pod2html lib/My/Module.pm > module.html
 ## Notes
 
 Document the public package surface in POD sections instead of scattering prose comments above every statement-level implementation detail.
+
+## Anti-patterns
+
+- scattering many tiny POD islands through the file when one coherent section would read better
+- documenting implementation-private subs while skipping the exported package interface
+- drifting `SYNOPSIS` examples after changing the actual call surface
+- using plain comments where `perldoc` should be able to render the material directly
+- forgetting that POD section structure matters as much as the prose itself
+
+## Reference starting points
+
+- [perlpod](https://perldoc.perl.org/perlpod)
+- [perlpodspec](https://perldoc.perl.org/perlpodspec)
+- CPAN or house-style conventions for NAME, SYNOPSIS, and exported sub documentation

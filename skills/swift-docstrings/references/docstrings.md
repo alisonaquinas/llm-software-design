@@ -43,6 +43,17 @@ func build(_ request: ReportRequest) -> ReportSnapshot {
 }
 ```
 
+
+## Markup patterns
+
+Swift Markup favors readable prose with lightweight field markers.
+
+- Start with a concise summary sentence on the declaration users see in Quick Help.
+- Use `- Parameter`, `- Parameters:`, `- Returns:`, and `- Throws:` when the contract needs structure.
+- Document public protocols, extensions, property wrappers, and async APIs before private helpers.
+- Keep examples short and truthful; Quick Help is often the first consumer.
+- Prefer comments on the symbol that Swift-DocC or Xcode will surface rather than detached narrative elsewhere.
+
 ## External tool access
 
 DocC, Xcode Quick Help, SourceKit-based tooling
@@ -69,3 +80,17 @@ docc convert
 ## Notes
 
 Favor the standard parameter and returns bullets so Quick Help renders consistent structured output.
+
+## Anti-patterns
+
+- mixing several markup idioms in one file without checking the rendered Quick Help output
+- ignoring async, throwing, or actor-isolation behavior that callers need to know
+- documenting extension methods without clarifying the receiver constraints that make them available
+- writing examples that compile only with hidden imports or platform assumptions
+- overusing long narrative where a clear parameter or returns section would be easier to scan
+
+## Reference starting points
+
+- [Markup Formatting Reference](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/)
+- [Swift-DocC](https://www.swift.org/documentation/docc/)
+- project conventions for Quick Help, platform availability, and sample code

@@ -54,6 +54,19 @@ Review this Classic Visual Basic module for idiomatic structure, naming, boundar
 Refactor this Classic Visual Basic snippet to follow common Classic Visual Basic best practice without changing behavior.
 ```
 
+## Verification and Follow-Through
+
+- verify the recommendation with the formatter, linter, compiler, or test command named in `references/best-practices.md`
+- call out which behavior must remain unchanged before suggesting stylistic cleanup
+- recommend one or two concrete checks that prove the refactor improved clarity, safety, or maintainability
+- preserve enforced repository conventions when they intentionally differ from the default baseline
+
+## Recovery Cues
+
+- if the runtime, dialect, framework, or vendor is unknown, give the safest default and name the missing fact that would narrow the advice
+- if project automation already enforces a competing convention, follow the enforced rule and explain the exception
+- if correctness bugs and style issues are mixed together, fix correctness and observability first, then return to style
+
 ## Safety Notes
 
 - do not force ecosystem migration unless the current stack is clearly blocking maintainability

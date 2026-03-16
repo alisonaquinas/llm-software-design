@@ -45,6 +45,17 @@ defmodule Report.Builder do
 end
 ```
 
+
+## Attribute map
+
+Use the native Elixir documentation attributes intentionally.
+
+- `@moduledoc` for the module-level overview
+- `@doc` for public functions and macros
+- `@typedoc` for public types that appear in specs or contracts
+- `@doc false` or `@moduledoc false` only when hiding internal surfaces is deliberate
+- keep `@spec` and the prose in sync so ExDoc and editors present a trustworthy contract
+
 ## External tool access
 
 ExDoc, IEx help, generated HTML docs
@@ -70,3 +81,17 @@ mix docs
 ## Notes
 
 Use `@typedoc` for public types and keep module docs high-level. That balance improves both generated navigation and inline help.
+
+## Anti-patterns
+
+- documenting private helpers while leaving the public module overview empty
+- letting `@spec` and `@doc` drift apart on inputs or return semantics
+- using `@doc false` as a shortcut for unclear public APIs that should be documented instead
+- repeating implementation detail where callers really need module-level usage guidance
+- shipping stale examples that no longer match the current function name or arity
+
+## Reference starting points
+
+- [Elixir getting started and language docs](https://hexdocs.pm/elixir/)
+- [ExDoc](https://hexdocs.pm/ex_doc/readme.html)
+- project conventions for `@doc`, `@moduledoc`, `@typedoc`, and hidden APIs

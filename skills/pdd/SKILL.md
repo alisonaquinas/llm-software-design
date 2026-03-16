@@ -59,6 +59,12 @@ Review this async design for sync-over-async blocking, unbounded concurrency, fo
 Show promise/task/future patterns in JavaScript, TypeScript, C#, Python, Rust, or adjacent native runtimes.
 ```
 
+## Verification and Next Steps
+
+- verify cancellation, timeout, and error propagation on one representative async path
+- show where ownership and cleanup live across awaits, retries, or fan-out
+- name the concurrency limit, backpressure rule, or structured-concurrency primitive that keeps the design safe
+
 ## Safety Notes
 
 - avoid fire-and-forget work unless ownership, retry, and shutdown semantics are explicit

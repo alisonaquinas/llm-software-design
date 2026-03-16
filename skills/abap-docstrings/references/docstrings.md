@@ -38,6 +38,17 @@ METHODS build
   RETURNING VALUE(report) TYPE zreport_snapshot.
 ```
 
+
+## ABAP Doc shape
+
+Keep ABAP Doc on the interface declaration that ADT and repository browsers expose.
+
+- Use a short synchronized summary for the declaration that appears in hover help.
+- Document public sections of classes and interfaces before protected or private implementation detail.
+- Keep importing, exporting, changing, returning, and raising information aligned with the real signature.
+- Prefer one truthful summary over a large HTML fragment; richer narrative belongs only where the surrounding toolchain already renders it well.
+- When a class or interface is the contract boundary, document the definition section instead of repeating text in every implementation.
+
 ## External tool access
 
 ABAP Development Tools, generated interface docs, repository browsers
@@ -63,3 +74,17 @@ ADT hover help and generated class interface docs
 ## Notes
 
 Document the public interface in class definitions rather than repeating prose in method implementations.
+
+## Anti-patterns
+
+- documenting only the implementation method while leaving the public class definition undocumented
+- letting parameter or exception prose drift away from the actual signature
+- using decorative HTML that makes ADT hovers harder to read
+- copying synchronized short texts between unrelated declarations without checking meaning
+- describing business promises or side effects that the method contract does not actually guarantee
+
+## Reference starting points
+
+- ABAP Development Tools help for ABAP Doc and element information hovers
+- SAP style guidance for public class and interface documentation in your landscape
+- repository-specific conventions for exception classes, parameter naming, and generated interface docs

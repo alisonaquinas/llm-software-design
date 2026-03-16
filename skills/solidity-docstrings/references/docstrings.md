@@ -38,6 +38,18 @@ function add(uint256 a, uint256 b) public pure returns (uint256);
 function build(bytes calldata request) external returns (bytes memory);
 ```
 
+
+## Core tag set
+
+NatSpec distinguishes between user-facing and developer-facing documentation.
+
+- `@notice` for end-user or integrator-visible behavior
+- `@dev` for implementation-facing notes that are still safe to publish
+- `@param` and `@return` for ABI contracts
+- `@inheritdoc` when inherited behavior should remain the source of truth
+- `@custom:` tags when the surrounding tooling consumes project-specific metadata
+- focus on public and external ABI surfaces, events, custom errors, and interfaces first
+
 ## External tool access
 
 solc userdoc and devdoc output, block explorer tooling, forge doc
@@ -64,3 +76,17 @@ forge doc
 ## Notes
 
 Document the ABI-facing surface first. Accurate NatSpec is especially important when external users read docs through generated metadata rather than source code.
+
+## Anti-patterns
+
+- documenting internal helpers more carefully than the public ABI surface
+- putting operational secrets or unsafe assumptions into `@dev` text that will be published
+- describing revert behavior or access control differently from what the code enforces
+- omitting event or custom-error documentation even though off-chain users rely on it
+- mixing NatSpec styles across contracts without checking emitted `userdoc` and `devdoc`
+
+## Reference starting points
+
+- [Solidity NatSpec Format](https://docs.soliditylang.org/en/latest/natspec-format.html)
+- [Solidity documentation](https://docs.soliditylang.org/)
+- repository conventions for `forge doc`, explorers, and emitted ABI metadata

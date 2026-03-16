@@ -41,6 +41,18 @@ Public Function BuildReport(ByVal request As Variant) As Variant
 End Function
 ```
 
+
+## Recommended header fields
+
+Keep the header vocabulary stable so legacy extractors can stay simple.
+
+- Name
+- Purpose
+- Parameters or Inputs
+- Returns when the member is a function
+- Side effects, COM expectations, or external dependencies
+- Errors, raised conditions, or special value conventions when callers depend on them
+
 ## External tool access
 
 VBDOX-style generators, legacy code analysis tooling
@@ -67,3 +79,17 @@ legacy code analysis and documentation tools
 ## Notes
 
 Preserve the team’s exact header field names when a legacy generator already depends on them. Consistency matters more than stylistic novelty here.
+
+## Anti-patterns
+
+- changing field labels from one module to another when VBDOX-style tooling expects consistency
+- documenting only the procedure name and omitting COM-visible behavior or side effects
+- leaving event handlers undocumented even when they are the real integration surface
+- placing headers above declarations other than the member they describe
+- copying legacy headers forward without checking whether parameter lists changed
+
+## Reference starting points
+
+- VBDOX or equivalent legacy generator configuration used by the codebase
+- team conventions for COM classes, forms, and event procedures
+- migration notes when VB6 modules are being ported to newer .NET or service layers

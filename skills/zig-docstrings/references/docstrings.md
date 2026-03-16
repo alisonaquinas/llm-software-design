@@ -37,6 +37,17 @@ pub fn build(request: ReportRequest) ReportSnapshot {
 }
 ```
 
+
+## Structural expectations
+
+Zig doc comments are emitted from the public declaration surface.
+
+- Put `///` comments directly on `pub` declarations that should appear in generated docs.
+- Keep the first sentence concise because generated HTML and editor hovers often surface only that line.
+- Prefer documenting public structs, enums, unions, functions, and error sets before tests or private helpers.
+- Use examples and safety notes when ownership, allocation, error unions, or comptime behavior matter to callers.
+- Re-check emitted docs after refactors because declaration order and visibility shape the public narrative.
+
 ## External tool access
 
 zig build docs, emitted HTML docs, editor help
@@ -63,3 +74,17 @@ zig test -femit-docs
 ## Notes
 
 Write comments on the public declaration that gets emitted into docs. Keep examples correct because they often become part of the generated narrative.
+
+## Anti-patterns
+
+- documenting private helpers more carefully than the exported `pub` surface
+- writing comments that contradict error unions, allocator requirements, or ownership behavior
+- relying on detached comments that do not attach to the actual public declaration
+- shipping examples that ignore comptime requirements or allocator setup
+- letting generated docs drift after visibility or declaration-order changes
+
+## Reference starting points
+
+- [Zig language documentation](https://ziglang.org/documentation/master/)
+- `zig build docs` or `zig test -femit-docs` output in the current repository
+- project conventions for allocator, error-set, and `pub` surface documentation

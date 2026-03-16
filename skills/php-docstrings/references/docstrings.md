@@ -50,6 +50,17 @@ function build(ReportRequest $request): ReportSnapshot
 }
 ```
 
+
+## Core tag set
+
+PHPDoc is most valuable when it fills gaps native syntax cannot carry by itself.
+
+- `@param`, `@return`, and `@throws` for the core contract
+- `@var` and `@property` when runtime-accessible shape matters on objects or arrays
+- `@template` and related tags when generics-like contracts matter to Psalm or PHPStan
+- `@deprecated` for migration guidance on still-supported APIs
+- keep native type hints and PHPDoc synchronized so static analysis and IDEs do not disagree
+
 ## External tool access
 
 phpDocumentor, Psalm, PHPStan, IDE hover help
@@ -76,3 +87,17 @@ phpstan analyse
 ## Notes
 
 Keep types synchronized with real signatures. Use PHPDoc to clarify generics, shapes, and exceptions that native syntax cannot express fully.
+
+## Anti-patterns
+
+- using PHPDoc to contradict native parameter or return types
+- documenting scalar types in prose but ignoring the real array shape, generic, or exception contract
+- copying class-level tags to methods that have materially different behavior
+- overusing `@throws` for generic runtime failures callers cannot act on
+- leaving stale examples after namespace, type, or template changes
+
+## Reference starting points
+
+- [phpDocumentor](https://docs.phpdoc.org/)
+- [PHPStan](https://phpstan.org/)
+- [Psalm](https://psalm.dev/)
