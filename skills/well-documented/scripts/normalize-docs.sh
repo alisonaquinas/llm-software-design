@@ -1,20 +1,17 @@
 #!/usr/bin/env bash
 # normalize-docs.sh — Non-destructively fill documentation gaps in a repository.
 #
-# Runs audit-docs.sh to find all FAILs and WARNs, then:
-#   - Creates missing required files using init-docs.sh (FAIL items only)
-#   - Extends thin AGENTS.md files with missing sections (WARN items)
-#   - Appends missing cross-references to AGENTS.md files
-#
-# Existing file content is ALWAYS preserved. This script only adds — it never
-# removes or rewrites content that is already present.
-#
-# Usage: normalize-docs.sh [-r ROOT] [-n NAME] [-y] [-q] [-h]
-#   -r ROOT   Repository root (default: current directory)
-#   -n NAME   Project name (default: basename of ROOT)
-#   -y        Skip confirmation prompt
-#   -q        Quiet — only show changes made
-#   -h        Show this help
+# Usage: normalize-docs.sh [-r ROOT] [-n NAME] [-d DESC] [--project-type TYPE]
+#                          [--maturity LEVEL] [--include-changelog] [-y] [-q] [-h]
+#   -r ROOT              Repository root (default: current directory)
+#   -n NAME              Project name (default: basename of ROOT)
+#   -d DESC              One-line project description for newly created README files
+#   --project-type TYPE  generic, library, cli, service, web-app, monorepo-package, data-pipeline
+#   --maturity LEVEL     minimal, standard, or full (default: standard)
+#   --include-changelog  Create CHANGELOG.md when the audit calls for it
+#   -y                   Skip confirmation prompt
+#   -q                   Quiet — only show essential changes
+#   -h, --help           Show this help
 
 set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -24,9 +21,12 @@ source "$SCRIPT_DIR/lib-common.sh"
 
 ROOT="$(pwd)"
 PROJECT_NAME=""
+PROJECT_DESC="Describe this project."
+PROJECT_TYPE="generic"
+MATURITY="standard"
+INCLUDE_CHANGELOG=false
 YES=false
 QUIET=false
-TODAY=$(date +%Y-%m-%d)
 
 usage() {
   grep '^# ' "$0" | sed 's/^# //'
@@ -35,148 +35,172 @@ usage() {
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    -r) ROOT="$2"; shift 2 ;;
-    -n) PROJECT_NAME="$2"; shift 2 ;;
-    -y) YES=true; shift ;;
-    -q) QUIET=true; shift ;;
-    -h|--help) usage ;;
-    --) shift; break ;;
-    *) printf 'unknown option: %s\n' "$1" >&2; exit 2 ;;
+    -r)
+      ROOT="$2"
+      shift 2
+      ;;
+    -n)
+      PROJECT_NAME="$2"
+      shift 2
+      ;;
+    -d)
+      PROJECT_DESC="$2"
+      shift 2
+      ;;
+    --project-type)
+      PROJECT_TYPE="$2"
+      shift 2
+      ;;
+    --maturity)
+      MATURITY="$2"
+      shift 2
+      ;;
+    --include-changelog)
+      INCLUDE_CHANGELOG=true
+      shift
+      ;;
+    -y)
+      YES=true
+      shift
+      ;;
+    -q)
+      QUIET=true
+      shift
+      ;;
+    -h|--help)
+      usage
+      ;;
+    *)
+      printf 'unknown option: %s\n' "$1" >&2
+      exit 2
+      ;;
   esac
 done
 
 ROOT="$(realpath "$ROOT")"
 [[ -z "$PROJECT_NAME" ]] && PROJECT_NAME="$(basename "$ROOT")"
 
-# ── dry-run audit to find gaps ───────────────────────────────────────────────
-
-echo "── Auditing $ROOT ..."
 AUDIT_OUT=$(mktemp)
 set +e
-bash "$SCRIPT_DIR/audit-docs.sh" -r "$ROOT" > "$AUDIT_OUT" 2>&1
+bash "$SCRIPT_DIR/audit-docs.sh" -r "$ROOT" --maturity "$MATURITY" > "$AUDIT_OUT" 2>&1
 AUDIT_EXIT=$?
 set -e
 
-# Show the audit summary
 cat "$AUDIT_OUT"
+FAILS=$(grep -c '^FAIL' "$AUDIT_OUT" || true)
+WARNS=$(grep -c '^WARN' "$AUDIT_OUT" || true)
 
-if (( AUDIT_EXIT == 0 )); then
+if (( FAILS == 0 && WARNS == 0 )); then
   echo ""
-  echo "No FAILs found — nothing to do."
+  echo "No gaps detected."
   rm -f "$AUDIT_OUT"
   exit 0
 fi
 
-# Count items to fix
-FAILS=$(grep -c '^FAIL' "$AUDIT_OUT" || true)
-WARNS=$(grep -c '^WARN' "$AUDIT_OUT" || true)
 echo ""
-printf "Found %d FAIL(s) and %d WARN(s) to address.\n" "$FAILS" "$WARNS"
-
-# ── confirmation ─────────────────────────────────────────────────────────────
+printf 'Found %d FAIL(s) and %d WARN(s).\n' "$FAILS" "$WARNS"
 
 if ! $YES; then
-  printf "Proceed with normalization? [y/N] "
+  printf 'Proceed with normalization? [y/N] '
   read -r answer
-  [[ "$answer" =~ ^[Yy]$ ]] || { echo "Aborted."; exit 0; }
+  [[ "$answer" =~ ^[Yy]$ ]] || { echo 'Aborted.'; rm -f "$AUDIT_OUT"; exit 0; }
 fi
 
-# ── fix missing root files (R-series FAILs) ──────────────────────────────────
+echo ""
+echo "── Creating root and baseline docs"
+INIT_ARGS=(
+  -r "$ROOT"
+  -n "$PROJECT_NAME"
+  -d "$PROJECT_DESC"
+  --project-type "$PROJECT_TYPE"
+  --maturity "$MATURITY"
+  -q
+)
+$INCLUDE_CHANGELOG && INIT_ARGS+=(--include-changelog)
+bash "$SCRIPT_DIR/init-docs.sh" "${INIT_ARGS[@]}"
 
 echo ""
-echo "── Fixing root-level gaps ..."
-bash "$SCRIPT_DIR/init-docs.sh" -r "$ROOT" -n "$PROJECT_NAME" -q
+echo "── Filling remaining directory gaps"
 
-# ── fix missing directory files (D-series FAILs) ─────────────────────────────
+create_dir_docs() {
+  local dir="$1"
+  local rel="${dir#"$ROOT/"}"
+  local links tmp
 
-echo ""
-echo "── Fixing per-directory gaps ..."
+  links=$(python3 - "$ROOT" "$dir" <<'PY'
+from pathlib import Path
+import os
+import sys
+root = Path(sys.argv[1]).resolve()
+dir_path = Path(sys.argv[2]).resolve()
+parent_rel = Path(os.path.relpath(dir_path.parent / 'AGENTS.md', dir_path)).as_posix()
+root_rel = Path(os.path.relpath(root / 'AGENTS.md', dir_path)).as_posix()
+print(f'- [Parent AGENTS.md]({parent_rel})')
+print(f'- [Root AGENTS.md]({root_rel})')
+PY
+)
 
-fix_missing_dir_file() {
-  local dir="$1" filename="$2"
+  if [[ ! -f "$dir/README.md" ]]; then
+    render_template "$ASSETS_DIR/templates/README.directory.md.tmpl" "$dir/README.md" "PROJECT_NAME=$rel"
+    printf '  create  %s/README.md\n' "$rel"
+  fi
 
-  case "$filename" in
-    README.md)
-      if [[ ! -f "$dir/README.md" ]]; then
-        local rel="${dir#"$ROOT/"}"
-        render_template \
-          "$ASSETS_DIR/templates/README.md.tmpl" \
-          "$dir/README.md" \
-          "PROJECT_NAME=$rel" \
-          "PROJECT_DESC=<TODO: describe what lives in this directory>" \
-          "TODAY=$TODAY"
-        printf "  create  %s/README.md\n" "$rel"
-      fi
-      ;;
-    AGENTS.md)
-      if [[ ! -f "$dir/AGENTS.md" ]]; then
-        local rel="${dir#"$ROOT/"}"
-        # Compute relative depth for parent link
-        local depth=0 tmp="$dir"
-        while [[ "$tmp" != "$ROOT" ]]; do tmp="$(dirname "$tmp")"; (( depth++ )) || true; done
-        local parent_link="../AGENTS.md"
-        render_template \
-          "$ASSETS_DIR/templates/AGENTS.md.tmpl" \
-          "$dir/AGENTS.md" \
-          "PROJECT_NAME=$rel" \
-          "DIR_LABEL=$rel" \
-          "PARENT_AGENTS_LINK=$parent_link" \
-          "TODAY=$TODAY"
-        printf "  create  %s/AGENTS.md\n" "$rel"
-      fi
-      ;;
-    CLAUDE.md)
-      if [[ ! -f "$dir/CLAUDE.md" ]]; then
-        local rel="${dir#"$ROOT/"}"
-        printf '# Claude Guidance\n\nSee [AGENTS.md](./AGENTS.md) for the authoritative instructions for this directory.\n' \
-          > "$dir/CLAUDE.md"
-        printf "  create  %s/CLAUDE.md\n" "$rel"
-      fi
-      ;;
-  esac
+  if [[ ! -f "$dir/AGENTS.md" ]]; then
+    tmp=$(mktemp)
+    render_template "$ASSETS_DIR/templates/AGENTS.md.tmpl" "$tmp" \
+      "DIR_LABEL=$rel" \
+      "PARENT_AGENTS_LINK=$links" \
+      "LAYOUT_TREE=$(generate_layout_tree "$dir")"
+    mv "$tmp" "$dir/AGENTS.md"
+    printf '  create  %s/AGENTS.md\n' "$rel"
+  fi
+
+  if [[ "$MATURITY" == "full" && ! -f "$dir/CLAUDE.md" ]]; then
+    cat > "$dir/CLAUDE.md" <<'STUB'
+# Claude Guidance
+
+See [AGENTS.md](./AGENTS.md) for the authoritative instructions for this directory.
+STUB
+    printf '  create  %s/CLAUDE.md\n' "$rel"
+  fi
 }
 
-# Parse FAIL lines for D-series to find which dirs need which files
-# Regex stored in a variable to avoid shell parsing issues with nested parens
-RE_DFAIL='^FAIL[[:space:]]+D0[124][[:space:]]+([A-Z.]+)[[:space:]]+\(([^/]+)/'
+RE_DIR_DOC='^(FAIL|WARN)[[:space:]]+D0[124][[:space:]]+.*\(([^)]+)\/\)'
+RE_DIR_XREF='^WARN[[:space:]]+D03[[:space:]]+AGENTS\.md[[:space:]]+\(([^)]+)\/\)'
+
 while IFS= read -r line; do
-  if [[ "$line" =~ $RE_DFAIL ]]; then
-    local_file="${BASH_REMATCH[1]}"
+  if [[ "$line" =~ $RE_DIR_DOC ]]; then
     rel_dir="${BASH_REMATCH[2]}"
     abs_dir="$ROOT/$rel_dir"
-    [[ "$rel_dir" == "." ]] && abs_dir="$ROOT"
-    fix_missing_dir_file "$abs_dir" "$local_file"
+    [[ -d "$abs_dir" ]] || continue
+    create_dir_docs "$abs_dir"
   fi
-done < "$AUDIT_OUT"
 
-# ── fix AGENTS.md WARNs: missing cross-references ────────────────────────────
-
-echo ""
-echo "── Appending missing cross-references ..."
-RE_D03WARN='^WARN[[:space:]]+D03[[:space:]]+AGENTS\.md[[:space:]]+\(([^/]+)/'
-while IFS= read -r line; do
-  if [[ "$line" =~ $RE_D03WARN ]]; then
+  if [[ "$line" =~ $RE_DIR_XREF ]]; then
     rel_dir="${BASH_REMATCH[1]}"
     agents_file="$ROOT/$rel_dir/AGENTS.md"
-    [[ ! -f "$agents_file" ]] && continue
-
-    # Don't add if a See Also section already exists
-    if grep -qiP '^## see also' "$agents_file"; then
-      $QUIET || printf "  skip  %s/AGENTS.md (See Also already present)\n" "$rel_dir"
-      continue
+    if [[ -f "$agents_file" ]] && ! grep -qi '^## See Also' "$agents_file"; then
+      links=$(python3 - "$ROOT" "$ROOT/$rel_dir" <<'PY'
+from pathlib import Path
+import os
+import sys
+root = Path(sys.argv[1]).resolve()
+dir_path = Path(sys.argv[2]).resolve()
+parent_rel = Path(os.path.relpath(dir_path.parent / 'AGENTS.md', dir_path)).as_posix()
+root_rel = Path(os.path.relpath(root / 'AGENTS.md', dir_path)).as_posix()
+print(f'- [Parent AGENTS.md]({parent_rel})')
+print(f'- [Root AGENTS.md]({root_rel})')
+PY
+)
+      printf '\n## See Also\n\n%s\n' "$links" >> "$agents_file"
+      printf '  append  %s/AGENTS.md — added See Also\n' "$rel_dir"
     fi
-
-    printf "\n## See Also\n\n- [Parent AGENTS.md](../AGENTS.md)\n- [Root AGENTS.md](%s/AGENTS.md)\n" \
-      "$(python3 -c "import os; print(os.path.relpath('$ROOT', '$ROOT/$rel_dir'))" 2>/dev/null || echo "../..")" \
-      >> "$agents_file"
-    printf "  append  %s/AGENTS.md — added See Also cross-references\n" "$rel_dir"
   fi
 done < "$AUDIT_OUT"
 
-# ── re-run audit for final score ─────────────────────────────────────────────
-
 echo ""
-echo "── Post-normalization audit ..."
-bash "$SCRIPT_DIR/audit-docs.sh" -r "$ROOT" -q || true
+echo "── Post-normalization audit"
+bash "$SCRIPT_DIR/audit-docs.sh" -r "$ROOT" --maturity "$MATURITY" -q || true
 
 rm -f "$AUDIT_OUT"
+exit "$AUDIT_EXIT"

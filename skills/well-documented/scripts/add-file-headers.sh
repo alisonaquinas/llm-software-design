@@ -1,15 +1,10 @@
 #!/usr/bin/env bash
-# add-file-headers.sh — Add file-level header comments to undocumented source files.
-#
-# Walks the target directory, detects the language from file extension, and
-# prepends a header block to any file that lacks one. Existing headers are
-# NEVER overwritten; files with any header comment in the first 10 lines are
-# skipped (their formatting takes precedence).
+# add-file-headers.sh — Add bootstrap file-level header comments to undocumented source files.
 #
 # Usage: add-file-headers.sh [-t TARGET] [-d DESC] [-y] [-n] [-h]
 #   -t TARGET   Directory or file to process (default: current directory)
-#   -d DESC     Module description to embed (default: "<TODO: describe this file>")
-#   -y          Skip confirmation (process all eligible files without prompting)
+#   -d DESC     Description to seed the header (default: "Describe this file")
+#   -y          Skip confirmation prompt
 #   -n          Dry run — show what would be modified without writing
 #   -h          Show this help
 
@@ -19,7 +14,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/lib-common.sh"
 
 TARGET="$(pwd)"
-DEFAULT_DESC="<TODO: describe this file>"
+DEFAULT_DESC="Describe this file."
 YES=false
 DRY_RUN=false
 
@@ -42,198 +37,323 @@ done
 
 TARGET="$(realpath "$TARGET")"
 
-# ── language detection ────────────────────────────────────────────────────────
+if [[ -d "$TARGET" && "$YES" == false && "$DRY_RUN" == false ]]; then
+  printf 'Add bootstrap headers under %s? [y/N] ' "$TARGET"
+  read -r answer
+  [[ "$answer" =~ ^[Yy]$ ]] || { echo 'Aborted.'; exit 0; }
+fi
 
 detect_language() {
   local file="$1"
   case "${file##*.}" in
-    py)              echo "python" ;;
-    js|mjs|cjs)      echo "javascript" ;;
-    ts|mts|cts)      echo "typescript" ;;
-    jsx)             echo "javascript" ;;
-    tsx)             echo "typescript" ;;
-    java)            echo "java" ;;
-    cs)              echo "csharp" ;;
-    cpp|cxx|cc)      echo "cpp" ;;
-    c)               echo "c" ;;
-    h|hpp|hxx)       echo "c" ;;
-    go)              echo "go" ;;
-    rb)              echo "ruby" ;;
-    rs)              echo "rust" ;;
-    kt|kts)          echo "kotlin" ;;
-    swift)           echo "swift" ;;
-    sh|bash)         echo "bash" ;;
-    zsh)             echo "bash" ;;
-    ps1|psm1)        echo "powershell" ;;
-    sql)             echo "sql" ;;
-    r|R)             echo "r" ;;
-    php)             echo "php" ;;
-    ex|exs)          echo "elixir" ;;
-    erl|hrl)         echo "erlang" ;;
-    hs)              echo "haskell" ;;
-    lua)             echo "lua" ;;
-    jl)              echo "julia" ;;
-    ml|mli)          echo "ocaml" ;;
-    scala)           echo "scala" ;;
-    dart)            echo "dart" ;;
-    *)               echo "" ;;
+    py) echo python ;;
+    js|mjs|cjs|jsx) echo javascript ;;
+    ts|mts|cts|tsx) echo typescript ;;
+    java) echo java ;;
+    cs) echo csharp ;;
+    cpp|cxx|cc) echo cpp ;;
+    c|h|hpp|hxx) echo c ;;
+    go) echo go ;;
+    rb) echo ruby ;;
+    rs) echo rust ;;
+    kt|kts) echo kotlin ;;
+    swift) echo swift ;;
+    sh|bash|zsh) echo bash ;;
+    ps1|psm1) echo powershell ;;
+    sql) echo sql ;;
+    r|R) echo r ;;
+    php) echo php ;;
+    ex|exs) echo elixir ;;
+    *) echo '' ;;
   esac
 }
 
-# ── header-presence detection ────────────────────────────────────────────────
-# Returns 0 (true) if the file already starts with a recognisable header block
-
 has_header() {
   local file="$1"
-  # Read first 10 non-blank lines
-  local first10
-  first10=$(grep -m10 '\S' "$file" 2>/dev/null | head -10 || true)
-
-  # Python: module docstring
-  echo "$first10" | grep -qP '^"""' && return 0
-  echo "$first10" | grep -qP "^'''" && return 0
-  # Block comment (/* ... */  or /** ... */)
-  echo "$first10" | grep -qP '^/[*/]' && return 0
-  # Line comment with keyword hint
-  echo "$first10" | grep -qiP '^(#|//|--|;)\s*(file|module|package|brief|author|description|provides|purpose|this (file|module|script))' && return 0
-  # Rust inner doc
-  echo "$first10" | grep -qP '^//!' && return 0
-  # Go package doc
-  echo "$first10" | grep -qP '^// Package ' && return 0
-  # Shell shebang + following comment
-  if echo "$first10" | grep -qP '^#!'; then
-    echo "$first10" | tail -n +2 | grep -qP '^#' && return 0
+  local first_lines
+  first_lines=$(grep -m20 '\S' "$file" 2>/dev/null | head -20 || true)
+  echo "$first_lines" | grep -q '^"""' && return 0
+  echo "$first_lines" | grep -q "^'''" && return 0
+  echo "$first_lines" | grep -qP '^/[*/]|^//!|^// Package ' && return 0
+  echo "$first_lines" | grep -qiP '^(#|//|--|;|///)\s*(BOOTSTRAP HEADER|purpose:|provides:|role in system:|@file|@brief|summary)' && return 0
+  if echo "$first_lines" | grep -qP '^#!'; then
+    echo "$first_lines" | tail -n +2 | grep -qP '^(#|//|///)' && return 0
   fi
   return 1
 }
 
-# ── header generation ─────────────────────────────────────────────────────────
+is_generated_like_file() {
+  local file="$1"
+  [[ "$file" == *'.min.js' || "$file" == *'.min.css' || "$file" == *'.designer.cs' || "$file" == *'/generated/'* ]]
+}
 
 make_header() {
   local lang="$1" filename="$2" desc="$3"
-  local basename
+  local basename pkg
   basename="$(basename "$filename")"
-
   case "$lang" in
     python)
-      printf '"""\n%s\n\nProvides: <TODO: list key exports>\n\n<TODO: how this file fits into the system>\n"""\n' "$desc"
+      cat <<PY
+"""
+BOOTSTRAP HEADER: refine before merge.
+
+Purpose: $desc
+
+Provides: <list key exports>
+
+Role in system: <describe how this file fits into the system>
+"""
+PY
       ;;
     javascript|typescript)
-      printf '/**\n * %s\n *\n * Provides: {@link TODO}\n *\n * <TODO: how this file fits into the system>\n *\n * @module %s\n */\n' \
-        "$desc" "${basename%.*}"
+      cat <<TS
+/**
+ * BOOTSTRAP HEADER: refine before merge.
+ *
+ * Purpose: $desc
+ *
+ * Provides: {@link TODO}
+ *
+ * Role in system: <describe how this file fits into the system>
+ *
+ * @module ${basename%.*}
+ */
+TS
       ;;
     java)
-      printf '/**\n * %s\n *\n * <p>Provides: {@link TODO}\n *\n * <p><TODO: how this class fits into the system>\n */\n' "$desc"
+      cat <<JAVA
+/**
+ * BOOTSTRAP HEADER: refine before merge.
+ *
+ * Purpose: $desc
+ *
+ * <p>Provides: {@link TODO}
+ *
+ * <p>Role in system: <describe how this file fits into the system>
+ */
+JAVA
       ;;
     csharp)
-      printf '/// <summary>\n/// %s\n/// </summary>\n/// <remarks>\n/// Provides: <see cref="TODO"/>\n/// <TODO: how this class fits into the system>\n/// </remarks>\n' "$desc"
+      cat <<CS
+/// <summary>
+/// BOOTSTRAP HEADER: refine before merge.
+/// </summary>
+/// <remarks>
+/// Purpose: $desc
+/// Provides: <see cref="TODO"/>
+/// Role in system: <describe how this file fits into the system>
+/// </remarks>
+CS
       ;;
     cpp|c)
-      printf '/**\n * @file %s\n * @brief %s\n *\n * Provides: TODO\n *\n * <TODO: how this file fits into the system>\n */\n' \
-        "$basename" "$desc"
+      cat <<CXX
+/**
+ * @file $basename
+ * @brief BOOTSTRAP HEADER: refine before merge.
+ *
+ * Purpose: $desc
+ *
+ * Provides: TODO
+ *
+ * Role in system: <describe how this file fits into the system>
+ */
+CXX
       ;;
     go)
-      local pkg
-      pkg=$(grep -oP '^package \K\w+' "$filename" 2>/dev/null | head -1 || echo "TODO")
-      printf '// Package %s %s\n//\n// It provides TODO.\n//\n// <TODO: how this package fits into the system>\n' \
-        "$pkg" "$desc"
+      pkg=$(grep -oP '^package\s+\K\w+' "$filename" 2>/dev/null | head -1 || true)
+      [[ -z "$pkg" ]] && pkg=TODO
+      cat <<GO
+// Package $pkg BOOTSTRAP HEADER: refine before merge.
+//
+// Purpose: $desc
+//
+// Provides: TODO
+//
+// Role in system: <describe how this file fits into the system>
+GO
       ;;
     ruby)
-      printf '# frozen_string_literal: true\n\n# %s\n#\n# Provides: TODO\n#\n# <TODO: how this file fits into the system>\n' "$desc"
+      cat <<RUBY
+# frozen_string_literal: true
+#
+# BOOTSTRAP HEADER: refine before merge.
+#
+# Purpose: $desc
+#
+# Provides: TODO
+#
+# Role in system: <describe how this file fits into the system>
+RUBY
       ;;
     rust)
-      printf '//! %s\n//!\n//! Provides: [`TODO`]\n//!\n//! <TODO: how this module fits into the system>\n' "$desc"
+      cat <<RUST
+//! BOOTSTRAP HEADER: refine before merge.
+//!
+//! Purpose: $desc
+//!
+//! Provides: [TODO]
+//!
+//! Role in system: <describe how this file fits into the system>
+RUST
       ;;
     kotlin)
-      printf '/**\n * %s\n *\n * Provides: [TODO]\n *\n * <TODO: how this file fits into the system>\n */\n' "$desc"
+      cat <<KOTLIN
+/**
+ * BOOTSTRAP HEADER: refine before merge.
+ *
+ * Purpose: $desc
+ *
+ * Provides: [TODO]
+ *
+ * Role in system: <describe how this file fits into the system>
+ */
+KOTLIN
       ;;
     swift)
-      printf '/// %s\n///\n/// Provides: ``TODO``\n///\n/// <TODO: how this file fits into the system>\n' "$desc"
+      cat <<SWIFT
+/// BOOTSTRAP HEADER: refine before merge.
+///
+/// Purpose: $desc
+///
+/// Provides: TODO
+///
+/// Role in system: <describe how this file fits into the system>
+SWIFT
       ;;
     bash)
-      printf '#!/usr/bin/env bash\n# %s\n#\n# Usage: %s [OPTIONS]\n#\n# <TODO: how this script fits into the system>\n#\n# Dependencies: none\n# Exit codes: 0 success, 1 error\n' \
-        "$desc" "$basename"
+      cat <<BASH
+# BOOTSTRAP HEADER: refine before merge.
+#
+# Purpose: $desc
+#
+# Provides: TODO
+#
+# Role in system: <describe how this file fits into the system>
+BASH
       ;;
     powershell)
-      printf '<#\n.SYNOPSIS\n    %s\n.DESCRIPTION\n    <TODO: how this script fits into the system>\n.NOTES\n    Provides: TODO\n#>\n' "$desc"
+      cat <<POWERSHELL
+<#
+.SYNOPSIS
+    BOOTSTRAP HEADER: refine before merge.
+.DESCRIPTION
+    Purpose: $desc
+.NOTES
+    Provides: TODO
+    Role in system: <describe how this file fits into the system>
+#>
+POWERSHELL
       ;;
     sql)
-      printf '-- %s\n--\n-- Provides: TODO\n--\n-- <TODO: how this script fits into the data model>\n' "$desc"
+      cat <<SQL
+-- BOOTSTRAP HEADER: refine before merge.
+--
+-- Purpose: $desc
+--
+-- Provides: TODO
+--
+-- Role in system: <describe how this file fits into the data model>
+SQL
       ;;
     r)
-      printf "#' %s\n#'\n#' Provides: TODO\n#'\n#' @description <TODO: how this file fits into the system>\n" "$desc"
+      cat <<R
+#' BOOTSTRAP HEADER: refine before merge.
+#'
+#' Purpose: $desc
+#'
+#' Provides: TODO
+#'
+#' @description <describe how this file fits into the system>
+R
       ;;
     elixir)
-      printf '@moduledoc """\n%s\n\nProvides: TODO\n\n<TODO: how this module fits into the system>\n"""\n' "$desc"
+      cat <<ELIXIR
+@moduledoc """
+BOOTSTRAP HEADER: refine before merge.
+
+Purpose: $desc
+
+Provides: TODO
+
+Role in system: <describe how this module fits into the system>
+"""
+ELIXIR
       ;;
     *)
-      # Generic: use # comment style
-      printf '# %s\n#\n# Provides: TODO\n#\n# <TODO: how this file fits into the system>\n' "$desc"
+      cat <<GENERIC
+# BOOTSTRAP HEADER: refine before merge.
+#
+# Purpose: $desc
+#
+# Provides: TODO
+#
+# Role in system: <describe how this file fits into the system>
+GENERIC
       ;;
   esac
 }
 
-# ── prepend header to file ────────────────────────────────────────────────────
-
 prepend_header() {
-  local file="$1" header="$2"
+  local file="$1" header="$2" lang="$3"
   local tmp
   tmp=$(mktemp)
-  printf '%s\n' "$header" > "$tmp"
-  # Preserve shebang if the language is bash and the file already starts with one
   if head -1 "$file" | grep -qP '^#!'; then
-    # Header already includes shebang for bash; don't double up
-    :
+    head -1 "$file" > "$tmp"
+    printf '\n%s\n' "$header" >> "$tmp"
+    tail -n +2 "$file" >> "$tmp"
+  else
+    if [[ "$lang" == "bash" ]]; then
+      printf '#!/usr/bin/env bash\n\n%s\n' "$header" > "$tmp"
+      cat "$file" >> "$tmp"
+    else
+      printf '%s\n' "$header" > "$tmp"
+      cat "$file" >> "$tmp"
+    fi
   fi
-  cat "$file" >> "$tmp"
   mv "$tmp" "$file"
 }
-
-# ── walk files ────────────────────────────────────────────────────────────────
 
 MODIFIED=0
 SKIPPED=0
 
 process_file() {
-  local file="$1"
-  local lang
+  local file="$1" lang rel header
   lang=$(detect_language "$file")
-  [[ -z "$lang" ]] && return  # unsupported extension → skip
-
-  local rel="${file#"$TARGET/"}"
+  [[ -z "$lang" ]] && return
   is_excluded_dir "$(dirname "$file")/" && return
+  is_generated_like_file "$file" && return
 
   if has_header "$file"; then
     (( SKIPPED++ )) || true
     return
   fi
 
+  rel="${file#"$TARGET/"}"
+  [[ "$file" == "$TARGET" ]] && rel="$(basename "$file")"
+
   if $DRY_RUN; then
-    printf "  would add  %s (%s)\n" "$rel" "$lang"
+    printf '  would add  %s (%s)\n' "$rel" "$lang"
     (( MODIFIED++ )) || true
     return
   fi
 
-  local header
   header=$(make_header "$lang" "$file" "$DEFAULT_DESC")
-  prepend_header "$file" "$header"
-  printf "  added  %s (%s)\n" "$rel" "$lang"
+  prepend_header "$file" "$header" "$lang"
+  printf '  added  %s (%s)\n' "$rel" "$lang"
   (( MODIFIED++ )) || true
 }
 
 if [[ -f "$TARGET" ]]; then
   process_file "$TARGET"
 else
-  while IFS= read -r f; do
-    process_file "$f"
+  while IFS= read -r file; do
+    process_file "$file"
   done < <(find "$TARGET" -type f | sort)
 fi
 
 echo ""
 if $DRY_RUN; then
-  printf "Dry run: %d file(s) would be modified, %d skipped (already have headers).\n" \
-    "$MODIFIED" "$SKIPPED"
+  printf 'Dry run: %d file(s) would be modified, %d skipped.\n' "$MODIFIED" "$SKIPPED"
 else
-  printf "Done: %d file(s) modified, %d skipped (already have headers).\n" \
-    "$MODIFIED" "$SKIPPED"
+  printf 'Done: %d file(s) modified, %d skipped.\n' "$MODIFIED" "$SKIPPED"
 fi

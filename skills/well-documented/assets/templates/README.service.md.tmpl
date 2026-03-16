@@ -1,0 +1,40 @@
+# {{PROJECT_NAME}}
+
+> {{PROJECT_DESC}}
+
+## Service purpose
+
+Explain the service boundary, the clients or upstream systems that call it, and the responsibilities it explicitly does not own.
+
+## Local startup
+
+Document the shortest real path to run the service locally.
+
+```bash
+<install command>
+<start command>
+```
+
+## Request flow
+
+Describe the request or job lifecycle from ingress to downstream dependencies. Add a PlantUML diagram when the flow has multiple hops or queues.
+
+## Interfaces
+
+List the main endpoints, handlers, queues, events, or scheduled jobs.
+
+## Configuration and dependencies
+
+Document required services, credentials, environment variables, ports, and data stores.
+
+## Observability and operations
+
+Explain logs, health checks, metrics, tracing hooks, and the first place to look when the service misbehaves.
+
+## Development workflow
+
+Document test, lint, migration, and verification commands.
+
+## License
+
+See [LICENSE.md](./LICENSE.md) for license information.

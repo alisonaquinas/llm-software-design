@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- added evidence-first tooling and references to `well-documented`, including documentation maturity levels, project-type README templates, truth-and-freshness audit guidance, and new unit tests for the helper scripts
+
+### Changed
+
+- made `well-documented` adaptive instead of recursive-by-default: `audit-docs`, `init-docs`, and `normalize-docs` now support `minimal`, `standard`, and `full` maturity levels
+- upgraded `well-documented/scripts/audit-docs.sh` to check broken markdown links, unresolved local path references, missing local script or Make-target references, bootstrap-marker drift, and git freshness signals when available
+- upgraded `well-documented/scripts/init-docs.sh` and `normalize-docs.sh` to use project-type-aware root README templates and a lighter default baseline
+- upgraded `well-documented/scripts/add-file-headers.sh` so generated headers are explicitly marked as bootstrap text and shell shebangs are preserved cleanly
+- replaced placeholder-heavy `well-documented` templates with more actionable scaffolds and added root README variants for library, cli, service, web app, monorepo package, and data pipeline repositories
+
 ### Fixed
 
 - `well-documented/scripts/audit-docs.sh` R06 abort: added `|| true` guard to

@@ -1,45 +1,55 @@
 # Repository Documentation Structure Standard
 
-## Required files at every level
+This standard defines **what good documentation looks like**, but it does not force the same file set into every repository or every directory. Choose a documentation maturity level first, then apply these expectations.
 
-### Root of the repository
+## Root-level baseline
 
-| File | Audience | Required | Purpose |
+### Always high-value
+
+| File | Audience | Typical expectation | Notes |
 | --- | --- | --- | --- |
+| `README.md` | Humans | Strongly expected | Explain purpose, setup, usage, and development flow |
+| `AGENTS.md` | AI agents | Strongly expected | Explain layout, workflows, invariants, and safe-editing rules |
+| `CLAUDE.md` | Claude Code | Expected when Claude workflows matter | Keep it as a stub or symlink to `AGENTS.md` plus any Claude-specific overrides |
 
-| `README.md` | Humans | Yes | Project overview, install, usage, contributing |
-| `AGENTS.md` | AI agents | Yes | Repo layout, workflows, invariants, modification rules |
-| `CLAUDE.md` | Claude Code | Yes | Stub pointing to `AGENTS.md`; place Claude-specific overrides here |
-| `CONCEPTS.md` | Humans + AI | Yes | Glossary of domain concepts with cross-references |
+### Depends on repository shape
 
-| `CHANGELOG.md` | Humans | Yes | Release history (Keep a Changelog format) |
-| `docs/` | Humans | Recommended | Design documents, architecture, ADRs, diagrams |
+| File | Audience | When it becomes important |
+| --- | --- | --- |
+| `CONCEPTS.md` | Humans + AI | When the domain language is non-obvious or reused across many files |
+| `CHANGELOG.md` | Humans | When the project publishes releases, tracks notable changes, or has external consumers |
+| `docs/` | Humans | When the structure, architecture, or design decisions are too large for the README |
 
-### Every directory containing source files (recursive)
+## Maturity-based expectations
 
-| File | Audience | Required | Purpose |
-| --- | --- | --- | --- |
+### Minimal
 
-| `README.md` | Humans | Yes | What lives here, why, how to use it |
-| `AGENTS.md` | AI agents | Yes | Directory layout, modification rules, invariants, cross-references |
-| `CLAUDE.md` | Claude Code | Yes | Stub or symlink to `AGENTS.md` in same directory |
+At `minimal`, the root docs carry most of the load. Folder-level docs are opt-in and should be created only where they clearly reduce confusion.
 
-Exceptions (no folder docs required):
+### Standard
 
-- Auto-generated directories: `node_modules/`, `vendor/`, `.venv/`, `__pycache__/`, `dist/`, `out/`, `build/`
+At `standard`, document the root plus any **doc-worthy directory**:
 
-- Version-control internals: `.git/`
+- public API boundaries
+- entrypoint directories such as `src/`, `app/`, `packages/`, `services/`, `cmd/`, `api/`, `scripts/`
+- high-change areas with local invariants
+- directories with multiple important submodules
 
-- Pure asset directories with no logic: `assets/`, `images/`, `icons/` (README still recommended)
+### Full
 
----
+At `full`, every meaningful source directory should usually have:
 
+- a local `README.md` for humans
+- a local `AGENTS.md` for agents
+- a `CLAUDE.md` stub or symlink when the workflow expects it
+
+This is the explicit opt-in maturity for recursive folder docs.
 
 ## docs/ folder structure
 
-The `docs/` folder holds long-form design and reference documentation intended for human readers. It should be organized around the project's major concerns, not its code structure.
+The `docs/` folder holds long-form design and reference documentation intended for human readers. Organize it around the project's major concerns, not around every source directory.
 
-### Recommended layout
+Recommended layout:
 
 ```text
 docs/
@@ -48,115 +58,85 @@ docs/
 ├── design/                # detailed design documents
 │   ├── README.md
 │   ├── <feature>.md
-│   └── decisions/         # Architecture Decision Records (ADRs)
+│   └── decisions/         # architecture decision records
 │       ├── README.md
 │       └── 0001-<title>.md
-└── api/                   # public API reference (if not auto-generated)
+└── api/                   # public API reference when not auto-generated
     └── README.md
-```text
+```
 
-### Diagrams in human-centered documents
+## Diagrams in human-centered documents
 
-**PlantUML is the preferred diagramming tool** for embedding visual structure in `README.md`, `docs/` files, and any human-centered documentation.
+**PlantUML is the preferred diagramming tool** for embedding visual structure in `README.md`, `docs/` files, and other human-centered documentation.
 
 Use PlantUML for:
 
-- Class and object diagrams (OOP structure)
-
-- Sequence diagrams (interactions, workflows)
-
-- Component and deployment diagrams (architecture)
-
-- Activity and state diagrams (process flows)
-
-- Use-case diagrams (user interactions)
-
-- Mind maps (concept relationships)
+- class and object diagrams
+- sequence diagrams
+- component and deployment diagrams
+- activity and state diagrams
+- use-case diagrams
+- mind maps for concept relationships
 
 Embed as fenced code blocks:
 
 ````markdown
-
 ```plantuml
 @startuml
 <diagram content>
 @enduml
-```text
-
+```
 ````
 
-Or generate `.svg`/`.png` outputs and reference them as images.
+Or generate `.svg` or `.png` outputs and reference them as images.
 
-PlantUML diagrams must be kept in sync with the code they describe. When a diagram references class names, method names, or component names that change in code, update the diagram in the same commit.
+Keep diagrams in sync with the code they describe. When a diagram references names that change, update the diagram in the same change set.
 
-Do not use PlantUML in `AGENTS.md` files — AI agents read those as plain text. Use ASCII art or table-based diagrams in `AGENTS.md` instead.
-
----
-
+Do not use PlantUML in `AGENTS.md` files. Use ASCII trees or tables there.
 
 ## README.md standard sections
 
-A complete human-centered `README.md` contains:
+A complete human-centered root `README.md` usually contains:
 
-1. **Title** — project name as `# Heading`
+1. title
+2. one-line description
+3. overview or architecture
+4. prerequisites
+5. installation or setup
+6. usage
+7. configuration
+8. development workflow
+9. contributing guidance
+10. license
 
-2. **One-line description** — what it does, for whom
+Project-type templates can legitimately emphasize a different order, but the README should still answer those questions somewhere.
 
-3. **Badges** (optional) — CI status, version, license
+A folder-level `README.md` can be lighter. It should at least explain:
 
-4. **Table of contents** (for files longer than ~150 lines)
-
-5. **Overview / Architecture** — 2–4 paragraphs; include a PlantUML diagram when structure is non-trivial
-
-6. **Prerequisites** — system requirements, required tools
-
-7. **Installation** — exact steps to set up
-
-8. **Usage** — concrete examples; command-line invocations or code snippets
-
-9. **Configuration** — environment variables, config files, options
-
-10. **Development** — how to set up a dev environment, run tests, lint
-
-11. **Contributing** — branch strategy, PR process, code style expectations
-
-12. **License** — one-liner referencing `LICENSE.md` or the SPDX identifier
-
-Missing sections are a `WARN` during `audit-docs`, not a `FAIL`, unless the section is essential for the project type.
-
----
-
+- what lives in the directory
+- why the directory exists
+- the most likely entrypoints or edit surfaces
+- links to deeper docs when they exist
 
 ## AGENTS.md standard sections
 
-A complete AI-agent-centered `AGENTS.md` contains:
+A complete `AGENTS.md` usually contains:
 
-1. **What this is** — one sentence.
+1. what this area is for
+2. layout
+3. common workflows
+4. invariants
+5. cross-references
 
-2. **Layout** — ASCII tree or table of files and directories, each with a one-line description.
-
-3. **Workflows** — step-by-step procedures for the most common modification tasks.
-
-4. **Invariants** — explicit "Do Not Violate" list of structural or semantic rules.
-
-5. **Cross-references** — links to parent, sibling, and child `AGENTS.md` files; any globally relevant docs.
-
-Cross-reference format at depth > 0:
+Cross-reference format at depth greater than zero:
 
 ```markdown
 ## See Also
 
-
 - [Parent AGENTS.md](../AGENTS.md)
-
 - [Root AGENTS.md](../../AGENTS.md)
-
 - [Sibling module AGENTS.md](../sibling/AGENTS.md)
-
-```text
-
----
-
+```
 
 ## CONCEPTS.md standard structure
 
@@ -168,40 +148,35 @@ Cross-reference format at depth > 0:
 <One paragraph of prose: what it is, why it matters, how it fits into the project.>
 
 **See also:** [path/to/related.md](path/to/related.md), [`$skill-name`], [Other Concept](#other-concept)
-
-```text
+```
 
 Rules:
 
-- Each concept gets exactly one paragraph (3–7 sentences).
-
-- "See also" line uses relative paths for local files, backtick-prefixed names for skills.
-
-- Concepts are alphabetically sorted unless grouping by domain is clearer.
-
-- Every concept mentioned in `README.md`, `AGENTS.md`, or `docs/` that is not self-evident belongs in `CONCEPTS.md`.
-
----
-
+- each concept gets one focused paragraph
+- `See also` lines use relative paths for local files and backticked skill names for skills
+- concepts are alphabetized unless domain grouping is clearer
+- concepts should explain vocabulary that is reused across code and docs, not obvious English words
 
 ## CLAUDE.md conventions
 
-Root `CLAUDE.md` is read automatically by Claude Code. It should:
-
-- Be brief (under 20 lines) — point to `AGENTS.md` for authoritative instructions.
-
-- Include any Claude Code-specific overrides not in `AGENTS.md` (e.g., tool permissions, MCP config notes).
-
-- Never duplicate content from `AGENTS.md`.
+Root `CLAUDE.md` should be brief and point to `AGENTS.md` for authoritative instructions.
 
 Sub-directory `CLAUDE.md` options:
 
-- **Symbolic link** (Linux/macOS): `ln -s AGENTS.md CLAUDE.md`
+- symbolic link on platforms that support it
+- short stub file on platforms where symlinks are awkward
 
-- **Stub file** (Windows or when symlinks are unavailable):
+Example stub:
 
-  ```markdown
-  # Claude Guidance
+```markdown
+# Claude Guidance
 
-  See [AGENTS.md](./AGENTS.md) for the authoritative instructions for this directory.
-```text
+See [AGENTS.md](./AGENTS.md) for the authoritative instructions for this directory.
+```
+
+## What to avoid
+
+- recursive folder-doc requirements as the default starting point
+- duplicate content between `AGENTS.md` and `CLAUDE.md`
+- placeholder-heavy docs that look complete but are not trustworthy
+- diagrams or layout sections that were never updated after the code changed

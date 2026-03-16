@@ -1,8 +1,5 @@
 #!/usr/bin/env bash
 # lib-common.sh — shared utilities for well-documented helper scripts
-#
-# Source this file from other scripts:
-#   source "$(dirname "$0")/lib-common.sh"
 
 # ── colour support ──────────────────────────────────────────────────────────
 if [[ -t 1 ]] && command -v tput &>/dev/null; then
@@ -22,11 +19,11 @@ FAIL_COUNT=0
 SKIP_COUNT=0
 
 # ── output helpers ──────────────────────────────────────────────────────────
-log_pass() { printf "${GRN}PASS${RST}  %s\n"  "$*"; (( PASS_COUNT++ )) || true; }
-log_warn() { printf "${YEL}WARN${RST}  %s\n"  "$*"; (( WARN_COUNT++ )) || true; }
-log_fail() { printf "${RED}FAIL${RST}  %s\n"  "$*"; (( FAIL_COUNT++ )) || true; }
-log_skip() { printf "${DIM}SKIP${RST}  %s\n"  "$*"; (( SKIP_COUNT++ )) || true; }
-log_info() { printf "      %s\n"              "$*"; }
+log_pass() { printf "${GRN}PASS${RST}  %s\n" "$*"; (( PASS_COUNT++ )) || true; }
+log_warn() { printf "${YEL}WARN${RST}  %s\n" "$*"; (( WARN_COUNT++ )) || true; }
+log_fail() { printf "${RED}FAIL${RST}  %s\n" "$*"; (( FAIL_COUNT++ )) || true; }
+log_skip() { printf "${DIM}SKIP${RST}  %s\n" "$*"; (( SKIP_COUNT++ )) || true; }
+log_info() { printf "      %s\n" "$*"; }
 
 score_report() {
   local total=$(( PASS_COUNT + WARN_COUNT + FAIL_COUNT ))
@@ -39,14 +36,13 @@ score_report() {
 }
 
 # ── directory exclusion ─────────────────────────────────────────────────────
-# Returns exit code 0 (true) if a path component matches an excluded pattern
 is_excluded_dir() {
   local path="$1"
   local excluded=(
     node_modules vendor .venv venv __pycache__
     dist out build .git .cache
-    ".next" ".nuxt" ".svelte-kit" ".parcel-cache"
-    coverage ".nyc_output" target
+    .next .nuxt .svelte-kit .parcel-cache
+    coverage .nyc_output target
   )
   for ex in "${excluded[@]}"; do
     if [[ "$path" == *"/$ex/"* || "$path" == *"/$ex" ]]; then
@@ -56,9 +52,72 @@ is_excluded_dir() {
   return 1
 }
 
+# ── source file helpers ─────────────────────────────────────────────────────
+is_source_file() {
+  local file="$1"
+  case "${file##*.}" in
+    py|js|mjs|cjs|ts|mts|cts|jsx|tsx|java|cs|cpp|cxx|cc|c|h|hpp|hxx|go|rb|rs|kt|kts|swift|sh|bash|zsh|ps1|psm1|sql|r|R|php|ex|exs|erl|hrl|hs|lua|jl|ml|mli|scala|dart)
+      return 0
+      ;;
+    *)
+      return 1
+      ;;
+  esac
+}
+
+count_source_files() {
+  local dir="$1"
+  local mode="${2:-recursive}"
+  if [[ "$mode" == "immediate" ]]; then
+    find "$dir" -maxdepth 1 -type f 2>/dev/null | while IFS= read -r file; do
+      is_source_file "$file" && echo "$file"
+    done | wc -l
+  else
+    find "$dir" -type f 2>/dev/null | while IFS= read -r file; do
+      is_excluded_dir "$(dirname "$file")/" && continue
+      is_source_file "$file" && echo "$file"
+    done | wc -l
+  fi
+}
+
+count_child_dirs() {
+  local dir="$1"
+  find "$dir" -maxdepth 1 -mindepth 1 -type d 2>/dev/null | while IFS= read -r child; do
+    is_excluded_dir "$child/" || echo "$child"
+  done | wc -l
+}
+
+doc_worthy_dir() {
+  local dir="$1" root="$2" maturity="${3:-standard}"
+  [[ "$dir" == "$root" ]] && return 1
+  is_excluded_dir "$dir/" && return 1
+
+  local recursive_sources immediate_sources child_dirs base
+  recursive_sources=$(count_source_files "$dir" recursive)
+  immediate_sources=$(count_source_files "$dir" immediate)
+  child_dirs=$(count_child_dirs "$dir")
+  base=$(basename "$dir")
+
+  case "$maturity" in
+    minimal)
+      return 1
+      ;;
+    full)
+      (( recursive_sources > 0 ))
+      ;;
+    standard|*)
+      (( recursive_sources > 0 )) || return 1
+      case "$base" in
+        src|source|sources|app|apps|packages|package|pkg|services|service|cmd|bin|api|server|client|lib|libs|core|modules|module|scripts|tools|workers|jobs|pipelines|pipeline)
+          return 0
+          ;;
+      esac
+      (( immediate_sources >= 3 || child_dirs >= 2 ))
+      ;;
+  esac
+}
+
 # ── template rendering ──────────────────────────────────────────────────────
-# render_template TEMPLATE_FILE OUTPUT_FILE [VAR=VALUE ...]
-# Replaces {{KEY}} placeholders with values from the VAR=VALUE pairs.
 render_template() {
   local tmpl="$1" out="$2"; shift 2
   local content
@@ -66,40 +125,13 @@ render_template() {
   for pair in "$@"; do
     local key="${pair%%=*}"
     local val="${pair#*=}"
-    # escape & for sed replacement
     local escaped_val
-    escaped_val=$(printf '%s' "$val" | sed 's/[&/\]/\\&/g; s/$/\\n/' | tr -d '\n' | sed 's/\\n$//')
+    escaped_val=$(printf '%s' "$val" | sed 's/[&/\\]/\\&/g; s/$/\\n/' | tr -d '\n' | sed 's/\\n$//')
     content=$(printf '%s' "$content" | sed "s/{{${key}}}/${escaped_val}/g")
   done
   printf '%s\n' "$content" > "$out"
 }
 
-# ── detect existing file style ──────────────────────────────────────────────
-# Outputs a style tag: "atx" (# headings), "setext" (underline headings), or "unknown"
-detect_heading_style() {
-  local file="$1"
-  if grep -qP '^#{1,6} ' "$file" 2>/dev/null; then
-    echo "atx"
-  elif grep -qP '^[=-]{3,}$' "$file" 2>/dev/null; then
-    echo "setext"
-  else
-    echo "unknown"
-  fi
-}
-
-# Outputs "pipe" (|---|) or "html" (<table>) or "unknown"
-detect_table_style() {
-  local file="$1"
-  if grep -qP '^\|' "$file" 2>/dev/null; then
-    echo "pipe"
-  elif grep -qi '<table' "$file" 2>/dev/null; then
-    echo "html"
-  else
-    echo "unknown"
-  fi
-}
-
-# Returns 0 if file exists AND has more than N non-blank lines
 file_has_content() {
   local file="$1" min_lines="${2:-3}"
   [[ -f "$file" ]] || return 1
@@ -108,7 +140,22 @@ file_has_content() {
   (( count >= min_lines ))
 }
 
-# ── ASSETS_DIR resolution ───────────────────────────────────────────────────
-# When a script is invoked, ASSETS_DIR should point to the skill's assets/
-# directory. Scripts set this themselves relative to their own location:
-#   ASSETS_DIR="$(dirname "$0")/../assets"
+generate_layout_tree() {
+  local dir="$1"
+  python3 - "$dir" <<'PY'
+from pathlib import Path
+import sys
+
+root = Path(sys.argv[1])
+items = sorted(root.iterdir(), key=lambda p: (not p.is_dir(), p.name.lower()))
+lines = [f"{root.name}/"]
+max_items = 12
+for index, item in enumerate(items[:max_items]):
+    prefix = "└── " if index == min(len(items), max_items) - 1 else "├── "
+    suffix = "/" if item.is_dir() else ""
+    lines.append(f"{prefix}{item.name}{suffix}")
+if len(items) > max_items:
+    lines.append("└── …")
+print("\n".join(lines))
+PY
+}
