@@ -90,7 +90,7 @@ check_root() {
     local dead=0
     while IFS= read -r line; do
       local fname
-      fname=$(echo "$line" | grep -oP '`[^`]+\.(md|json|yaml|sh|py|js|ts)`' | tr -d '`' | head -1)
+      fname=$(echo "$line" | grep -oP '`[^`]+\.(md|json|yaml|sh|py|js|ts)`' | tr -d '`' | head -1) || true
       if [[ -n "$fname" ]] && [[ ! -e "$ROOT/$fname" ]]; then
         (( dead++ )) || true
       fi
@@ -213,9 +213,14 @@ check_markdownlint_all() {
       >"$tmpout" 2>&1; then
     emit_pass "M02  markdownlint — all .md files pass"
   else
-    local count
-    count=$(wc -l < "$tmpout")
-    emit_fail "M02  markdownlint — $count violation line(s); run check-markdownlint.sh for details"
+    # Distinguish a tool crash (SyntaxError / incompatible runtime) from real violations
+    if grep -qP '^(SyntaxError|TypeError|Error:|node:)' "$tmpout" 2>/dev/null; then
+      emit_warn "M02  markdownlint — tool exited with an error (check Node.js version ≥ 20 and markdownlint-cli2 install); run check-markdownlint.sh for details"
+    else
+      local count
+      count=$(grep -cP '\S' "$tmpout" || echo 0)
+      emit_fail "M02  markdownlint — $count violation(s); run check-markdownlint.sh for details"
+    fi
   fi
   rm -f "$tmpout"
 }

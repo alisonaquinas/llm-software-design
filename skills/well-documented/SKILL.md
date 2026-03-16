@@ -203,6 +203,11 @@ add-docstrings src/api/
 check-concepts
 ```
 
+## Environment Requirements
+
+- `markdownlint-cli2` requires **Node.js ≥ 20**. On Node 18 or earlier the tool crashes on startup with a `SyntaxError` for unsupported regex flags. Install a newer Node version or use `nvm use 20` before running `check-markdownlint` or expecting M01/M02 audit items to pass.
+- All other scripts require only standard POSIX tools (`bash ≥ 4`, `grep`, `sed`, `find`).
+
 ## Safety Notes
 
 - do not delete or replace accurate documentation just to force a template

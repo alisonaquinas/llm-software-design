@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `well-documented/scripts/audit-docs.sh` R06 abort: added `|| true` guard to
+  `fname=$(... | grep -oP ...)` command substitution so the script no longer
+  exits early under `set -euo pipefail` when a line in AGENTS.md contains no
+  backtick-quoted file reference — previously the audit silently stopped after
+  R05 on any repo that had an AGENTS.md
+- `well-documented/scripts/audit-docs.sh` M02 misleading output: tool crashes
+  (e.g. `SyntaxError` from Node.js < 20) now surface as a WARN with an
+  actionable message rather than counting error stack lines as "violations"
+- `well-documented/SKILL.md`: document Node.js ≥ 20 requirement for
+  `markdownlint-cli2`; include `nvm` workaround note
+
 ### Changed
 
 - test-drove the full 114-skill catalog and added explicit verification or recovery guidance to every skill so common requests now end with a clearer follow-through path
