@@ -44,6 +44,7 @@ This pass focused on the thinner docstring skills rather than the already-rich a
 ## Per-scenario notes
 
 ### S01 — Dart public API doc comment
+
 - Target promise: the strengthened `dart-docstrings` guide now calls out `///`, summary-line discipline, and public-surface targeting.
 - Live action: created `/tmp/docstrings-drive-2to_ljmc/dart/lib/mathx.dart` with package-facing docs on a class and exported method.
 - Verification: `grep -n '^///' /tmp/docstrings-drive-2to_ljmc/dart/lib/mathx.dart` would return two adjacent doc comment lines; both summaries are concise and declaration-adjacent.
@@ -52,6 +53,7 @@ This pass focused on the thinner docstring skills rather than the already-rich a
 - Improvement signal: keep the new `Structural expectations`, anti-patterns, and reference links.
 
 ### S02 — Java generic API variant
+
 - Target promise: the richer `java-docstrings` guide now names the tag set, including type parameters and `{@inheritDoc}`/exception handling.
 - Live action: created `/tmp/docstrings-drive-2to_ljmc/java/src/Api.java` for a small generic API contract.
 - Verification: checked that `@param <T>` and `@throws IllegalArgumentException` appear in the Javadoc block next to the declaration.
@@ -60,6 +62,7 @@ This pass focused on the thinner docstring skills rather than the already-rich a
 - Improvement signal: the explicit tag inventory is high leverage and worth preserving across other tagged languages.
 
 ### S03 — OCaml interface-first placement
+
 - Target promise: the improved `ocaml-docstrings` guide now explicitly prefers `.mli` comments and public module interfaces.
 - Live action: created paired interface and implementation files at `/tmp/docstrings-drive-2to_ljmc/ocaml/src/report.mli` and `/tmp/docstrings-drive-2to_ljmc/ocaml/src/report.ml`.
 - Verification: the `(** ... *)` comment appears in the `.mli` export surface, while the implementation stays free of redundant contract prose.
@@ -68,6 +71,7 @@ This pass focused on the thinner docstring skills rather than the already-rich a
 - Improvement signal: signature-boundary guidance is essential for interface-centric languages.
 
 ### S04 — Awk recovery from thin comments
+
 - Target promise: `awk-docstrings` now recommends a reusable header field schema instead of only a bare summary.
 - Live action: created `/tmp/docstrings-drive-2to_ljmc/awk/report.awk` with `Name`, `Purpose`, `Inputs`, `Outputs`, and `Globals` fields.
 - Verification: confirmed the structured field labels are present and adjacent to the documented function.
@@ -76,6 +80,7 @@ This pass focused on the thinner docstring skills rather than the already-rich a
 - Improvement signal: comment-only languages benefit most from explicit field vocabularies.
 
 ### S05 — PowerShell help-block setup
+
 - Target promise: `powershell-docstrings` now includes an explicit help-section map, making setup for `Get-Help` and platyPS more direct.
 - Live action: created `/tmp/docstrings-drive-2to_ljmc/powershell/New-ReportSnapshot.ps1` with a compact help block.
 - Verification: checked for `.SYNOPSIS`, `.PARAMETER Request`, `.OUTPUTS`, and `.EXAMPLE` markers in the block.
@@ -84,6 +89,7 @@ This pass focused on the thinner docstring skills rather than the already-rich a
 - Improvement signal: setup-oriented docstring skills should name the extraction-facing sections explicitly.
 
 ### S06 — Wolfram exported-symbol boundary
+
 - Target promise: `wolfram-docstrings` now explains that usage messages belong in the exported package section between `BeginPackage` and the private block.
 - Live action: created `/tmp/docstrings-drive-2to_ljmc/wolfram/ReportPackage.wl` with one exported symbol and a private implementation region.
 - Verification: checked that the `::usage` assignment appears before `Begin["`Private`"]`.
@@ -92,6 +98,7 @@ This pass focused on the thinner docstring skills rather than the already-rich a
 - Improvement signal: exported-surface boundaries matter as much as syntax in symbol-based systems.
 
 ### S07 — Ada specification boundary
+
 - Target promise: the improved `ada-docstrings` guide now calls out the package specification as the right contract boundary.
 - Live action: created `/tmp/docstrings-drive-2to_ljmc/ada/report.ads` and `/tmp/docstrings-drive-2to_ljmc/ada/report.adb` for a small package.
 - Verification: confirmed `@summary` and `@param` appear in the specification file and not only in the body.

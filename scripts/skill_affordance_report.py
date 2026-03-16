@@ -42,8 +42,10 @@ def format_table(rows: list[dict[str, object]]) -> str:
     header = "| Skill | Intent Router | Quick Start | Workflow | Verification | Safety | Refs | Code blocks |"
     sep = "| --- | --- | --- | --- | --- | --- | ---: | ---: |"
     lines = [header, sep]
+    def cell(v):
+        return "yes" if v else "no"
+
     for row in rows:
-        cell = lambda v: "yes" if v else "no"
         lines.append(
             "| {name} | {intent_router} | {quick_start} | {workflow} | {verification} | {safety} | {references} | {code_blocks} |".format(
                 name=row["name"],
