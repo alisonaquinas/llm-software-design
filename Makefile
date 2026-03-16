@@ -1,8 +1,9 @@
-.PHONY: all build clean help list verify lint test test-unit
+.PHONY: all build bundle clean help list verify lint test test-unit
 .DEFAULT_GOAL := help
 .SECONDEXPANSION:
 
 PYTHON ?= python3
+PLUGIN_NAME := software-design
 SKILLS_ROOT := skills
 SKILLS := $(sort $(patsubst $(SKILLS_ROOT)/%/SKILL.md,%,$(wildcard $(SKILLS_ROOT)/*/SKILL.md)))
 BUILD_DIR := built
@@ -56,6 +57,11 @@ all: clean build
 	@echo ""
 	@echo "Full rebuild complete!"
 	@echo "Skills available in: $(BUILD_DIR)/"
+
+bundle: build
+	@echo "Building $(PLUGIN_NAME)-plugin.zip..."
+	@cd $(BUILD_DIR) && zip -q $(PLUGIN_NAME)-plugin.zip *-skill.zip
+	@echo "  ✓ $(BUILD_DIR)/$(PLUGIN_NAME)-plugin.zip created"
 
 verify:
 	@$(PYTHON) scripts/verify_built_zips.py --build-dir $(BUILD_DIR) --skills-dir $(SKILLS_ROOT)
