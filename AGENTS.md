@@ -149,7 +149,7 @@ This repo uses **trunk-based development**. The developer works alone.
 1. Run `make lint` — verify markdown, Python, YAML, and skill structure pass.
 2. Run `make test-unit` — verify all Python unit tests pass.
 3. Run `make verify` — verify skill ZIPs can be built and opened.
-4. Update `.claude-plugin/plugin.json` so `version` matches the intended tag.
+4. Update `.claude-plugin/plugin.json` so `version` matches the intended tag (strip the leading `v`). **This is the most common release failure.** The CI workflow checks `TAG == plugin.json version` and aborts with `ERROR: tag v1.2.0 does not match plugin.json version v1.1.3` if they differ. Do this step before committing and tagging — never after.
 5. Move the relevant `Unreleased` notes into a dated release entry in `CHANGELOG.md`.
 6. Commit with a message like `chore(release): bump to v<VERSION>`.
 7. Create an annotated git tag: `git tag -a v<VERSION> -m "Release v<VERSION>"`.
