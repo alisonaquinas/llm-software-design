@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-03-16
+
+### Added
+
+- `Makefile`: added `bundle` target that packages all built `*-skill.zip` files into a single `software-design-plugin.zip` for one-click offline installation; `PLUGIN_NAME := software-design` variable drives the output filename
+
+### Changed
+
+- `Makefile`: extended `.PHONY` to include `bundle`; updated `help` text to document the new target
+- `.github/workflows/release.yml`: added "Build plugin bundle ZIP" step (`make bundle`) so `software-design-plugin.zip` is uploaded alongside the individual skill ZIPs on every tag release; converted CRLF line endings to LF for yamllint compliance
+
 ## [1.2.0] - 2026-03-16
 
 ### Added
