@@ -8,6 +8,7 @@ import zipfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+REQUIRED_FILES = ["SKILL.md", "agents/claude.yaml", "agents/openai.yaml"]
 
 
 def discover_skills(skills_root: Path) -> list[str]:
@@ -24,10 +25,23 @@ def verify_zip(path: Path) -> tuple[bool, str]:
     try:
         with zipfile.ZipFile(path, 'r') as zf:
             bad_member = zf.testzip()
+            names = {name.replace("\\", "/") for name in zf.namelist()}
     except zipfile.BadZipFile:
         return False, 'invalid zip'
     if bad_member is not None:
         return False, f'corrupt member: {bad_member}'
+    if not names:
+        return False, 'empty zip'
+
+    repo_name = path.parent.parent.name
+    skill_name = path.stem.replace("-skill", "")
+    missing = []
+    for rel_path in REQUIRED_FILES:
+        expected = f"{repo_name}/skills/{skill_name}/{rel_path}"
+        if expected not in names:
+            missing.append(expected)
+    if missing:
+        return False, 'missing members: ' + ', '.join(sorted(missing))
     return True, 'valid'
 
 

@@ -166,3 +166,29 @@ When a tag matching `v*.*.*` is pushed:
 5. Dispatches `plugin-updated` to `alisonaquinas/llm-skills` (if token is configured).
 
 **Nothing is released without passing lint, test, validate, and build gates.**
+
+---
+
+## Command + Agent Templates
+
+### Command Templates
+
+```bash
+# Targeted checks
+python scripts/lint_skills.py <skill-name>
+python scripts/validate_skills.py <skill-name>
+python scripts/skill_affordance_report.py <skill-name>
+
+# Baseline quality gate
+make test
+make build
+make verify
+```
+
+### Agent Template (Design/OOP/Architecture Domain)
+
+1. Keep recommendations context-aware and tradeoff-driven.
+2. Favor concrete examples over abstract theory-only guidance.
+3. Keep SKILL concise; move depth to references.
+4. Preserve parallel quality across related skill families.
+5. Use neutral wording and safe, non-destructive examples.

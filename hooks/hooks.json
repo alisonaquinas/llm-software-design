@@ -1,0 +1,14 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "You are in llm-software-design. Prioritize architecture clarity, tradeoff-aware design advice, and repository quality gates."
+          }
+        ]
+      }
+    ]
+  }
+}

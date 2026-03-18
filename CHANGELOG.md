@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.3] - 2026-03-16
+
+### Added
+
+- Added repository-wide skill agent manifest (agents/software-design-maintainer.md), command entries, and hooks/hooks.json for consistent skill routing across Claude and Codex clients.
+- Extended AGENTS.md with command + agent template section for focused skill loops.
+
+### Changed
+
+- Hardened scripts/verify_built_zips.py with REQUIRED_FILES invariant checks.
+
 ## [1.3.2] - 2026-03-18
 
 ### Fixed
