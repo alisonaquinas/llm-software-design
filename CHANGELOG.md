@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.3.2] - 2026-03-18
+
+### Fixed
+
+- Hardened `tests/test_well_documented_tools.py` with deterministic repo-local temporary directories, safe cleanup, and Bash path normalization for command invocation to prevent Windows tempfile and path handling regressions.
+- Upgraded packaging verification so built ZIPs are checked for required files under `llm-software-design/skills/<skill>/...`, making repo-rooted layout mismatches fail during validation.
+
+## [1.3.1] - 2026-03-18
+
+### Added
+
+- Added repository-wide skill agent and command scaffolding for all skills, including per-skill `agents/` manifests and `commands/` entries, so skill invocations can be routed consistently by both Claude and Codex clients.
+- Added `hooks/hooks.json` with preconfigured hooks for agent selection and command execution orchestration.
+
 ## [1.3.0] - 2026-03-16
 
 ### Added

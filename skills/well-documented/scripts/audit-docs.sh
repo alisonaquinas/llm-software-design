@@ -3,13 +3,14 @@
 #
 # Usage: audit-docs.sh [-r ROOT] [--maturity LEVEL] [--check-local-commands]
 #                      [--no-check-local-commands] [--git-freshness]
-#                      [--no-git-freshness] [-q] [-h]
+#                      [--no-git-freshness] [--no-markdownlint] [-q] [-h]
 #   -r ROOT                   Repository root (default: current directory)
 #   --maturity LEVEL          minimal, standard, or full (default: standard)
 #   --check-local-commands    Verify local script and Make target references (default: on)
 #   --no-check-local-commands Skip local command verification
 #   --git-freshness           Warn when code changed without docs changes if git is available (default: on)
 #   --no-git-freshness        Skip git freshness checks
+#   --no-markdownlint          Skip markdownlint validation (M02)
 #   -q                        Quiet — only print FAILs and WARNs; suppress PASSes and SKIPs
 #   -h, --help                Show this help
 
@@ -23,6 +24,7 @@ QUIET=false
 MATURITY="standard"
 CHECK_LOCAL_COMMANDS=true
 CHECK_GIT_FRESHNESS=true
+CHECK_MARKDOWNLINT=true
 
 usage() {
   grep '^# ' "$0" | sed 's/^# //'
@@ -53,6 +55,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --no-git-freshness)
       CHECK_GIT_FRESHNESS=false
+      shift
+      ;;
+    --no-markdownlint)
+      CHECK_MARKDOWNLINT=false
       shift
       ;;
     -q)
@@ -216,6 +222,11 @@ check_root() {
 }
 
 check_markdownlint_all() {
+  if ! $CHECK_MARKDOWNLINT; then
+    emit_skip "M02  markdownlint — skipped in test environment"
+    return
+  fi
+
   local config_arg=()
   local cfg
   for cfg in "$ROOT/.markdownlint.yaml" "$ROOT/.markdownlint.json" \
