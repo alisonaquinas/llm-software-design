@@ -1,6 +1,6 @@
 # llm-software-design
 
-A cross-compatible repository of 114 LLM skills for software design guidance, language-specific code review, and source-level API documentation. The merged catalog now includes the original design-review skills, 7 design methodology skills, 50 `[language]-best-practice` skills, and 50 `[language]-docstrings` skills that align on consistent structure and depth.
+A cross-compatible repository of 116 LLM skills for software design guidance, language-specific code review, and source-level API documentation. The merged catalog now includes 9 design-review skills, 7 design methodology skills, 50 `[language]-best-practice` skills, and 50 `[language]-docstrings` skills that align on consistent structure and depth.
 
 ## Skill Families
 
@@ -13,6 +13,8 @@ A cross-compatible repository of 114 LLM skills for software design guidance, la
 | `design-patterns` | Choose and critique common patterns and the tradeoffs that justify them |
 | `software-architecture` | Compare architectural styles, seams, integration choices, and system-level tradeoffs |
 | `code-smells` | Identify maintainability risks, triage them, and propose pragmatic refactoring paths |
+| `high-coherence` | Maintain conceptual integrity across boundaries, dependency rules, and runtime behavior |
+| `low-coupling` | Reduce structural and operational coupling to improve change locality and lower blast radius |
 | `semantic-versioning` | Apply SemVer 2.0.0, choose the correct bump level, and manage git tags with `bump-version` / `set-version` |
 | `well-documented` | Audit, initialize, and normalize repository documentation: README, AGENTS.md, CONCEPTS.md, file headers, and docstrings |
 

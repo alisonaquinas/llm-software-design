@@ -1,0 +1,4 @@
+interface:
+  display_name: "Low Coupling"
+  short_description: "Reduce dependency blast radius and ripple effects."
+  default_prompt: "Use $low-coupling to review or reduce structural, contract, temporal, and operational coupling with pragmatic, incremental refactors."

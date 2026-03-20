@@ -1,0 +1,4 @@
+interface:
+  display_name: "High Coherence"
+  short_description: "Preserve design consistency across boundaries."
+  default_prompt: "Use $high-coherence to review or improve conceptual integrity, boundary clarity, architectural conformance, and runtime alignment."

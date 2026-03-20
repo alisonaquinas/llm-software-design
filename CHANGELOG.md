@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-03-19
+
+### Added
+
+- added `high-coherence`, a software design skill for preserving conceptual integrity, architectural conformance, and runtime alignment as systems evolve
+- added `low-coupling`, a software design skill for reducing structural, contract, temporal, and operational coupling with pragmatic, behavior-preserving refactors
+
+### Changed
+
+- updated `README.md` to reflect the expanded 116-skill catalog and include the two new design and review skills
+
 ## [1.3.3] - 2026-03-16
 
 ### Added
