@@ -1,0 +1,4 @@
+interface:
+  display_name: "Planguage Tester"
+  short_description: "Convert Planguage specs into evidence."
+  default_prompt: "Use $planguage-tester to derive tests, boundary checks, and audit-ready evidence from Planguage requirements."

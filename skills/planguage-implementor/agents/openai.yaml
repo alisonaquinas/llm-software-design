@@ -1,0 +1,4 @@
+interface:
+  display_name: "Planguage Implementor"
+  short_description: "Turn Planguage goals into delivery plans."
+  default_prompt: "Use $planguage-implementor to turn Planguage requirements into implementation plans, traceability, instrumentation, and evidence-ready delivery slices."

@@ -1,6 +1,6 @@
 # llm-software-design
 
-A cross-compatible repository of 116 LLM skills for software design guidance, language-specific code review, and source-level API documentation. The merged catalog now includes 9 design-review skills, 7 design methodology skills, 50 `[language]-best-practice` skills, and 50 `[language]-docstrings` skills that align on consistent structure and depth.
+A cross-compatible repository of 120 LLM skills for software design guidance, language-specific code review, and source-level API documentation. The merged catalog now includes 9 design-review skills, 7 design methodology skills, 4 requirements and specification skills, 50 `[language]-best-practice` skills, and 50 `[language]-docstrings` skills that align on consistent structure and depth.
 
 ## Skill Families
 
@@ -29,6 +29,15 @@ A cross-compatible repository of 116 LLM skills for software design guidance, la
 | `event-sourcing` | Design systems that persist state as ordered domain events and derive views through replay |
 | `idd` | Design systems around stable contracts, ports, and interface boundaries |
 | `pdd` | Design asynchronous software around promises, tasks, futures, and structured concurrency |
+
+### Requirements and specification skills
+
+| Skill | Description |
+| --- | --- |
+| `planguage-author` | Author measurable Planguage functional and quality requirements |
+| `planguage-reader` | Interpret, review, and translate Planguage requirements |
+| `planguage-implementor` | Turn Planguage requirements into delivery plans and traceable implementation slices |
+| `planguage-tester` | Derive acceptance tests and audit evidence from Planguage requirements |
 
 ### Language best-practice skills
 

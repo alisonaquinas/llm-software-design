@@ -1,0 +1,4 @@
+interface:
+  display_name: "Planguage Reader"
+  short_description: "Interpret and review Planguage specs."
+  default_prompt: "Use $planguage-reader to explain, review, or translate Planguage requirements into plain language, delivery implications, and evidence needs."

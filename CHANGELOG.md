@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- added four Planguage requirement workflow skills: `planguage-author`, `planguage-reader`, `planguage-implementor`, and `planguage-tester`
+- added `agents/planguage-maintainer.md` plus command scaffolding in `commands/skill-development.md`, `commands/claude-command-sdlc.md`, `commands/claude-hook-sdlc.md`, and `commands/claude-agent-sdlc.md` to coordinate the new Planguage workflow
+
+### Changed
+
+- updated `hooks/hooks.json` to an explicit safe hook scaffold with empty `PreToolUse` and `PostToolUse` lists
+- updated `README.md` and `docs/skill-test-drive-report.md` to reflect the expanded 120-skill catalog
+
 ## [1.4.1] - 2026-03-22
 
 ### Fixed

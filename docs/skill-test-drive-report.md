@@ -4,10 +4,10 @@ This report records the repository-wide test-drive pass used to tighten the skil
 
 ## Scope
 
-- 114 skills total
+- 120 skills total
 - 50 `[language]-best-practice` skills
 - 50 `[language]-docstrings` skills
-- 14 design, methodology, and documentation skills
+- 18 design, methodology, requirements, and documentation skills
 
 ## Test-Drive Method
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Planguage Author"
+  short_description: "Draft measurable Planguage requirements."
+  default_prompt: "Use $planguage-author to draft or normalize measurable Planguage requirements with clear tags, scales, meters, and target levels."
