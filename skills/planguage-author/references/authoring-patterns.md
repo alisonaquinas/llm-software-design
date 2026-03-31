@@ -34,6 +34,49 @@
 - multiple outcomes bundled into one tag
 - scale without a meter
 - targets copied from another system without source or context
+- fake precision from weak source text, such as inventing numeric goals from adjectives alone
+
+## Insufficient evidence
+
+Stop before setting committed fail or goal levels when the source only provides:
+
+- adjectives without measurable thresholds
+- stakeholder wishes without a test method
+- open questions about scope, user class, workload, or environment
+- copied targets with no local source, rationale, or benchmark
+
+In that state, it is still safe to produce:
+
+- `Tag`
+- `Gist` or `Ambition`
+- a provisional `Scale`
+- a provisional or to-be-defined `Meter`
+- `Stakeholders`
+- `Source`
+- explicit `Open questions`
+
+Surface follow-up questions that would unlock real targets, such as:
+
+- which population, workload, or environment does the requirement apply to?
+- what evidence source should define the target: benchmark, regulation, stakeholder commitment, or historical baseline?
+- what exact result would count as fail versus acceptable success?
+- who owns the decision to commit the target?
+
+## Safe partial requirement example
+
+```text
+Tag: Search.Results.Relevance
+Gist: Return relevant results for common customer queries.
+Ambition: Relevant results reduce reformulation effort and improve product discovery.
+Scale: Percentage of top-10 search results judged relevant for representative catalog queries.
+Meter: To be defined after the benchmark query set and reviewer rubric are agreed.
+Stakeholders: Customers, Merchandising, Search Team.
+Source: Product note stating search should be "more relevant".
+Open questions:
+- which query set defines representative customer searches?
+- who scores relevance and with what rubric?
+- what precision level is required for release versus stretch?
+```
 
 ## Starter template
 

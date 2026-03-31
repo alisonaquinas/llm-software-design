@@ -84,3 +84,73 @@ A later pass should spend deeper live time on:
 ## Well-Documented Follow-Up Test Drive
 
 A focused second pass on `well-documented` exposed three practical issues in live use: freshly bootstrapped READMEs linked to license files that did not exist yet, `add-file-headers.sh` dropped executable bits on rewritten shell scripts, and quiet-mode audit scores under-counted PASS items. The fix set removed the broken default license links, made bootstrap notes explicit in the README and agent templates, preserved file permissions during header insertion, and corrected quiet-mode scoring so the audit summary remains truthful. The bash harness for `well-documented` was also refreshed to match the maturity-level model and the current audit semantics.
+
+## Planguage Workflow Focused Test Drive
+
+This focused pass reviewed the four new Planguage skills plus their supporting
+agent, command, and hook scaffolding after the initial authoring work landed.
+
+### Scope
+
+- `planguage-author`
+- `planguage-reader`
+- `planguage-implementor`
+- `planguage-tester`
+- `agents/planguage-maintainer.md`
+- `commands/skill-development.md`
+- `commands/claude-command-sdlc.md`
+- `commands/claude-hook-sdlc.md`
+- `commands/claude-agent-sdlc.md`
+- `hooks/hooks.json`
+
+### Scenario Matrix
+
+| ID | Bucket | Target surface | Live action | Outcome |
+| --- | --- | --- | --- | --- |
+| P01 | happy-path | `planguage-author` | rewrote vague checkout, search, and audit-trail requirements into measurable Planguage objects in a disposable workspace | `PARTIAL` |
+| P02 | variant | `planguage-reader` | reviewed an intentionally ambiguous Planguage fragment and translated it into plain-language gaps and next steps | `PASS` |
+| P03 | verification | `planguage-implementor` | converted the authored checkout requirement into a traceable thin-slice implementation plan with instrumentation and release gates | `PASS` |
+| P04 | recovery | `planguage-tester` | derived a boundary-aware acceptance matrix and blocker check from the authored checkout requirement | `PASS` |
+| P05 | setup | command, agent, and hook scaffolding | ran the new command loop checks, affordance report, and JSON parse against the safe hook scaffold | `PASS` |
+
+### Evidence Summary
+
+- `P01`: the authoring flow made decomposition, tag selection, scale definition,
+  and meter design straightforward. The remaining friction is that source-poor
+  requirements still require human judgment to decide whether to stop at open
+  questions or propose provisional numeric targets.
+- `P02`: the reader skill cleanly highlighted missing `Scale`, `Meter`, and
+  target levels without silently repairing the requirement during explanation.
+- `P03`: the implementor skill translated a measurable requirement into
+  instrumentation, traceability, and rollout checkpoints without rewriting the
+  requirement itself.
+- `P04`: the tester skill produced a usable goal and fail boundary matrix and
+  explicitly preserved the requirement's meter as the acceptance procedure.
+- `P05`: the orchestration layer is coherent enough to run the intended checks,
+  and the hook file stays safe by exposing explicit but empty `PreToolUse` and
+  `PostToolUse` lists instead of speculative startup hooks.
+
+### Highest-Leverage Finding
+
+- `P01` was the only `PARTIAL`, and it has now been addressed. `planguage-author`
+  now includes an explicit evidence-first fallback path, a low-evidence inline
+  example, and a clear stop condition for cases where the source cannot justify
+  committed numeric targets.
+
+### Re-Test Note
+
+- Re-ran the `P01` style scenario against vague requirement text after the
+  authoring updates. The skill now makes the decision point explicit: either
+  commit target levels from evidence or stop at a tagged requirement skeleton
+  with a missing-facts list. The workflow no longer leaves the operator guessing
+  whether to invent provisional goals.
+
+### Recommendation
+
+`approve`
+
+The new Planguage workflow is usable as shipped: the role split is clear, the
+reader and tester skills enforce healthy skepticism, the implementor skill
+preserves traceability, and the command-plus-hook layer is safe to keep in the
+repo. A small follow-up refinement to `planguage-author` would make the family
+even stronger, but it is not blocking basic use.

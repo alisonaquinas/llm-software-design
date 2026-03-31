@@ -24,8 +24,9 @@ Planguage-style specifications.
 2. assign one stable tag to one requirement object
 3. define the scale with clear units, scope, and conditions
 4. define the meter so the requirement can be tested the same way every time
-5. set fail, goal, stretch, and wish levels when they add decision value
-6. keep design ideas separate from the requirement itself
+5. decide whether the source supports committed target levels or only a requirement skeleton plus missing facts
+6. set fail, goal, stretch, and wish levels only when the evidence supports them
+7. keep design ideas separate from the requirement itself
 
 ## Workflow
 
@@ -35,6 +36,7 @@ Planguage-style specifications.
 - write the gist or ambition in plain business language before adding numeric targets
 - define the scale so a reviewer can tell exactly what is being measured
 - define the meter with a reproducible test, observation, or analysis method
+- if the source cannot justify committed numeric targets, stop at a tagged skeleton and list the missing evidence needed before setting fail or goal levels
 - add baseline or benchmark values when they clarify current reality
 - write fail, goal, stretch, and wish levels only when each level changes a decision
 - record stakeholders, owner, source, and open questions that still affect target quality
@@ -57,11 +59,32 @@ Rewrite these functional requirements in Planguage with tags, scales, meters, an
 Draft a Planguage requirement for response time, availability, and onboarding success.
 ```
 
+```text
+The source only says the admin audit trail should be "useful". Draft the Planguage skeleton and list the evidence needed before setting targets.
+```
+
+Example safe low-evidence output:
+
+```text
+Tag: Audit.Admin.Usefulness
+Gist: Give administrators useful audit trails for privileged actions.
+Ambition: Useful audit trails reduce investigation time and improve accountability.
+Scale: Percentage of in-scope privileged actions that emit a searchable audit event with the required fields.
+Meter: To be defined with Security and Platform Operations after the privileged action inventory and review workflow are confirmed.
+Stakeholders: Administrators, Security, Compliance.
+Source: Interview notes describing "useful" audit trails.
+Open questions:
+- which admin actions are in scope?
+- which fields make an audit event useful enough for review?
+- what search latency or completeness threshold is required?
+```
+
 ## Verification and Next Steps
 
 - verify that each requirement object expresses one main outcome
 - verify that scale and meter allow two different reviewers to test the same thing
 - verify that design choices were not smuggled into the requirement body
+- verify that missing evidence is listed explicitly when fail and goal levels are still provisional
 - name the smallest missing fact that would most improve the requirement quality
 
 ## Safety Notes
