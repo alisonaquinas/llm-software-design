@@ -1,6 +1,6 @@
 {
   "name": "llm-software-design",
-  "version": "1.4.2",
+  "version": "1.4.3",
   "description": "Cross-compatible LLM skills for software design, language best practices, and source-level API documentation guidance.",
   "author": {
     "name": "Alison Aquinas"
