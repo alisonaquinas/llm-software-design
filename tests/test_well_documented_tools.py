@@ -4,11 +4,11 @@ from __future__ import annotations
 
 import os
 import re
-import uuid
+import shlex
 import shutil
 import subprocess
-import shlex
 import unittest
+import uuid
 from contextlib import contextmanager
 from pathlib import Path
 
