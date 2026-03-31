@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-03-30
+
 ### Added
 
 - added four Planguage requirement workflow skills: `planguage-author`, `planguage-reader`, `planguage-implementor`, and `planguage-tester`
@@ -14,8 +16,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- strengthened `planguage-author` with an explicit low-evidence fallback path so the agent stops at a tagged requirement skeleton plus missing facts instead of inventing numeric targets
 - updated `hooks/hooks.json` to an explicit safe hook scaffold with empty `PreToolUse` and `PostToolUse` lists
 - updated `README.md` and `docs/skill-test-drive-report.md` to reflect the expanded 120-skill catalog
+
+### Fixed
+
+- sorted imports in `tests/test_well_documented_tools.py` so the Python lint job passes consistently in CI
+- restored executable git mode bits on `skills/well-documented/scripts/*.sh` so Linux CI can run the helper scripts without `Permission denied`
 
 ## [1.4.1] - 2026-03-22
 
