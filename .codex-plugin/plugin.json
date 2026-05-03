@@ -1,0 +1,25 @@
+{
+  "name": "software-design",
+  "version": "1.4.3",
+  "description": "Cross-compatible LLM skills for software design, language best practices, and source-level API documentation guidance.",
+  "author": {
+    "name": "Alison Aquinas"
+  },
+  "repository": "https://github.com/alisonaquinas/llm-software-design",
+  "license": "MIT",
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Software Design Skills",
+    "shortDescription": "Skills for design, architecture, and code quality.",
+    "longDescription": "Cross-compatible skills for software design, architecture, maintainability, language best practices, and source documentation.",
+    "developerName": "Alison Aquinas",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://llm-skills.alisonaquinas.com",
+    "defaultPrompt": [
+      "Use Software Design Skills to review architecture, design, or maintainability tradeoffs.",
+      "Use Software Design Skills to improve language-specific code or API documentation."
+    ],
+    "brandColor": "#D97706"
+  }
+}
